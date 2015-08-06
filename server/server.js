@@ -1,4 +1,3 @@
-
 var path = require('path');
 var favicon = require('serve-favicon');
 var logger = require('morgan');
@@ -27,7 +26,6 @@ app.set('views', path.join(__dirname, '/../client'));
 app.engine('html', require('./lib/htmlEngine'));
 app.set('view engine', 'html');
 
-
 server.listen(8080);
 
 app.use(logger('dev'));
@@ -40,9 +38,6 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 
 require('./lib/routes.js')(app, passport, db, bcrypt);
-
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(express.static(path.join(__dirname, 'views')));
 
 easySocket(server).onConnect(function(socket){
   handler(socket);
