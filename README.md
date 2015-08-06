@@ -1,2 +1,3 @@
 # BattleScript
-The Very First Platform that allow real-time live coding with your team
+
+The official repo for Battle Script.
