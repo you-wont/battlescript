@@ -1,0 +1,24 @@
+{
+  "name": "battlescript",
+  "version": "1.0.0",
+  "homepage": "https://github.com/battlescript/battlescript",
+  "authors": [
+    "Nick Salloum <nick@callmenick.com>",
+    "Adam Ellsworth <azellsworth@gmail.com>",
+    "Omar Shaikh <oshaikh13@gmail.com>",
+    "Eric Le <hle2806@uw.edu>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib/",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "~1.4.3",
+    "angular": "~1.4.3"
+  }
+}
