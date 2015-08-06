@@ -43,14 +43,19 @@ module.exports = function(app, passport, db, bcrypt) {
     });
   });
 
+  app.get('/auth', function(req, res){
+    res.end(req.isAuthenticated());
+  });
+
   // =====================================
   // PROFILE SECTION =====================
   // =====================================
   // we will want this protected so you have to be logged in to visit
   // we will use route middleware to verify this (the isLoggedIn function)
-  app.get('/profile', isLoggedIn, function(req, res) {
-    res.render('profile');
-  });
+
+  // app.get('/profile', isLoggedIn, function(req, res) {
+  //   res.render('profile');
+  // });
 
   // =====================================
   // LOGOUT ==============================
@@ -59,6 +64,7 @@ module.exports = function(app, passport, db, bcrypt) {
     req.logout();
     res.redirect('/');
   });
+
 };
 
 // route middleware to make sure a user is logged in
