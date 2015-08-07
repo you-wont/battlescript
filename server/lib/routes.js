@@ -44,7 +44,7 @@ module.exports = function(app, passport, db, bcrypt) {
   });
 
   app.get('/auth', function(req, res){
-    res.end(req.isAuthenticated());
+    res.send(req.isAuthenticated());
   });
 
   // =====================================
@@ -60,9 +60,8 @@ module.exports = function(app, passport, db, bcrypt) {
   // =====================================
   // LOGOUT ==============================
   // =====================================
-  app.get('/logout', function(req, res) {
+  app.post('/logout', function(req, res) {
     req.logout();
-    res.redirect('/');
   });
 
 };
@@ -75,5 +74,5 @@ function isLoggedIn(req, res, next) {
     return next();
 
   // if they aren't redirect them to the home page
-  res.redirect('/');
+  res.send(401);
 }
