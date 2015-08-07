@@ -21,10 +21,12 @@ passport.deserializeUser(passportConfig.serialization);
 
 
 // view engine setup
-console.log(__dirname);
-app.set('views', path.join(__dirname, '/../client'));
-app.engine('html', require('./lib/htmlEngine'));
-app.set('view engine', 'html');
+
+app.use(express.static(path.join(__dirname, '/../client/')));
+app.use(express.static(path.join(__dirname, '/../client/assets/')));
+// app.set('views', path.join(__dirname, '/../client'));
+// app.engine('html', require('./lib/htmlEngine'));
+// app.set('view engine', 'html');
 
 server.listen(8080);
 

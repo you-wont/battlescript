@@ -26,11 +26,11 @@ angular.module('battlescript', [
   // if it's not valid, we then redirect back to signin/signup
   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
     if (next.$$route && next.$$route.authenticate) {
-      Auth.isAuth(function(result)){
+      Auth.isAuth(function(result){
         if (!result) {
           $location.path('/signin');
         }
-      }
+      });
     }
   });
 });
