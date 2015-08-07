@@ -1,7 +1,10 @@
 angular.module('battlescript', [
-  'battlescript.services'
+  'battlescript.services',
+  'battlescript.auth',
+  'battlescript.main',
+  'ngRoute' // MAY WANT TO CHANGE TO UI ROUTER
 ])
-.config(function($routeProvider) {
+.config(function($routeProvider, $httpProvider) {
   $routeProvider
     .when('/signin', {
       templateUrl: 'app/auth/signin.html',
@@ -11,10 +14,33 @@ angular.module('battlescript', [
       templateUrl: 'app/auth/signup.html',
       controller: 'AuthController'
     })
-    
-    // We add our $httpInterceptor into the array
-    // of interceptors. Think of it like middleware for your ajax calls
-    // We don't need this... We have auth
+    .when('/logout', {
+      templateUrl: 'app/auth/logout.html',
+      controller: 'AuthController'
+    })
+    .when('/', {
+      templateUrl: 'app/main/main.html',
+      controller: 'MainController'
+    })
+
+    $httpProvider.interceptors.push('AttachTokens');
+})
+.factory('AttachTokens', function ($window) {
+  // this is an $httpInterceptor
+  // its job is to stop all out going request
+  // then look in local storage and find the user's token
+  // then add it to the header so the server can validate the request
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('battlepro'); // CHANGE THIS TO ANOTHER SECRET
+      if (jwt) {
+        object.headers['x-access-token'] = jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attach;
 })
 .run(function ($rootScope, $location, Auth) {
   // here inside the run phase of angular, our services and controllers
@@ -25,12 +51,15 @@ angular.module('battlescript', [
   // and send that token to the server to see if it is a real user or hasn't expired
   // if it's not valid, we then redirect back to signin/signup
   $rootScope.$on('$routeChangeStart', function (evt, next, current) {
-    if (next.$$route && next.$$route.authenticate) {
-      Auth.isAuth(function(result){
-        if (!result) {
-          $location.path('/signin');
-        }
-      });
+    if (next.$$route && !Auth.isAuth()) {
+      $rootScope.signedIn = false;
+      if(next.$$route.originalPath === "/signup"){
+        $location.path('/signup');
+      } else {
+        $location.path('/signin');
+      }
+    } else {
+      $rootScope.signedIn = true;
     }
   });
 });

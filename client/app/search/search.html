@@ -1,0 +1,58 @@
+<div ng-controller = "SearchController">
+  <div class="search">
+    <div class="grid__row grid__row--pad clearfix">
+      <div class="grid__item grid__item--fl33 grid__item--pad">
+        <input type="text" name="search query" class="search__input search__input--text " placeholder='{{searchQuery}}' ng-model="searchQuery">
+      </div>
+      <div class="grid__item grid__item--fl33 grid__item--pad">
+        <input type="text" name="location" class="search__input search__input--text" placeholder='location' ng-model="location.text">
+      </div>
+      <div class="grid__item grid__item--fl33 grid__item--pad">
+        <input type="text" name="distance" class="search__input search__input--text" placeholder='walking time (min)' ng-model="distance.walkingTime">
+        <!-- <input type="range" min="1" value="5" max="30" class="search__input" ng-model="distance.walkingTime"> -->
+      </div>
+    <div class="search__footer">
+      <button class="search__submit" ng-click="getResults()">Search</button>
+      <br>
+      <button class="button__toggle-favorites" ng-click="seeFavorites = !seeFavorites">Toggle Favorites</button>
+    </div>
+  </div>
+  
+  <!-- <div class="test__animate" ng-repeat="result in results" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">{{result.name}}</div> -->
+  
+  <div class="result" ng-repeat="result in results | filter:filterFunction" ng-animate="{enter: 'animate-enter', leave: 'animate-leave'}">
+    <div class="grid__row grid__row--picture-left grid__row--address-right clearfix">
+      <div class="grid__item grid__item--fx120">
+         <img class="result__image" src="{{result.image_url}}"/>
+      </div>
+      
+      <div class="grid__item grid__item--fl100">
+        <div class="result__info">
+          <a href="{{result.url}}" class="result__name">{{result.name}}</a>
+          <div class="result__stars-container">
+            <div class="result__stars-image"><img src="{{result.rating_img_url_large}}"/></div>
+          </div>
+          <div class="result__distance">{{result.walkingDistance}} minute walk</div>
+        </div>
+        <div class="result__buttons">
+          <button class="love__button" ng-click="love(result)">Loved it!</button>
+          <button class="hate__button" ng-click="hate(result)">Not Interested</button>
+        </div>
+      </div>
+      
+      <div class="grid__item grid__item--fx240">
+        <div class="result__location-info">
+          <a href="http://maps.google.com/?q={{result.name + '+' + result.location.city}}" class="result__map-link">Google Map</a>
+          <div class="result__address--line-1">{{result.location.display_address[0]}}</div>
+          <div class="result__address--line-2">{{result.location.display_address[2]}}</div>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+  <div class="results__footer">
+    <button class="more-results-button" ng-show="resultsServed">More Results</button>
+  </div>
+  
+</div>

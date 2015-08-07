@@ -1,46 +1,32 @@
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-var express = require('express');
+  var express     = require('express'),
+      mongoose    = require('mongoose');
+
 var app = express();
-var server = require('http').Server(app);
-var db = require('./schema.js');
-var easySocket = require('./lib/easySocket.js');
-var handler = require('./lib/socketHandler.js');
-var passport = require('passport');
-var session      = require('express-session');
-var bcrypt = require('bcrypt-nodejs');
 
-// This config should go in a module or something...
-var passportConfig = require('./lib/strategyConfig.js')(db);
-passport.use(passportConfig.strategy);
-passport.serializeUser(passportConfig.serialization);
-passport.deserializeUser(passportConfig.serialization);
+mongoose.connect('mongodb://localhost/battlescript'); // connect to mongo database named
+
+// configure our server with all the middleware and and routing
+require('./config/middleware.js')(app, express);
+
+// export our app for testing and flexibility, required by index.js
+
+app.listen(8000);
+
+module.exports = app;
 
 
-// view engine setup
+/* Walkthrough of the server
 
-app.use(express.static(path.join(__dirname, '/../client/')));
-app.use(express.static(path.join(__dirname, '/../client/assets/')));
-// app.set('views', path.join(__dirname, '/../client'));
-// app.engine('html', require('./lib/htmlEngine'));
-// app.set('view engine', 'html');
+  Express, mongoose, and our server are initialzed here
+  Next, we then inject our server and express into our config/middleware.js file for setup.
+    We also exported our server for easy testing
 
-server.listen(8080);
+  middleware.js requires all express middleware and sets it up
+  our authentication is set up there as well
+  we also create individual routers for are two main features, links and users
+  each feature has its own folder with a model, controller, and route file
+    the respective file is required in middleware.js and injected with its mini router
+    that route file then requires the respective controller and sets up all the routes
+    that controller then requires the respective model and sets up all our endpoints which respond to requests
 
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-
-app.use(session({ secret: 'swagillrektum8' })); // session secret
-app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-
-require('./lib/routes.js')(app, passport, db, bcrypt);
-
-easySocket(server).onConnect(function(socket){
-  handler(socket);
-});
+*/

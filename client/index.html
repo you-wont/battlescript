@@ -1,21 +1,40 @@
-
 <!DOCTYPE html>
-<html ng-app='shortly'>
+<html ng-app='battlescript'>
   <head>
     <meta charset="utf-8" />
-    <title>Battlescript</title>
-    <link rel="stylesheet" type="text/css" href="css/style.css" />
+    <title>BattleScript</title>
+    <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
+    <script src="lib/angular/angular.js"></script>
+    <script src="lib/angular-route/angular-route.js"></script>
   </head>
   <body>
-    <h1>Battlescript</h1>
 
-    <!-- the ng-view directive is where our templates will be loaded into when naviagted to -->
-    <div ng-view></div>
+    <div class="container">
 
-    <script src="lib/angular.js"></script>
-    <script src="lib/angular-route.js"></script>
+      <div class="header">
+        <h1 class="header__title">BattleScript</h1>
+        <div class='navigation' ng-show="signedIn">
+          <ul class="navigation__items">
+           <!--  <li class="navigation__item"><a class='' ng-click="seeFavorites = !seeFavorites" ng-controller="SearchController">Toggle Faves</a></li> -->
+            <li class="navigation__item"><a href='/#/logout' class='logout' ng-click="logout()">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="container--pad">
+        <div ng-view ng-show="true"></div>
+      </div>
 
+      <footer class="footer">
+        Fuck Yeah Productions
+      </footer>
+
+    </div>
+
+    <script src="app/services/services.js"></script>
     <script src="app/auth/auth.js"></script>
+    <script src="app/main/main.js"></script>
     <script src="app/app.js"></script>
   </body>
 </html>
