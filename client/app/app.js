@@ -21,7 +21,7 @@ angular.module('battlescript', [
       templateUrl: 'app/auth/logout.html',
       controller: 'AuthController'
     })
-    .when('/socketTest', {
+    .when('/duel', {
       templateUrl: 'app/duel/codeView.html',
       controller: 'DuelController'
     })
