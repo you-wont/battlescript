@@ -1,10 +1,22 @@
-<div id='signin'>
-  <h1 class="sub">signin</h1>
-  <form name="signinForm" ng-submit='signin()'>
-    <input placeholder='username' type='text'ng-model='user.username'>
-    <input placeholder='password' type="password" ng-model='user.password'>
-    <button>signin</button>
+<div class="container">
+  <div class="page-header">
+    <h1>Sign In</h1>
+  </div>
+  
+  <form ng-submit="signin()">
+    <div class="form-group">
+      <input type="text" class="form-control" ng-model="user.username" placeholder="username">
+    </div>
+    
+    <div class="form-group">
+      <input class="form-control" type="password" ng-model="user.password" placeholder="password">
+    </div>
+
+    <div class="form-group">
+      <button type="submit" class="btn btn-primary">Sign In</button>
+    </div>
   </form>
-  <a href="#/signup" class="sub-link">Don't have an account? Signup ...</a>
+
+  Don't have an account?  <a href="#/signup" class="sub-link">Signup ...</a>
   <div class="message">{{message}}</div>
 </div>
