@@ -5,7 +5,15 @@
     <title>BattleScript</title>
     <link rel="stylesheet" type="text/css" href="assets/css/style.css" />
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700' rel='stylesheet' type='text/css'>
-    <script src="lib/angular/angular.js"></script>
+
+    <script src="/socket.io/socket.io.js"></script>
+
+    <script src="lib/textEditor/ace.js"></script>
+    <script src="lib/textEditor/mode-javascript.js"></script>
+    <script src="lib/textEditor/theme-monokai.js"></script>
+    <script src="lib/textEditor/worker-javascript.js"></script>
+
+    <script src="lib/angular/angular.min.js"></script>
     <script src="lib/angular-route/angular-route.js"></script>
   </head>
   <body>
@@ -35,6 +43,7 @@
     <script src="app/services/services.js"></script>
     <script src="app/auth/auth.js"></script>
     <script src="app/main/main.js"></script>
+    <script src="app/duel/duel.js"></script>
     <script src="app/app.js"></script>
   </body>
 </html>

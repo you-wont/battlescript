@@ -332,4 +332,8 @@ button {
     height: 0px;
 }
 
+#editor1,
+#editor2 { 
+  height: 300px;
+}
 

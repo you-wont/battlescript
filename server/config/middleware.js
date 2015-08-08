@@ -8,7 +8,7 @@ module.exports = function (app, express) {
 
   var userRouter = express.Router();
   // var linkRouter = express.Router();
-  // var searchRouter = express.Router();
+  // var roomRouter = express.Router();
 
   app.use(morgan('dev'));
   app.use(bodyParser.urlencoded({extended: true}));
@@ -17,6 +17,7 @@ module.exports = function (app, express) {
 
 
   app.use('/api/users', userRouter); // use user router for all user request
+  // app.use('/api/rooms', roomRouter); // use user router for all user request
   // authentication middleware used to decode token and made available on the request
 
   app.use(helpers.errorLogger);
@@ -26,5 +27,5 @@ module.exports = function (app, express) {
 
   // THESE ARE JUST HERE FOR REFERENCE
   // require('../links/linkRoutes.js')(linkRouter);
-  // require('../search/searchRoutes.js')(searchRouter);
+  // require('../room/roomRoutes.js')(roomRouter);
 };
