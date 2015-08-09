@@ -2,16 +2,12 @@ angular.module('battlescript.services', [])
 
 // Main Factory
 .factory('Main',function ($http){
-  return {
-    sampleFunction: function(){
-      console.log("I'm in a sample function");
-    }
-  }
-
 })
 
 // Auth factory
 .factory('Auth', function ($http, $location, $window) {
+  
+  // signs users in
   var signin = function (user) {
     return $http({
       method: 'POST',
@@ -23,6 +19,7 @@ angular.module('battlescript.services', [])
     });
   };
 
+  // signs users up
   var signup = function (user) {
     return $http({
       method: 'POST',
@@ -34,16 +31,18 @@ angular.module('battlescript.services', [])
     });
   };
 
+  // helper to check if users are authorized
   var isAuth = function () {
     return !!$window.localStorage.getItem('battlepro');
   };
 
+  // signs out users
   var signout = function () {
     $window.localStorage.removeItem('battlepro');
     $location.path('/signin');
   };
 
-
+  // return all funcs as an obj
   return {
     signin: signin,
     signup: signup,
@@ -65,6 +64,7 @@ angular.module('battlescript.services', [])
     });
   };
 
+  // return all funcs as an obj
   return {
     getDuel: getDuel
   }
@@ -72,36 +72,45 @@ angular.module('battlescript.services', [])
 
 // The search factory (if we need it)
 .factory('Search', function ($http){
+  
+  // gets results
+  var getResults = function(searchData, callback){
+    $http({
+      method: 'POST',
+      url: '/api/search',
+      data: searchData
+    })
+    .then(function(resp){
+      console.log("got respons");
+      callback(resp.data);
+    });
+  };
+
+  // return all funcs as an obj
   return {
-    getResults: function(searchData, callback){
-      $http({
-        method: 'POST',
-        url: '/api/search',
-        data: searchData
-      })
-      .then(function(resp){
-        console.log("GOT RESPONSE FROM SERVER!")
-        callback(resp.data)
-      });
-    }
+    getResults: getResults
   }
 
 })
 
 // The preference factory (if we need it)
 .factory('Preference', function ($http){
+  
+  // save preferences
+  var save = function(preferences, callback){
+    $http({
+      method: 'POST',
+      url: '/api/search/preferences',
+      data: preferences
+    })
+    .then(function(resp){
+      console.log("GOT RESPONSE FROM SERVER!")
+      callback(resp.data);
+    });
+  };
+
   return {
-    save: function(preferences, callback){
-      $http({
-        method: 'POST',
-        url: '/api/search/preferences',
-        data: preferences
-      })
-      .then(function(resp){
-        console.log("GOT RESPONSE FROM SERVER!")
-        callback(resp.data);
-      });
-    }
+    save: save
   }
 
 });
