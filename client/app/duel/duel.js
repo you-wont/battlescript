@@ -1,7 +1,26 @@
 angular.module('battlescript.duel', [])
 
-.controller('DuelController', function($scope){
-  $scope.challenge = "FETCH FROM API";
+.controller('DuelController', function($scope, Duel){
+  $scope.duel;
+  $scope.duelDescription = null;
+  $scope.duelProjectId = null;
+  $scope.duelSolutionId = null;
+
+  // fetch a duel
+  $scope.getDuel = function() {
+    console.log('getting');
+    Duel.getDuel()
+      .then(function(data) {
+        $scope.duel = JSON.parse(data.body);
+        $scope.duelDescription = $scope.duel.description;
+
+        $scope.duelProjectId = $scope.duel.session.projectId;
+        $scope.duelSolutionId = $scope.duel.session.solutionId;
+      })
+      .catch(function(err) {
+        console.log(err);
+      });
+  };
 
   // var socket = io.connect('http://localhost:8000');
   var socket = io.connect('http://localhost:8000', {'force new connection': true});

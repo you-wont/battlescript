@@ -1,6 +1,9 @@
-var express     = require('express'),
-    mongoose    = require('mongoose');
+// load .env as soon as possible
+require('dotenv').load();
 
+// boot up express express and mongoose
+var express = require('express');
+var mongoose = require('mongoose');
 var app = express();
 var server = require('http').Server(app);
 

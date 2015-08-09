@@ -1,8 +1,6 @@
 angular.module('battlescript.services', [])
 
-
-
-//###########################################################################
+// Main Factory
 .factory('Main',function ($http){
   return {
     sampleFunction: function(){
@@ -12,51 +10,8 @@ angular.module('battlescript.services', [])
 
 })
 
-
-// THE SEARCH AND PREFERENCE FUNCTIONS ARE ONLY HERE FOR REFERENCE
-.factory('Search', function ($http){
-  return {
-    getResults: function(searchData, callback){
-      $http({
-        method: 'POST',
-        url: '/api/search',
-        data: searchData
-      })
-      .then(function(resp){
-        console.log("GOT RESPONSE FROM SERVER!")
-        callback(resp.data)
-      });
-    }
-  }
-
-})
-// THE SEARCH AND PREFERENCE FUNCTIONS ARE ONLY HERE FOR REFERENCE
-.factory('Preference', function ($http){
-  return {
-    save: function(preferences, callback){
-      $http({
-        method: 'POST',
-        url: '/api/search/preferences',
-        data: preferences
-      })
-      .then(function(resp){
-        console.log("GOT RESPONSE FROM SERVER!")
-        callback(resp.data);
-      });
-    }
-  }
-
-})
-//###########################################################################
-
+// Auth factory
 .factory('Auth', function ($http, $location, $window) {
-  // Don't touch this Auth service!!!
-  // it is responsible for authenticating our user
-  // by exchanging the user's username and password
-  // for a JWT from the server
-  // that JWT is then stored in localStorage as 'battlepro'
-  // after you signin/signup open devtools, click resources,
-  // then localStorage and you'll see your token from the server
   var signin = function (user) {
     return $http({
       method: 'POST',
@@ -95,4 +50,58 @@ angular.module('battlescript.services', [])
     isAuth: isAuth,
     signout: signout
   };
+})
+
+// The duels factory
+.factory('Duel', function($http) {
+
+  // gets a duel
+  var getDuel = function() {
+    return $http({
+      method: 'GET',
+      url: '/api/duels/getduel',
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
+  return {
+    getDuel: getDuel
+  }
+})
+
+// The search factory (if we need it)
+.factory('Search', function ($http){
+  return {
+    getResults: function(searchData, callback){
+      $http({
+        method: 'POST',
+        url: '/api/search',
+        data: searchData
+      })
+      .then(function(resp){
+        console.log("GOT RESPONSE FROM SERVER!")
+        callback(resp.data)
+      });
+    }
+  }
+
+})
+
+// The preference factory (if we need it)
+.factory('Preference', function ($http){
+  return {
+    save: function(preferences, callback){
+      $http({
+        method: 'POST',
+        url: '/api/search/preferences',
+        data: preferences
+      })
+      .then(function(resp){
+        console.log("GOT RESPONSE FROM SERVER!")
+        callback(resp.data);
+      });
+    }
+  }
+
 });
