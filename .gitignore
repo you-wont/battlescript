@@ -1,5 +1,5 @@
-### node etc ###
-
+# Environment #
+.env
 
 # Files that might appear on external disk
 .Spotlight-V100
