@@ -22,7 +22,7 @@ angular.module('battlescript', [
       controller: 'AuthController'
     })
     .when('/duel', {
-      templateUrl: 'app/duel/codeView.html',
+      templateUrl: 'app/duel/duel.html',
       controller: 'DuelController'
     })
     .when('/', {
