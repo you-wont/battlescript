@@ -3,7 +3,8 @@ angular.module('battlescript.duel', [])
 .controller('DuelController', function($scope){
   $scope.challenge = "FETCH FROM API";
 
-  var socket = io.connect('http://localhost:8000');
+  // var socket = io.connect('http://localhost:8000');
+  var socket = io.connect('http://localhost:8000', {'force new connection': true});
   socket.on('news', function (data) {
     console.log(data);
     socket.emit('my other event', { my: 'data' });
@@ -28,7 +29,16 @@ angular.module('battlescript.duel', [])
   socket.on('updateEnemy', function(text){
     editor2.setValue(text);
     editor2.clearSelection();
-    // deselect
-
   });
-})
+
+  // location change listeners
+  $scope.$on('$routeChangeStart', function(event, next, current) {
+    console.log('kill socket');
+  });
+
+  // handle refresh event
+  window.onbeforeunload = function(e) {
+    console.log('unload');
+  };
+
+});
