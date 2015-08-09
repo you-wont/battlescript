@@ -33,12 +33,12 @@ angular.module('battlescript.duel', [])
 
   // location change listeners
   $scope.$on('$routeChangeStart', function(event, next, current) {
-    console.log('kill socket');
+    socket.emit('disconnectedClient')
   });
 
   // handle refresh event
   window.onbeforeunload = function(e) {
-    console.log('unload');
+    socket.emit('disconnectedClient');
   };
 
 });

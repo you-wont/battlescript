@@ -7,12 +7,15 @@ module.exports = function(socket){
     socket.broadcast.to(joinedRoom).emit('updateEnemy', data);
   });
 
-  socket.on('disconnect', function(){
+  socket.on('disconnectedClient', function(){
     joinedRoom.members--;
     console.log('Client left room...');
+    console.log(joinedRoom.members);
     if (joinedRoom.members === 0) {
       roomModel.removeRoom(joinedRoom);
       console.log('deleting room');
     }
+
+    socket.disconnect();
   });
 };
