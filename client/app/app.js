@@ -1,7 +1,7 @@
 angular.module('battlescript', [
   'battlescript.services',
-  'battlescript.auth',
   'battlescript.main',
+  'battlescript.auth',
   'battlescript.duel',
   'ngRoute' // MAY WANT TO CHANGE TO UI ROUTER
 ])

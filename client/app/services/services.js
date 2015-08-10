@@ -2,6 +2,7 @@ angular.module('battlescript.services', [])
 
 // Main Factory
 .factory('Main',function ($http){
+  return {}
 })
 
 // Auth factory
