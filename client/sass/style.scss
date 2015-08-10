@@ -1,37 +1,64 @@
+@import "config.variables";
+
+
+
+
+
 /* -----------------------------------------------------------------------------
 
   FONTS
   
 ----------------------------------------------------------------------------- */
+
 @font-face {
   font-family: 'Oxygen';
   font-style: normal;
   font-weight: 300;
-  src: url("../fonts/oxygen/oxygen-v5-latin-300.eot");
-  src: local("Oxygen Light"), local("Oxygen-Light"), url("../fonts/oxygen/oxygen-v5-latin-300.eot?#iefix") format("embedded-opentype"), url("../fonts/oxygen/oxygen-v5-latin-300.woff2") format("woff2"), url("../fonts/oxygen/oxygen-v5-latin-300.woff") format("woff"), url("../fonts/oxygen/oxygen-v5-latin-300.ttf") format("truetype"), url("../fonts/oxygen/oxygen-v5-latin-300.svg#Oxygen") format("svg");
+  src: url('../fonts/oxygen/oxygen-v5-latin-300.eot');
+  src: local('Oxygen Light'), local('Oxygen-Light'),
+       url('../fonts/oxygen/oxygen-v5-latin-300.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/oxygen/oxygen-v5-latin-300.woff2') format('woff2'),
+       url('../fonts/oxygen/oxygen-v5-latin-300.woff') format('woff'),
+       url('../fonts/oxygen/oxygen-v5-latin-300.ttf') format('truetype'),
+       url('../fonts/oxygen/oxygen-v5-latin-300.svg#Oxygen') format('svg');
 }
 
 @font-face {
   font-family: 'Oxygen';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/oxygen/oxygen-v5-latin-regular.eot");
-  src: local("Oxygen"), local("Oxygen-Regular"), url("../fonts/oxygen/oxygen-v5-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/oxygen/oxygen-v5-latin-regular.woff2") format("woff2"), url("../fonts/oxygen/oxygen-v5-latin-regular.woff") format("woff"), url("../fonts/oxygen/oxygen-v5-latin-regular.ttf") format("truetype"), url("../fonts/oxygen/oxygen-v5-latin-regular.svg#Oxygen") format("svg");
+  src: url('../fonts/oxygen/oxygen-v5-latin-regular.eot');
+  src: local('Oxygen'), local('Oxygen-Regular'),
+       url('../fonts/oxygen/oxygen-v5-latin-regular.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/oxygen/oxygen-v5-latin-regular.woff2') format('woff2'),
+       url('../fonts/oxygen/oxygen-v5-latin-regular.woff') format('woff'),
+       url('../fonts/oxygen/oxygen-v5-latin-regular.ttf') format('truetype'),
+       url('../fonts/oxygen/oxygen-v5-latin-regular.svg#Oxygen') format('svg');
 }
 
 @font-face {
   font-family: 'Oxygen';
   font-style: normal;
   font-weight: 700;
-  src: url("../fonts/oxygen/oxygen-v5-latin-700.eot");
-  src: local("Oxygen Bold"), local("Oxygen-Bold"), url("../fonts/oxygen/oxygen-v5-latin-700.eot?#iefix") format("embedded-opentype"), url("../fonts/oxygen/oxygen-v5-latin-700.woff2") format("woff2"), url("../fonts/oxygen/oxygen-v5-latin-700.woff") format("woff"), url("../fonts/oxygen/oxygen-v5-latin-700.ttf") format("truetype"), url("../fonts/oxygen/oxygen-v5-latin-700.svg#Oxygen") format("svg");
+  src: url('../fonts/oxygen/oxygen-v5-latin-700.eot');
+  src: local('Oxygen Bold'), local('Oxygen-Bold'),
+       url('../fonts/oxygen/oxygen-v5-latin-700.eot?#iefix') format('embedded-opentype'),
+       url('../fonts/oxygen/oxygen-v5-latin-700.woff2') format('woff2'),
+       url('../fonts/oxygen/oxygen-v5-latin-700.woff') format('woff'),
+       url('../fonts/oxygen/oxygen-v5-latin-700.ttf') format('truetype'),
+       url('../fonts/oxygen/oxygen-v5-latin-700.svg#Oxygen') format('svg');
 }
+
+
+
+
 
 /* -----------------------------------------------------------------------------
 
   BOX SIZING RESET
   
 ----------------------------------------------------------------------------- */
+
 *,
 *::before,
 *::after {
@@ -42,11 +69,16 @@ html {
   box-sizing: border-box;
 }
 
+
+
+
+
 /* -----------------------------------------------------------------------------
 
   ELEMENTS
   
 ----------------------------------------------------------------------------- */
+
 html,
 body {
   margin: 0;
@@ -55,11 +87,11 @@ body {
 }
 
 body {
-  color: #777;
+  color: $color--neutral;
   background-color: #fff;
-  font-family: "Montserrat", sans-serif;
-  font-size: 14px;
-  line-height: 1.8;
+  font-family: $font-family--primary;
+  font-size: $font-size--small;
+  line-height: $line-height--medium;
 }
 
 h1,
@@ -68,18 +100,18 @@ h3,
 h4,
 h5,
 h6 {
-  color: #555;
+  color: $color--neutral-dark;
   font-weight: 700;
-  line-height: 1.2;
+  line-height: $line-height--small;
 }
 
 a {
-  color: #EB7F00;
+  color: $color--theme-orange;
   text-decoration: none;
 }
 
 a:hover {
-  color: #854800;
+  color: darken($color--theme-orange, 20%);
 }
 
 b,
@@ -97,85 +129,83 @@ img {
   height: auto;
 }
 
+
+
+
+
 /* -----------------------------------------------------------------------------
 
   LAYOUT
   
 ----------------------------------------------------------------------------- */
+
 .container {
   margin: 0 auto;
   padding: 0 48px;
   width: 1200px;
 }
 
+
+
+
+
 /* -----------------------------------------------------------------------------
 
   GRID OBJECT
   
 ----------------------------------------------------------------------------- */
+
 .grid {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
   margin: 0 -12px;
 }
 
 .grid__item {
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
+  flex-flow: row nowrap;
   padding: 0 12px;
 }
 
 .grid__item--25 {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 25%;
-      -ms-flex: 0 0 25%;
-          flex: 0 0 25%;
+  flex: 0 0 25%;
 }
 
 .grid__item--50 {
-  -webkit-box-flex: 0;
-  -webkit-flex: 0 0 50%;
-      -ms-flex: 0 0 50%;
-          flex: 0 0 50%;
+  flex: 0 0 50%;
 }
+
+
+
+
 
 /* -----------------------------------------------------------------------------
 
   HEADER
   
 ----------------------------------------------------------------------------- */
+
 .header {
   padding: 24px 0;
-  background-color: #2B3A42;
+  background-color: $color--theme-blue-dark;
 }
 
 .header__inner {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-flex-flow: row nowrap;
-      -ms-flex-flow: row nowrap;
-          flex-flow: row nowrap;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  flex-flow: row nowrap;
+  align-items: center;
 }
+
+
+
+
 
 /* -----------------------------------------------------------------------------
 
   NAV OBJECT
   
 ----------------------------------------------------------------------------- */
+
 .nav {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 
 .nav__items {
@@ -188,7 +218,7 @@ img {
 .nav__item {
   display: inline-block;
   margin: 0 0 0 24px;
-  font-size: 22px;
+  font-size: $font-size--large;
   font-weight: 700;
 }
 
@@ -199,59 +229,50 @@ img {
 }
 
 .nav__link--alt {
-  color: #EB7F00;
+  color: $color--theme-orange;
 }
 
 .nav__link:hover {
-  color: #EB7F00;
+  color: $color--theme-orange;
   background-color: #fff;
 }
 
 .nav__link--alt:hover {
   color: #fff;
-  background-color: #EB7F00;
+  background-color: $color--theme-orange;
 }
+
+
+
+
 
 /* -----------------------------------------------------------------------------
 
   HEADER MAIN OBJECT
   
 ----------------------------------------------------------------------------- */
+
 /**
  * This is the header on all the main pages, i.e. not the home page.
  */
+
 .header-main {
   padding: 12px 0;
-  background-color: #2B3A42;
+  background-color: $color--theme-blue-dark;
 }
 
 .header-main__inner {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .header-main__user {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  flex: 1;
 }
 
 .header-main__user-details {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
   display: flex;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-      -ms-flex-align: center;
-          align-items: center;
+  align-items: center;
 }
 
 .header-main__user-avatar {
@@ -264,18 +285,16 @@ img {
 
 .header-main__user-name {
   margin: 0;
-  color: #EB7F00;
+  color: $color--theme-orange;
   font-weight: 300;
 }
 
 /**
  * Some modifiers for right side opponent
  */
+
 .header-main__user-details--right {
-  -webkit-box-pack: end;
-  -webkit-justify-content: flex-end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
+  justify-content: flex-end;
 }
 
 .header-main__user-details--right > .header-main__user-avatar {
@@ -285,6 +304,7 @@ img {
 /**
  * The logo
  */
+
 .header-main__logo {
   width: 96px;
 }
@@ -296,20 +316,30 @@ img {
   height: auto;
 }
 
+
+
+
+
 /* -----------------------------------------------------------------------------
 
   MAIN
   
 ----------------------------------------------------------------------------- */
+
 .main {
   padding: 48px 0;
 }
+
+
+
+
 
 /* -----------------------------------------------------------------------------
 
   EDITOR COMPONENTS
   
 ----------------------------------------------------------------------------- */
+
 .editor {
   height: 360px;
 }
@@ -318,13 +348,18 @@ img {
   height: 180px;
 }
 
+
+
+
+
 /* -----------------------------------------------------------------------------
 
   TEXT
   
 ----------------------------------------------------------------------------- */
+
 .lead {
   margin: 0 48px;
-  font-size: 28px;
+  font-size: $font-size--xlarge;
   text-align: center;
 }
