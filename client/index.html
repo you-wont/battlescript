@@ -2,9 +2,7 @@
 <html ng-app='battlescript'>
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>BattleScript</title>
-  <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
 
   <script src="/socket.io/socket.io.js"></script>
@@ -15,33 +13,17 @@
   <script src="plugins/ace/worker-javascript.js"></script>
 
   <script src="lib/angular/angular.min.js"></script>
-  <script src="lib/angular-route/angular-route.js"></script>
+  <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
 </head>
 <body>
 
-<nav class="navbar navbar-default">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="#">BattleScript</a>
-    </div>
-    <ul class="nav navbar-nav">
-      <li ng-show="signedIn"><a href="/#/">Home</a></li>
-      <li ng-show="signedIn"><a href="/#/duel">Duel</a></li>
-      <li ng-show="signedIn"><a href='/#/logout' class='logout' ng-click="logout()">Logout</a></li>
-    </ul>
-  </div>
-</nav>
-
-<main class="main">
-  <div class="container">
-    <div ng-view ng-show="true"></div>
-  </div>
-</main>
+<div ui-view></div>
 
 <script src="app/services/services.js"></script>
-<script src="app/main/main.js"></script>
 <script src="app/auth/auth.js"></script>
-<script src="app/duel/duel.js"></script>
+<script src="app/home/home.js"></script>
+<script src="app/dashboard/dashboard.js"></script>
+<script src="app/battle/battle.js"></script>
 <script src="app/app.js"></script>
 </body>
 </html>

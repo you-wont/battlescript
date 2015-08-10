@@ -1,21 +1,21 @@
-angular.module('battlescript.duel', [])
+angular.module('battlescript.battle', [])
 
-.controller('DuelController', function($scope, Duel){
-  $scope.duel;
-  $scope.duelDescription = null;
-  $scope.duelProjectId = null;
-  $scope.duelSolutionId = null;
+.controller('BattleController', function($scope, Battle){
+  $scope.battle;
+  $scope.battleDescription = null;
+  $scope.battleProjectId = null;
+  $scope.battleSolutionId = null;
 
-  // fetch a duel
-  $scope.getDuel = function() {
+  // fetch a battle
+  $scope.getBattle = function() {
     console.log('getting');
-    Duel.getDuel()
+    Battle.getBattle()
       .then(function(data) {
-        $scope.duel = JSON.parse(data.body);
-        $scope.duelDescription = $scope.duel.description;
+        $scope.battle = JSON.parse(data.body);
+        $scope.battleDescription = $scope.battle.description;
 
-        $scope.duelProjectId = $scope.duel.session.projectId;
-        $scope.duelSolutionId = $scope.duel.session.solutionId;
+        $scope.battleProjectId = $scope.battle.session.projectId;
+        $scope.battleSolutionId = $scope.battle.session.solutionId;
       })
       .catch(function(err) {
         console.log(err);
@@ -44,9 +44,6 @@ angular.module('battlescript.duel', [])
     editor2.setValue(text);
     editor2.clearSelection();
   });
-  // location change listeners
-
-  // Alright... Comments
 
   // What this does is when someone goes on a different page, it disconnects the "user"
   // So, it emits the event disconnect user

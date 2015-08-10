@@ -1,7 +1,12 @@
 angular.module('battlescript.services', [])
 
-// Main Factory
-.factory('Main',function ($http){
+// Home Factory
+.factory('Home',function ($http){
+  return {}
+})
+
+// Dashboard Factory
+.factory('Dashboard',function ($http){
   return {}
 })
 
@@ -52,11 +57,11 @@ angular.module('battlescript.services', [])
   };
 })
 
-// The duels factory
-.factory('Duel', function($http) {
+// The battle factory
+.factory('Battle', function($http) {
 
   // gets a duel
-  var getDuel = function() {
+  var getBattle = function() {
     return $http({
       method: 'GET',
       url: '/api/duels/getduel',
@@ -67,7 +72,7 @@ angular.module('battlescript.services', [])
 
   // return all funcs as an obj
   return {
-    getDuel: getDuel
+    getBattle: getBattle
   }
 })
 
