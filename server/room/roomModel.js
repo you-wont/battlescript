@@ -24,13 +24,13 @@ var roomSet = function(){
 var createRoom = function(){
   var newRoom = new roomSet();
   save(newRoom);
+  count++;
   return newRoom;
 }
 
 
 var save = function(room){
-  rooms[count] = room;
-  count++;
+  rooms[room.count] = room;
 };
 
 var getOpenRoom = function(){
@@ -44,23 +44,25 @@ var getOpenRoom = function(){
 }
 
 var removeRoom = function(key){
-  delete room[key];
+  delete rooms[key];
 }
 
 var createOrGetRoom = function(){
   if(getOpenRoom()){
     var returnVal = getOpenRoom();
     returnVal.members++;
-    return returnVal.count;
+    return returnVal;
   } else {
     var returnVal = createRoom();
     returnVal.members++;
-    return returnVal.count;
+    return returnVal;
   }
 }
 
 
 
 module.exports.createOrGetRoom = createOrGetRoom;
+module.exports.save = save;
+module.exports.removeRoom = removeRoom;
 
 

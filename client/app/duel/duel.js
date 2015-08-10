@@ -23,12 +23,7 @@ angular.module('battlescript.duel', [])
   };
 
   // var socket = io.connect('http://localhost:8000');
-  var socket = io.connect('http://localhost:8000', {'force new connection': true});
-  socket.on('news', function (data) {
-    console.log(data);
-    socket.emit('my other event', { my: 'data' });
-  });
-
+  var socket = io.connect('http://localhost:8000');
 
   // Initializes the editors
   var editor1 = ace.edit("editor1");
@@ -49,15 +44,21 @@ angular.module('battlescript.duel', [])
     editor2.setValue(text);
     editor2.clearSelection();
   });
-
   // location change listeners
+
+  // Alright... Comments
+
+  // What this does is when someone goes on a different page, it disconnects the "user"
+  // So, it emits the event disconnect user
   $scope.$on('$routeChangeStart', function(event, next, current) {
-    socket.emit('disconnectedClient')
+    console.log('routeChangeStart');
+    socket.emit('disconnectedClient');
   });
 
-  // handle refresh event
+  // This does the same, for refresh. Now go to socket handler for more info
   window.onbeforeunload = function(e) {
     socket.emit('disconnectedClient');
   };
+
 
 });

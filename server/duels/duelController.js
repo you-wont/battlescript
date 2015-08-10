@@ -24,7 +24,7 @@ module.exports = {
       request.get({
         url: 'https://www.codewars.com/api/v1/deferred/' + dmid,
         headers: {
-          'Authorization': 'TFp2KBBKWkDu_qCRyByV'
+          'Authorization': process.env.CODEWARS_AUTHORIZATION
         }
       }, function(error, response, body) {
         // parse the json response
@@ -65,7 +65,7 @@ module.exports = {
         code: 'dummy code'
       },
       headers: {
-        'Authorization': 'TFp2KBBKWkDu_qCRyByV'
+        'Authorization': process.env.CODEWARS_AUTHORIZATION
       }
     }, function(error, response, body) {
       if (error) {
