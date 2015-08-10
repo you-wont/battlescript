@@ -5,7 +5,7 @@ module.exports = {
     var options = {
       url: 'https://www.codewars.com/api/v1/code-challenges/5513795bd3fafb56c200049e/javascript/train',
       headers: {
-        'Authorization': process.env.CODEWARS_AUTHORIZATION
+        'Authorization': 'TFp2KBBKWkDu_qCRyByVz'
       }
     };
     
