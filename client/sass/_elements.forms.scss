@@ -5,6 +5,7 @@
 ----------------------------------------------------------------------------- */
 
 input,
+textarea,
 button {
   color: inherit;
   font-family: inherit;
@@ -19,6 +20,7 @@ button {
 }
 
 input:focus,
+textarea:focus,
 button:focus {
   outline: none;
 }

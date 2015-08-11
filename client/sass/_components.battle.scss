@@ -23,3 +23,19 @@
 .battle-waiting__timer span {
   color: $color--theme-orange;
 }
+
+.battle-waiting__loading {
+  font-size: $font-size--xxlarge;
+  font-weight: 700;
+  text-align: center;
+}
+
+/*  */
+
+.battle-description {
+  margin-bottom: 24px;
+}
+
+.battle-description__title {
+  margin-bottom: 4px;
+}
