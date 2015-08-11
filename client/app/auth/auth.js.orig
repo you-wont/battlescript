@@ -31,8 +31,11 @@ angular.module('battlescript.auth', [])
   };
 
   $scope.logout = function() {
+<<<<<<< HEAD
+    $window.localStorage.removeItem('battlepro');
+    $location.path('/signin');
+=======
     console.log('calling log out');
-    $scope.user.username = $window.localStorage.getItem('username');
     console.log("inside log out ", $scope.user)
     Auth.signout($scope.user)
     .then(function (token){    
@@ -44,5 +47,6 @@ angular.module('battlescript.auth', [])
         $scope.message = "Username Not Found";
         console.error(error);
     });
+>>>>>>> adding signout and currentUsers
   };
 });

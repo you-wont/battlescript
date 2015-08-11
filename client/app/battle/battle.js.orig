@@ -1,12 +1,14 @@
 angular.module('battlescript.battle', [])
 
 <<<<<<< HEAD
-.controller('BattleController', function($scope, $timeout, Battle) {
-  
+.controller('BattleController', function($scope, $timeout, Battle){
+  $scope.playerOne = window.localStorage.getItem('username');
+  $scope.playerTwo = "Waiting for 2nd player"
+
   ////////////////////////////////////////////////////////////
   // stuff to handle the waiting on both opponents
   ////////////////////////////////////////////////////////////
-
+  
   // initial battle wait time when two users enter battle room
   $scope.battleWaitTime = 300000;
 
@@ -66,7 +68,7 @@ angular.module('battlescript.battle', [])
   $scope.playerTwo = "Waiting for 2nd player"
 
 
->>>>>>> Users are part of room model, users will rejoin same room when they reload page
+>>>>>>> Room is working, player enter the right room, player name display correctly
   $scope.battle;
   $scope.battleDescription = null;
   $scope.battleProjectId = null;
@@ -106,7 +108,8 @@ angular.module('battlescript.battle', [])
     socket.emit('textChange', editor1.getValue());
   });
 
-  socket.on('userJoined', function(userArray){
+  socket.emit('getUsers');
+  socket.on('userList', function(userArray){
     // THIS WILL ONLY WORK FOR TWO USERS RIGHT NOW
     // loop over array looking for other users
     userArray.forEach(function(name){
