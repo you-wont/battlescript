@@ -1,52 +1,49 @@
-<div class="header-main">
-  <div class="container">
-    <div class="header-main__inner">
-      
-      <div class="header-main__user">
-        <a href="#" class="header-main__user-details">
-          <img class="header-main__user-avatar">
-          <h3 class="header-main__user-name">Nick Salloum</h3>
-        </a>
-      </div>
-
-      <div class="header-main__logo">
-        <a href="/#/"><img src="assets/img/logo.svg" alt=""></a>
-      </div>
-
-      <div class="header-main__user">
-        <a href="#" class="header-main__user-details header-main__user-details--right">
-          <h3 class="header-main__user-name">Eric Le</h3>
-          <img class="header-main__user-avatar">
-        </a>
-      </div>
-
-    </div>
-  </div>
-</div>
+<ng-include src="'app/partials/header.html'"></ng-include>
 
 <main class="main">
   <div class="container">
     
-    <h1>It's duel time!</h1>
-    <button class="btn btn-primary" ng-click="getBattle()">Load Battle</button>
-  
-    <div class="grid">
-      <div class="grid__item grid__item--25">
-        <h3>Prompt</h3>
-        <div ng-show="!!battleDescription">
-          {{ battleDescription }}
+    <div class="battle">
+
+      <div class="battle-waiting">
+        <h1>Waiting for players</h1>
+        
+        <div class="grid grid--l battle-waiting__buttons">
+          <div class="grid__item grid__item--50-l battle-waiting__opp">
+            <button ng-class="userReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateUserReadyState()">{{ userReadyText }}</button>
+          </div>
+          <div class="grid__item grid__item--50-l battle-waiting__opp">
+            <button ng-class="opponentReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateOpponentReadyState()">{{ opponentReadyText }}</button>
+          </div>
+        </div>
+        <div class="battle-waiting__timer">
+          <h3>Time remaining:</h3>
+          <span>{{ battleWaitTime | date:'m:ss' }}</span>
         </div>
       </div>
-      <div class="grid__item grid__item--50">
-        <h3>player 1</h3>
-        <div id="editor1" class="editor"></div>
-      </div>
-      <div class="grid__item grid__item--25">
-        <h3>player 2</h3>
-        <div id="editor2" class="editor editor--opponent"></div>
-      </div>
-    </div>
 
+      <!-- then when both are clicked, show the prompt -->
+    
+      <!-- <h1>It's duel time!</h1>
+      <button class="btn btn-primary" ng-click="getBattle()">Load Battle</button>
+
+      <div ng-show="!!battleDescription">
+        <h3>Prompt</h3>
+        {{ battleDescription }}
+      </div>
+    
+      <div class="grid">
+        <div class="grid__item grid__item--50">
+          <h3>player 1</h3>
+          <div id="editor1" class="editor"></div>
+        </div>
+        <div class="grid__item grid__item--50">
+          <h3>player 2</h3>
+          <div id="editor2" class="editor editor--opponent"></div>
+        </div>
+      </div> -->
+  
+    </div><!-- /battle -->
 
   </div>
 </main>

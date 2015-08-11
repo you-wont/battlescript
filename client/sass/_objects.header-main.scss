@@ -1,0 +1,69 @@
+/* -----------------------------------------------------------------------------
+
+  HEADER MAIN OBJECT
+  
+----------------------------------------------------------------------------- */
+
+/**
+ * This is the header on all the main pages, i.e. not the home page.
+ */
+
+.header-main {
+  padding: 12px 0;
+  background-color: $color--theme-blue-dark;
+}
+
+.header-main__inner {
+  display: flex;
+  align-items: center;
+}
+
+.header-main__user {
+  flex: 1;
+}
+
+.header-main__user-details {
+  display: flex;
+  align-items: center;
+}
+
+.header-main__user-avatar {
+  margin: 0 24px 0 0;
+  width: 36px;
+  height: 36px;
+  background-color: #fff;
+  border-radius: 50%;
+}
+
+.header-main__user-name {
+  margin: 0;
+  color: $color--theme-orange;
+  font-weight: 300;
+}
+
+/**
+ * Some modifiers for right side opponent
+ */
+
+.header-main__user-details--right {
+  justify-content: flex-end;
+}
+
+.header-main__user-details--right > .header-main__user-avatar {
+  margin: 0 0 0 24px;
+}
+
+/**
+ * The logo
+ */
+
+.header-main__logo {
+  width: 96px;
+}
+
+.header-main__logo img {
+  display: block;
+  margin: 0;
+  width: 100%;
+  height: auto;
+}

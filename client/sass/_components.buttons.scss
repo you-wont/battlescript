@@ -1,0 +1,43 @@
+/* -----------------------------------------------------------------------------
+
+  BUTTONS
+  
+----------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+}
+
+.btn--primary {
+  color: #fff;
+  background-color: $color--theme-blue-mid;
+}
+
+.btn--primary:hover {
+  background-color: $color--theme-blue-dark;
+}
+
+.btn--primary.active {
+  background-color: $color--theme-orange;
+}
+
+.btn--large {
+  padding: 12px 24px;
+  font-size: $font-size--medium;
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+@media all and (min-width: 840px) {
+  .btn--large {
+    padding: 24px 48px;
+    font-size: $font-size--large;
+  }
+}

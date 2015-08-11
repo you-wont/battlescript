@@ -6,7 +6,7 @@ angular.module('battlescript', [
   'battlescript.battle',
   'ui.router'
 ])
-.config(function($stateProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
       url: '/',
