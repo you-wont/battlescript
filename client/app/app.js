@@ -4,7 +4,8 @@ angular.module('battlescript', [
   'battlescript.home',
   'battlescript.dashboard',
   'battlescript.battle',
-  'ui.router'
+  'ui.router',
+  'ngAnimate'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
@@ -40,6 +41,8 @@ angular.module('battlescript', [
       controller: 'BattleController',
       authenticate: true
     });
+
+    $urlRouterProvider.otherwise('/');
 })
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('AttachTokens');

@@ -21,6 +21,15 @@
   background-color: $color--theme-orange;
 }
 
+.btn--secondary {
+  color: #fff;
+  background-color: $color--theme-orange;
+}
+
+.btn--secondary:hover {
+  background-color: darken($color--theme-orange, 20%);
+}
+
 .btn--large {
   padding: 12px 24px;
   font-size: $font-size--medium;
@@ -36,8 +45,10 @@
 }
 
 @media all and (min-width: 840px) {
+  
   .btn--large {
-    padding: 24px 48px;
+    padding: 16px 48px;
     font-size: $font-size--large;
   }
+
 }
