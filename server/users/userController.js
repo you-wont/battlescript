@@ -2,6 +2,8 @@ var User = require('./userModel.js'),
     Q    = require('q'),
     jwt  = require('jwt-simple');
 
+var currentUsers = {};
+
 module.exports = {
   signin: function (req, res, next) {
     var username = req.body.username,
@@ -18,6 +20,10 @@ module.exports = {
               if (foundUser) {
                 var token = jwt.encode(user, 'secret');
                 res.json({token: token});
+
+                //save the user to currentUsers array
+                currentUsers[user.username] = user;
+
               } else {
                 return next(new Error('No user'));
               }
@@ -53,6 +59,9 @@ module.exports = {
         }
       })
       .then(function (user) {
+        
+        currentUsers[user.username] = user;
+
         // create token to send back for auth
         var token = jwt.encode(user, 'secret');
         res.json({token: token});
