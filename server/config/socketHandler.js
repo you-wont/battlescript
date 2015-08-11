@@ -1,6 +1,6 @@
 var roomModel = require('../room/roomModel.js');
 
-module.exports = function(socket){
+module.exports = function(socket, io){
   var username = socket.handshake.query.username;
   console.log('connected');
   var joinedRoom = roomModel.createOrGetRoom();
@@ -20,6 +20,10 @@ module.exports = function(socket){
   // Emit array of all users to a room when someone joins
   socket.in(joinedRoom.id).emit('userJoined', joinedRoom.users);
 
+
+  socket.on('getUsers', function(){
+    io.in(joinedRoom.id).emit('userList', joinedRoom.users);
+  });
 
   socket.on('textChange', function(data){
     socket.broadcast.to(joinedRoom.id).emit('updateEnemy', data);

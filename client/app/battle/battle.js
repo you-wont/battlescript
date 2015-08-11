@@ -100,7 +100,8 @@ angular.module('battlescript.battle', [])
     socket.emit('textChange', editor1.getValue());
   });
 
-  socket.on('userJoined', function(userArray){
+  socket.emit('getUsers');
+  socket.on('userList', function(userArray){
     // THIS WILL ONLY WORK FOR TWO USERS RIGHT NOW
     // loop over array looking for other users
     userArray.forEach(function(name){
