@@ -125,6 +125,7 @@ img {
   
 ----------------------------------------------------------------------------- */
 input,
+textarea,
 button {
   color: inherit;
   font-family: inherit;
@@ -139,6 +140,7 @@ button {
 }
 
 input:focus,
+textarea:focus,
 button:focus {
   outline: none;
 }
@@ -216,6 +218,12 @@ button:focus {
         -ms-flex: 0 0 50%;
             flex: 0 0 50%;
   }
+  .grid__item--75-s {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 75%;
+        -ms-flex: 0 0 75%;
+            flex: 0 0 75%;
+  }
 }
 
 @media all and (min-width: 600px) {
@@ -245,6 +253,12 @@ button:focus {
         -ms-flex: 0 0 50%;
             flex: 0 0 50%;
   }
+  .grid__item--75-m {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 75%;
+        -ms-flex: 0 0 75%;
+            flex: 0 0 75%;
+  }
 }
 
 @media all and (min-width: 840px) {
@@ -273,6 +287,12 @@ button:focus {
     -webkit-flex: 0 0 50%;
         -ms-flex: 0 0 50%;
             flex: 0 0 50%;
+  }
+  .grid__item--75-l {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 75%;
+        -ms-flex: 0 0 75%;
+            flex: 0 0 75%;
   }
 }
 
@@ -648,7 +668,21 @@ button:focus {
   
 ----------------------------------------------------------------------------- */
 .editor {
+  display: block;
+  width: 100%;
+  max-width: 100%;
   height: 360px;
+  font-size: 14px;
+}
+
+.editor-form__field {
+  margin-bottom: 12px;
+}
+
+.editor__notes {
+  margin-top: 12px;
+  padding: 12px;
+  border: solid 1px #BDD4DE;
 }
 
 /* -----------------------------------------------------------------------------
@@ -672,6 +706,21 @@ button:focus {
   color: #EB7F00;
 }
 
+.battle-waiting__loading {
+  font-size: 36px;
+  font-weight: 700;
+  text-align: center;
+}
+
+/*  */
+.battle-description {
+  margin-bottom: 24px;
+}
+
+.battle-description__title {
+  margin-bottom: 4px;
+}
+
 /* -----------------------------------------------------------------------------
 
   BUTTONS
@@ -686,7 +735,7 @@ button:focus {
   background-color: #3F5765;
 }
 
-.btn--primary:hover {
+.btn--primary:not(:disabled):hover {
   background-color: #2B3A42;
 }
 
@@ -699,8 +748,17 @@ button:focus {
   background-color: #EB7F00;
 }
 
-.btn--secondary:hover {
+.btn--secondary:not(:disabled):hover {
   background-color: #854800;
+}
+
+.btn:disabled {
+  opacity: 0.3;
+}
+
+.btn--medium {
+  padding: 8px 18px;
+  font-size: 16px;
 }
 
 .btn--large {
@@ -718,8 +776,12 @@ button:focus {
 }
 
 @media all and (min-width: 840px) {
+  .btn--medium {
+    padding: 12px 36px;
+    font-size: 18px;
+  }
   .btn--large {
-    padding: 16px 48px;
+    padding: 15px 48px;
     font-size: 22px;
   }
 }
@@ -750,5 +812,83 @@ button:focus {
 @media all and (min-width: 1080px) {
   .lead {
     font-size: 36px;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+
+  SPINNER
+  
+----------------------------------------------------------------------------- */
+.spinner-container {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  background-color: #2B3A42;
+}
+
+.spinner {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  width: 96px;
+  height: 96px;
+}
+
+.spinner::before,
+.spinner::after {
+  display: block;
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  content: "";
+}
+
+.spinner::before {
+  border-top: solid 18px #3F5765;
+  border-bottom: solid 18px #3F5765;
+  border-left: solid 18px transparent;
+  border-right: solid 18px transparent;
+  border-radius: 48px;
+  -webkit-animation: spinner-2 1s infinite ease;
+          animation: spinner-2 1s infinite ease;
+}
+
+.spinner::after {
+  width: 24px;
+  height: 24px;
+  background-color: #EB7F00;
+  border-radius: 18px;
+}
+
+@-webkit-keyframes spinner-2 {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
+  }
+}
+
+@keyframes spinner-2 {
+  from {
+    -webkit-transform: rotate(0deg);
+            transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg);
   }
 }
