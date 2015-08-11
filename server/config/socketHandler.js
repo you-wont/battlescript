@@ -21,8 +21,10 @@ module.exports = function(socket, io){
   socket.in(joinedRoom.id).emit('userJoined', joinedRoom.users);
 
 
-  socket.on('getUsers', function(){
-    io.in(joinedRoom.id).emit('userList', joinedRoom.users);
+  socket.on('updateUsers', function(){
+    setTimeout(function(){
+      io.in(joinedRoom.id).emit('userList', joinedRoom.users);
+    }, 40);
   });
 
   socket.on('textChange', function(data){
