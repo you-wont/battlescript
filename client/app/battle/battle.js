@@ -93,7 +93,7 @@ angular.module('battlescript.battle', [])
   editor2.setReadOnly(true);
 
   editor1.getSession().on('change', function(e) {
-    console.log(editor1.getValue());
+    //console.log(editor1.getValue());
     socket.emit('textChange', editor1.getValue());
   });
 

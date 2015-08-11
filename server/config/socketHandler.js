@@ -1,8 +1,10 @@
 var roomModel = require('../room/roomModel.js');
 
 module.exports = function(socket){
-  var joinedRoom = roomModel.createOrGetRoom();
   console.log('connected');
+  var joinedRoom = roomModel.createOrGetRoom();
+  
+  console.log(joinedRoom);
   // Join a room
   socket.join(joinedRoom.count);
   // Increment members

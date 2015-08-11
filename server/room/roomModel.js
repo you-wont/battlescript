@@ -1,17 +1,17 @@
 var rooms = {};
-var count = 0;
+var roomCount = 0;
 var totalInRoom = 2;
 
-var roomSet = function(){
+var Room = function(){
   var roomInstance = {};
 
   roomInstance.members = 0;
-  roomInstance.maxLen = totalInRoom;
-  roomInstance.count = count;
+  roomInstance.maxOccupancy = totalInRoom;
+  roomInstance.roomID = roomCount;
 
 
   roomInstance.needsMember = function(){
-    if (this.members < this.maxLen) {
+    if (this.members < this.maxOccupancy) {
       return true;
     } else {
       return false;
@@ -22,47 +22,46 @@ var roomSet = function(){
 }
 
 var createRoom = function(){
-  var newRoom = new roomSet();
-  save(newRoom);
-  count++;
+  var newRoom = Room();
+  updateRooms(newRoom);
+  roomCount++;
   return newRoom;
 }
 
 
-var save = function(room){
-  rooms[room.count] = room;
+var updateRooms = function(room){
+  rooms[room.roomID] = room;
 };
 
 var getOpenRoom = function(){
-  for (var key in rooms) {
-    if (rooms[key].needsMember()){
-      return rooms[key];
+  for (var id in rooms) {
+    if (rooms[id].needsMember()){
+      return rooms[id];
     }
   }
 
   return null;
 }
 
-var removeRoom = function(key){
-  delete rooms[key];
+var removeRoom = function(id){
+  delete rooms[id];
 }
 
 var createOrGetRoom = function(){
-  if(getOpenRoom()){
-    var returnVal = getOpenRoom();
-    returnVal.members++;
-    return returnVal;
-  } else {
-    var returnVal = createRoom();
-    returnVal.members++;
-    return returnVal;
+  var openRoom = getOpenRoom();
+  if(!openRoom){ // returns null if there are no open rooms
+    var openRoom = createRoom();
   }
+  openRoom.members++;
+  return openRoom;
 }
 
 
 
 module.exports.createOrGetRoom = createOrGetRoom;
-module.exports.save = save;
+module.exports.updateRooms = updateRooms;
 module.exports.removeRoom = removeRoom;
+module.exports.rooms = rooms;
+module.exports.roomCount = roomCount;
 
 
