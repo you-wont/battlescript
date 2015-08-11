@@ -7,7 +7,19 @@ angular.module('battlescript.services', [])
 
 // Dashboard Factory
 .factory('Dashboard',function ($http){
-  return {}
+  var getUsers = function(){
+    return $http({
+      method: 'GET',
+      url: '/api/users/getusers'
+    })
+    .then(function(resp){
+      console.log(resp);
+    });
+  };
+
+  return {
+    getUsers : getUsers
+  };
 })
 
 // Auth factory
@@ -57,7 +69,7 @@ angular.module('battlescript.services', [])
     
     return $http({
       method: 'POST',
-      url: '/api/users/logout',
+      url: '/api/users/signout',
       data: user
     })
     .then(function (resp) {

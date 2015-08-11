@@ -32,6 +32,7 @@ angular.module('battlescript.auth', [])
 
   $scope.logout = function() {
     console.log('calling log out');
+    $scope.user.username = $window.localStorage.getItem('username');
     console.log("inside log out ", $scope.user)
     Auth.signout($scope.user)
     .then(function (token){    

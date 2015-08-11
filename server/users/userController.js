@@ -23,6 +23,7 @@ module.exports = {
 
                 //save the user to currentUsers array
                 currentUsers[user.username] = user;
+                console.log("CURRENT USER LIST :", currentUsers);
 
               } else {
                 return next(new Error('No user'));
@@ -61,6 +62,7 @@ module.exports = {
       .then(function (user) {
         
         currentUsers[user.username] = user;
+        console.log("CURRENT USER LIST :", currentUsers);
 
         // create token to send back for auth
         var token = jwt.encode(user, 'secret');
@@ -109,5 +111,10 @@ module.exports = {
           delete currentUsers[username];
           console.log(">>>> when log out",currentUsers)
         });
+  },
+
+  getUsers: function (req, res, next){
+    console.log("SENDING CURRENT USERS ", currentUsers);
+    res.send(currentUsers);
   }
 };
