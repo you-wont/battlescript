@@ -1,21 +1,25 @@
 var roomModel = require('../room/roomModel.js');
 
 module.exports = function(socket){
+  var username = socket.handshake.query.username;
   console.log('connected');
   var joinedRoom = roomModel.createOrGetRoom();
-  
-  console.log(joinedRoom);
+  joinedRoom.users.push(username);
+  console.log("CURRENT STATE OF ROOMS: ", roomModel.rooms);
+  console.log("I JUST JOINED :", joinedRoom);
+  console.log("Joined room ID :", joinedRoom.id);
+  console.log("Total number of rooms: ", roomModel.roomCount);
   // Join a room
-  socket.join(joinedRoom.count);
+  socket.join(joinedRoom.id);
   // Increment members
-  joinedRoom.members++;
+  // joinedRoom.members++;
 
   // Save the room. Save it with the count (its like a key)
-  roomModel.save(joinedRoom);
+  roomModel.updateRooms(joinedRoom);
 
 
   socket.on('textChange', function(data){
-    socket.broadcast.to(joinedRoom.count).emit('updateEnemy', data);
+    socket.broadcast.to(joinedRoom.id).emit('updateEnemy', data);
   });
 
   // I catch the disconnected client. What I do is 'remove' the memeber from the room
@@ -27,14 +31,14 @@ module.exports = function(socket){
 
   socket.on('disconnectedClient', function(){
     console.log('disconnectedClient');
-    console.log(joinedRoom.count);
+    console.log('DISCONECTED FROM ROOM: ', joinedRoom.id);
 
     joinedRoom.members--;
 
     if (joinedRoom.members === 0) {
-      roomModel.removeRoom(joinedRoom.count);
+      roomModel.removeRoom(joinedRoom.id);
     } else {
-      roomModel.save(joinedRoom.count);
+      roomModel.updateRooms(joinedRoom.id);
     }
 
   });

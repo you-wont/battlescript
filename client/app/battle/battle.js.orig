@@ -80,8 +80,12 @@ angular.module('battlescript.battle', [])
       });
   };
 
+<<<<<<< HEAD
+  var socket = io.connect('http://localhost:8000');
+=======
   // var socket = io.connect('http://localhost:8000');
   var socket = io('http://localhost:8000', {query: "username=" + window.localStorage.getItem('username')});
+>>>>>>> Users joining the same room, usernames in progress
 
   // Initializes the editors
   var editor1 = ace.edit("editor1");

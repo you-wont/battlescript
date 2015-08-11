@@ -1,13 +1,16 @@
-var rooms = {};
-var roomCount = 0;
+var rooms = {
+  storage: {},
+  roomCount: 0
+};
 var totalInRoom = 2;
 
 var Room = function(){
   var roomInstance = {};
-
+  
+  roomInstance.users =[];
   roomInstance.members = 0;
   roomInstance.maxOccupancy = totalInRoom;
-  roomInstance.roomID = roomCount;
+  roomInstance.id = rooms.roomCount;
 
 
   roomInstance.needsMember = function(){
@@ -24,33 +27,37 @@ var Room = function(){
 var createRoom = function(){
   var newRoom = Room();
   updateRooms(newRoom);
-  roomCount++;
+  rooms.roomCount += 1;
   return newRoom;
 }
 
 
 var updateRooms = function(room){
-  rooms[room.roomID] = room;
+  rooms.storage[room.id] = room;
 };
 
 var getOpenRoom = function(){
-  for (var id in rooms) {
-    if (rooms[id].needsMember()){
-      return rooms[id];
+  for (var id in rooms.storage) {
+    if (rooms.storage[id].needsMember()){
+      console.log("FOUND A 1-PERSON ROOM");
+      return rooms.storage[id];
     }
   }
-
+  console.log("DIDNT FIND A SUITABLE ROOM");
   return null;
 }
 
 var removeRoom = function(id){
-  delete rooms[id];
+  delete rooms.storage[id];
 }
 
 var createOrGetRoom = function(){
   var openRoom = getOpenRoom();
   if(!openRoom){ // returns null if there are no open rooms
+    console.log("CREATING A NEW ROOM");
     var openRoom = createRoom();
+  } else {
+    console.log("FETCHED AN OPEN ROOM");
   }
   openRoom.members++;
   return openRoom;
@@ -61,7 +68,7 @@ var createOrGetRoom = function(){
 module.exports.createOrGetRoom = createOrGetRoom;
 module.exports.updateRooms = updateRooms;
 module.exports.removeRoom = removeRoom;
-module.exports.rooms = rooms;
-module.exports.roomCount = roomCount;
+module.exports.rooms = rooms.storage;
+module.exports.roomCount = rooms.roomCount;
 
 
