@@ -37,6 +37,7 @@ var updateRooms = function(room){
 };
 
 var getOpenRoom = function(){
+  console.log("STORAGE: ", rooms.storage);
   for (var id in rooms.storage) {
     if (rooms.storage[id].needsMember()){
       console.log("FOUND A 1-PERSON ROOM");
@@ -48,6 +49,7 @@ var getOpenRoom = function(){
 }
 
 var removeRoom = function(id){
+  console.log("DELETING ROOM");
   delete rooms.storage[id];
 }
 
@@ -68,7 +70,6 @@ var createOrGetRoom = function(){
 module.exports.createOrGetRoom = createOrGetRoom;
 module.exports.updateRooms = updateRooms;
 module.exports.removeRoom = removeRoom;
-module.exports.rooms = rooms.storage;
-module.exports.roomCount = rooms.roomCount;
+module.exports.rooms = rooms;
 
 
