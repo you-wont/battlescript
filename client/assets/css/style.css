@@ -4,27 +4,27 @@
   
 ----------------------------------------------------------------------------- */
 @font-face {
-  font-family: 'Oxygen';
-  font-style: normal;
-  font-weight: 300;
-  src: url("../fonts/oxygen/oxygen-v5-latin-300.eot");
-  src: local("Oxygen Light"), local("Oxygen-Light"), url("../fonts/oxygen/oxygen-v5-latin-300.eot?#iefix") format("embedded-opentype"), url("../fonts/oxygen/oxygen-v5-latin-300.woff2") format("woff2"), url("../fonts/oxygen/oxygen-v5-latin-300.woff") format("woff"), url("../fonts/oxygen/oxygen-v5-latin-300.ttf") format("truetype"), url("../fonts/oxygen/oxygen-v5-latin-300.svg#Oxygen") format("svg");
-}
-
-@font-face {
-  font-family: 'Oxygen';
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 400;
-  src: url("../fonts/oxygen/oxygen-v5-latin-regular.eot");
-  src: local("Oxygen"), local("Oxygen-Regular"), url("../fonts/oxygen/oxygen-v5-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/oxygen/oxygen-v5-latin-regular.woff2") format("woff2"), url("../fonts/oxygen/oxygen-v5-latin-regular.woff") format("woff"), url("../fonts/oxygen/oxygen-v5-latin-regular.ttf") format("truetype"), url("../fonts/oxygen/oxygen-v5-latin-regular.svg#Oxygen") format("svg");
+  src: url("../fonts/roboto-v15-latin-regular.eot");
+  src: local("Roboto"), local("Roboto-Regular"), url("../fonts/roboto-v15-latin-regular.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v15-latin-regular.woff2") format("woff2"), url("../fonts/roboto-v15-latin-regular.woff") format("woff"), url("../fonts/roboto-v15-latin-regular.ttf") format("truetype"), url("../fonts/roboto-v15-latin-regular.svg#Roboto") format("svg");
 }
 
 @font-face {
-  font-family: 'Oxygen';
+  font-family: 'Roboto';
+  font-style: italic;
+  font-weight: 400;
+  src: url("../fonts/roboto-v15-latin-italic.eot");
+  src: local("Roboto Italic"), local("Roboto-Italic"), url("../fonts/roboto-v15-latin-italic.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v15-latin-italic.woff2") format("woff2"), url("../fonts/roboto-v15-latin-italic.woff") format("woff"), url("../fonts/roboto-v15-latin-italic.ttf") format("truetype"), url("../fonts/roboto-v15-latin-italic.svg#Roboto") format("svg");
+}
+
+@font-face {
+  font-family: 'Roboto';
   font-style: normal;
   font-weight: 700;
-  src: url("../fonts/oxygen/oxygen-v5-latin-700.eot");
-  src: local("Oxygen Bold"), local("Oxygen-Bold"), url("../fonts/oxygen/oxygen-v5-latin-700.eot?#iefix") format("embedded-opentype"), url("../fonts/oxygen/oxygen-v5-latin-700.woff2") format("woff2"), url("../fonts/oxygen/oxygen-v5-latin-700.woff") format("woff"), url("../fonts/oxygen/oxygen-v5-latin-700.ttf") format("truetype"), url("../fonts/oxygen/oxygen-v5-latin-700.svg#Oxygen") format("svg");
+  src: url("../fonts/roboto-v15-latin-700.eot");
+  src: local("Roboto Bold"), local("Roboto-Bold"), url("../fonts/roboto-v15-latin-700.eot?#iefix") format("embedded-opentype"), url("../fonts/roboto-v15-latin-700.woff2") format("woff2"), url("../fonts/roboto-v15-latin-700.woff") format("woff"), url("../fonts/roboto-v15-latin-700.ttf") format("truetype"), url("../fonts/roboto-v15-latin-700.svg#Roboto") format("svg");
 }
 
 /* -----------------------------------------------------------------------------
@@ -56,8 +56,8 @@ body {
 
 body {
   color: #777;
-  background-color: #fff;
-  font-family: "Montserrat", sans-serif;
+  background-color: #2B3A42;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   line-height: 1.8;
 }
@@ -104,6 +104,11 @@ em {
   font-style: italic;
 }
 
+p {
+  margin: 0;
+  padding: 0;
+}
+
 /* -----------------------------------------------------------------------------
 
   MEDIA
@@ -133,6 +138,11 @@ button {
   appearance: none;
 }
 
+input:focus,
+button:focus {
+  outline: none;
+}
+
 /* -----------------------------------------------------------------------------
 
   LAYOUT
@@ -140,8 +150,14 @@ button {
 ----------------------------------------------------------------------------- */
 .container {
   margin: 0 auto;
-  padding: 0 48px;
+  padding: 0 24px;
   max-width: 1280px;
+}
+
+@media all and (min-width: 600px) {
+  .container {
+    padding: 0 48px;
+  }
 }
 
 /* -----------------------------------------------------------------------------
@@ -188,6 +204,12 @@ button {
         -ms-flex: 0 0 25%;
             flex: 0 0 25%;
   }
+  .grid__item--33-s {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 33.3333%;
+        -ms-flex: 0 0 33.3333%;
+            flex: 0 0 33.3333%;
+  }
   .grid__item--50-s {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 50%;
@@ -211,6 +233,12 @@ button {
         -ms-flex: 0 0 25%;
             flex: 0 0 25%;
   }
+  .grid__item--33-m {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 33.3333%;
+        -ms-flex: 0 0 33.3333%;
+            flex: 0 0 33.3333%;
+  }
   .grid__item--50-m {
     -webkit-box-flex: 0;
     -webkit-flex: 0 0 50%;
@@ -233,6 +261,12 @@ button {
     -webkit-flex: 0 0 25%;
         -ms-flex: 0 0 25%;
             flex: 0 0 25%;
+  }
+  .grid__item--33-l {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 33.3333%;
+        -ms-flex: 0 0 33.3333%;
+            flex: 0 0 33.3333%;
   }
   .grid__item--50-l {
     -webkit-box-flex: 0;
@@ -309,7 +343,6 @@ button {
   display: inline-block;
   margin: 0 12px;
   font-size: 22px;
-  font-weight: 700;
 }
 
 .nav__link {
@@ -367,13 +400,10 @@ button {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
-}
-
-.header-main__user {
-  -webkit-box-flex: 1;
-  -webkit-flex: 1;
-      -ms-flex: 1;
-          flex: 1;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
 }
 
 .header-main__user-details {
@@ -391,8 +421,8 @@ button {
   margin: 0 24px 0 0;
   width: 36px;
   height: 36px;
-  background-color: #fff;
   border-radius: 50%;
+  box-shadow: inset 0 0 0 2px #fff;
 }
 
 .header-main__user-name {
@@ -436,6 +466,180 @@ button {
 ----------------------------------------------------------------------------- */
 .main {
   padding: 48px 0;
+  background-color: #fff;
+}
+
+/* -----------------------------------------------------------------------------
+
+  AUTH
+  
+----------------------------------------------------------------------------- */
+.auth {
+  margin: 0 auto;
+  padding: 48px 0;
+  max-width: 720px;
+}
+
+.auth__header {
+  margin-bottom: 48px;
+}
+
+.auth__logo {
+  display: block;
+  margin: 0 auto;
+  width: 180px;
+  height: auto;
+}
+
+.auth__message {
+  margin: 12px 0;
+  padding: 12px;
+  color: #EB7F00;
+  border: solid 1px #3F5765;
+}
+
+.auth-form {
+  padding: 24px;
+  background-color: #3F5765;
+}
+
+.auth-form__title {
+  margin: 0 0 24px 0;
+  color: #EB7F00;
+  font-weight: 400;
+  text-align: center;
+}
+
+.auth-form__group {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 12px;
+}
+
+.auth-form__group > label {
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 100%;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+  color: #BDD4DE;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+.auth-form__group > input {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  padding: 12px;
+}
+
+.auth-form__group > input:focus {
+  box-shadow: 0 0 0 4px #2B3A42;
+}
+
+.auth-form__footer {
+  text-align: right;
+}
+
+.auth__footer {
+  margin-top: 24px;
+  color: #BDD4DE;
+  text-align: center;
+}
+
+@media all and (min-width: 600px) {
+  .auth-form {
+    padding: 48px;
+  }
+  .auth-form__title {
+    margin: 0 0 48px 0;
+  }
+  .auth-form__group {
+    -webkit-flex-flow: row nowrap;
+        -ms-flex-flow: row nowrap;
+            flex-flow: row nowrap;
+    margin-bottom: 24px;
+  }
+  .auth-form__group > label {
+    -webkit-box-flex: 0;
+    -webkit-flex: 0 0 160px;
+        -ms-flex: 0 0 160px;
+            flex: 0 0 160px;
+  }
+  .auth__footer {
+    margin-top: 48px;
+  }
+}
+
+/* -----------------------------------------------------------------------------
+
+  DASHBOARD
+  
+----------------------------------------------------------------------------- */
+/* stats */
+.dashboard-stats {
+  margin: 0 0 24px 0;
+  padding: 24px;
+  background-color: #2B3A42;
+}
+
+.dashboard-stats__title {
+  margin-bottom: 24px;
+  color: #fff;
+  font-size: 28px;
+  font-weight: 400;
+}
+
+@media all and (min-width: 600px) {
+  .dashboard-stats {
+    padding: 48px;
+  }
+}
+
+/* stats entry */
+.dashboard-stats-entry__title {
+  padding: 12px;
+  color: #fff;
+  background-color: #EB7F00;
+  font-size: 14px;
+  font-weight: 400;
+}
+
+.dashboard-stats-entry__body {
+  padding: 12px;
+  background-color: #3F5765;
+}
+
+.dashboard-stats-entry__stat {
+  color: #fff;
+}
+
+.dashboard-stats-entry__stat > span {
+  color: #EB7F00;
+}
+
+.dashboard-stats__streak {
+  color: #BDD4DE;
+  font-size: 18px;
+}
+
+.dashboard-stats__streak > span {
+  color: #EB7F00;
+}
+
+/* leaderboard */
+.dashboard-leaderboard {
+  padding: 12px;
 }
 
 /* -----------------------------------------------------------------------------
@@ -490,6 +694,15 @@ button {
   background-color: #EB7F00;
 }
 
+.btn--secondary {
+  color: #fff;
+  background-color: #EB7F00;
+}
+
+.btn--secondary:hover {
+  background-color: #854800;
+}
+
 .btn--large {
   padding: 12px 24px;
   font-size: 18px;
@@ -506,7 +719,7 @@ button {
 
 @media all and (min-width: 840px) {
   .btn--large {
-    padding: 24px 48px;
+    padding: 16px 48px;
     font-size: 22px;
   }
 }
@@ -517,6 +730,7 @@ button {
   
 ----------------------------------------------------------------------------- */
 .lead {
+  color: #3F5765;
   font-size: 18px;
   text-align: center;
 }

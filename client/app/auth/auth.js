@@ -33,5 +33,5 @@ angular.module('battlescript.auth', [])
   $scope.logout = function() {
     $window.localStorage.removeItem('battlepro');
     $location.path('/signin');
-  }
+  };
 });

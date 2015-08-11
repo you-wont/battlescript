@@ -17,3 +17,8 @@ button {
   -moz-appearance: none;
   appearance: none;
 }
+
+input:focus,
+button:focus {
+  outline: none;
+}
