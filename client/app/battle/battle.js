@@ -131,5 +131,9 @@ angular.module('battlescript.battle', [])
     socket.emit('disconnectedClient', {username: $scope.playerOne});
   };
 
+  window.addEventListener("hashchange", function(e) {
+    socket.emit('disconnectedClient', {username: $scope.playerOne});
+  })
+
 
 });
