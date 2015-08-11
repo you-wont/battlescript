@@ -1,6 +1,6 @@
 angular.module('battlescript.battle', [])
 
-.controller('BattleController', function($scope, Battle){
+.controller('BattleController', function($scope, $timeout, Battle){
   $scope.playerOne = window.localStorage.getItem('username');
   $scope.playerTwo = "Waiting for 2nd player"
 
