@@ -90,7 +90,7 @@ angular.module('battlescript.services', [])
 // The battle factory
 .factory('Battle', function($http) {
 
-  // gets a duel
+  // gets a battle
   var getBattle = function() {
     return $http({
       method: 'GET',
@@ -100,9 +100,25 @@ angular.module('battlescript.services', [])
     });
   };
 
+  // attempts a battle
+  var attemptBattle = function(projectId, solutionId, code) {
+    return $http({
+      method: 'POST',
+      url: '/api/duels/attemptduel',
+      data: {
+        code: code,
+        projectId: projectId,
+        solutionId: solutionId
+      }
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
   // return all funcs as an obj
   return {
-    getBattle: getBattle
+    getBattle: getBattle,
+    attemptBattle: attemptBattle
   }
 })
 

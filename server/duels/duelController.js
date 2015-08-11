@@ -32,9 +32,7 @@ module.exports = {
 
         if (body && body.success) {
           // if poll body exists, and the poll is successful, we're good to go.
-          console.log('successful poll!');
-          console.log(body);
-          res.end();
+          res.send(body);
         } else {
           // otherwise, we need to keep polling...
           if (pollCounter++ >= 20) {
@@ -42,7 +40,7 @@ module.exports = {
             // the api and run into endless loop. If we cross 20 polls,
             // something is definitely wrong...
             console.log('-----> Too many polls...');
-            res.end();
+            res.send({reason: 'Too many polls...'});
           } else {
             // as long as we're under the poll limit, keep on polling every
             // 0.5 seconds with the generated dmid from the initial post
@@ -62,7 +60,8 @@ module.exports = {
     request.post({
       url: 'https://www.codewars.com/api/v1/code-challenges/projects/' + req.body.projectId + '/solutions/' + req.body.solutionId + '/attempt',
       json: {
-        code: 'dummy code'
+        code: req.body.code,
+        output_format: 'raw'
       },
       headers: {
         'Authorization': process.env.CODEWARS_AUTHORIZATION
