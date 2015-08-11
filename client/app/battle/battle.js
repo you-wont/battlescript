@@ -100,10 +100,13 @@ angular.module('battlescript.battle', [])
     socket.emit('textChange', editor1.getValue());
   });
 
-  socket.emit('getUsers');
+  socket.emit('updateUsers');
   socket.on('userList', function(userArray){
     // THIS WILL ONLY WORK FOR TWO USERS RIGHT NOW
     // loop over array looking for other users
+    if (userArray.length === 1){
+      $scope.playerTwo = "Waiting for 2nd player";
+    }
     userArray.forEach(function(name){
       if(name !== $scope.playerOne){
         $scope.playerTwo = name;    
@@ -121,19 +124,20 @@ angular.module('battlescript.battle', [])
 
   // What this does is when someone goes on a different page, it disconnects the "user"
   // So, it emits the event disconnect user
-  $scope.$on('$routeChangeStart', function(event, next, current) {
-    console.log('routeChangeStart');
-    socket.emit('disconnectedClient', {username: $scope.playerOne});
-  });
+  $scope.$on('$routeChangeStart', logout);
 
   // This does the same, for refresh. Now go to socket handler for more info
   window.onbeforeunload = function(e) {
-    socket.emit('disconnectedClient', {username: $scope.playerOne});
+    logout();
   };
+  
+  // Logout on back button
+  window.addEventListener("hashchange", logout)
 
-  window.addEventListener("hashchange", function(e) {
+  var logout = function(){
+    socket.emit('updateUsers');
     socket.emit('disconnectedClient', {username: $scope.playerOne});
-  })
+  }
 
 
 });
