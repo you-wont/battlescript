@@ -254,6 +254,11 @@ angular.module('battlescript.battle', [])
       });
   };
 
+  // call immediately
+  // TODO: DELETE THIS ONCE LAYOUT LOOKS GOOD ENOUGH, IT SHOULD NOT BE CALLED
+  // IMMEDIATELY.
+  $scope.getBattle();
+
 
 
 
