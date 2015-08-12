@@ -95,6 +95,21 @@ angular.module('battlescript', [
   };
 })
 
+.directive('headerLogout', function() {
+  var link = function(scope, element, attrs) {
+    element.bind('click', function(e) {
+      e.preventDefault();
+      scope.$parent.$apply(attrs.logout);
+    });
+  };
+
+  return {
+    link: link,
+    restrict: 'E',
+    templateUrl: 'app/directives/header-logout.html'
+  };
+})
+
 ////////////////////////////////////////////////////////////
 // run the style
 ////////////////////////////////////////////////////////////
