@@ -7,9 +7,14 @@ angular.module('battlescript.battle', [])
   ////////////////////////////////////////////////////////////
 
   $scope.playerOne = window.localStorage.getItem('username');
-  $scope.playerTwo = "...";
+  $scope.playerTwo;
 
-
+  // this gets passed into the directive.
+  // it definitely needs to be refactored depending on what happens
+  // up above.
+  $scope.userInfo = {
+    username: $scope.playerOne
+  };
 
 
 

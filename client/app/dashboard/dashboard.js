@@ -7,6 +7,13 @@ angular.module('battlescript.dashboard', [])
   // rededfining it in every controller
   $scope.username = window.localStorage.getItem('username');
 
+  // this gets passed into the directive.
+  // it definitely needs to be refactored depending on what happens
+  // up above.
+  $scope.userInfo = {
+    username: $scope.username
+  };
+
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
   ////////////////////////////////////////////////////////////

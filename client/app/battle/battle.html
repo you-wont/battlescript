@@ -1,28 +1,4 @@
-<div class="header-main">
-  <div class="container">
-    <div class="header-main__inner">
-      <div class="header-main__user">
-        <a href="#" class="header-main__user-details">
-          <div class="header-main__user-avatar">
-            <img src="assets/img/avatar.svg">
-          </div>
-          <h3 class="header-main__user-name">{{ playerOne }}</h3>
-        </a>
-      </div>
-      <div class="header-main__logo">
-        <a href="#/"><img src="assets/img/logo.svg" alt=""></a>
-      </div>
-      <div class="header-main__user">
-        <a href="#" class="header-main__user-details header-main__user-details--right">
-          <h3 class="header-main__user-name" ng-show="!!playerTwo">{{ playerTwo }}</h3>
-          <div class="header-main__user-avatar">
-            <img src="assets/img/avatar.svg">
-          </div>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+<header-main user-info="userInfo"></header-main>
 
 <main class="main">
   <div class="container">

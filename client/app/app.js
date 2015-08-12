@@ -1,3 +1,7 @@
+////////////////////////////////////////////////////////////
+// bootstrap the app and all services and controllers
+////////////////////////////////////////////////////////////
+
 angular.module('battlescript', [
   'battlescript.services',
   'battlescript.auth',
@@ -6,6 +10,11 @@ angular.module('battlescript', [
   'battlescript.battle',
   'ui.router'
 ])
+
+////////////////////////////////////////////////////////////
+// config the app states
+////////////////////////////////////////////////////////////
+
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider
     .state('home', {
@@ -43,9 +52,19 @@ angular.module('battlescript', [
 
     $urlRouterProvider.otherwise('/');
 })
+
+////////////////////////////////////////////////////////////
+// config the app tokens
+////////////////////////////////////////////////////////////
+
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('AttachTokens');
 })
+
+////////////////////////////////////////////////////////////
+// set up app factory for attaching tokens
+////////////////////////////////////////////////////////////
+
 .factory('AttachTokens', function ($window) {
   var attach = {
     request: function (object) {
@@ -59,6 +78,27 @@ angular.module('battlescript', [
   };
   return attach;
 })
+
+////////////////////////////////////////////////////////////
+// boot up app directives
+// 
+// - headerMain: the main header bar for auth'd users
+////////////////////////////////////////////////////////////
+
+.directive('headerMain', function() {
+  return {
+    restrict: 'E',
+    scope: {
+      userInfo: '=userInfo'
+    },
+    templateUrl: 'app/directives/header-main.html'
+  };
+})
+
+////////////////////////////////////////////////////////////
+// run the style
+////////////////////////////////////////////////////////////
+
 .run(function ($rootScope, $location, Auth) {
   $rootScope.$on('$stateChangeStart', function (evt, next, current) {
     // redirect home if auth required and user isn't auth
