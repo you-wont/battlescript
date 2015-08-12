@@ -63,6 +63,13 @@
         <div class="grid__item grid__item--50-m">
           <div class="dashboar-widget dashboard-online">
             <h2 class="dashboar-widget__title">Online Now</h2>
+            <ul class="dashboard-online__list">
+              <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
+                <span>{{ value.username }}</span>
+                <span>Rank: (1)</span>
+                <span><a href="#" ng-click="requestBattle($event, value.username)">Challenge?</a></span>
+              </li>
+            </ul>
           </div><!-- /dashboar widget -->
         </div><!-- /grid item -->
       </div><!-- /grid -->

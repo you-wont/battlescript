@@ -62,3 +62,25 @@
 .dashboard-leaderboard {
   
 }
+
+/* online users */
+
+.dashboard-online__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-online__item {
+  display: flex;
+  padding: 4px 0;
+  border-bottom: solid 1px $color--theme-grey-light;
+}
+
+.dashboard-online__item:last-child {
+  border-bottom: none;
+}
+
+.dashboard-online__item > span {
+  flex: 1;
+}

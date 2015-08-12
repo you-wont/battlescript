@@ -646,6 +646,33 @@ button:focus {
 }
 
 /* leaderboard */
+/* online users */
+.dashboard-online__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-online__item {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  padding: 4px 0;
+  border-bottom: solid 1px #EFEFEF;
+}
+
+.dashboard-online__item:last-child {
+  border-bottom: none;
+}
+
+.dashboard-online__item > span {
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
 /* -----------------------------------------------------------------------------
 
   EDITOR COMPONENTS

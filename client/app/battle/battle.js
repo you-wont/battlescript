@@ -17,7 +17,9 @@ angular.module('battlescript.battle', [])
   // open up socket and handle socket events
   ////////////////////////////////////////////////////////////
 
-  var socket = io('http://localhost:8000', {query: "username=" + $scope.playerOne});
+  var socket = io('http://localhost:8000', {
+    query: 'username=' + $scope.playerOne + '&handler=battle'
+  });
 
   socket.emit('updateUsers');
   socket.on('userList', function(userArray){

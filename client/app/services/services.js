@@ -7,18 +7,18 @@ angular.module('battlescript.services', [])
 
 // Dashboard Factory
 .factory('Dashboard',function ($http){
-  var getUsers = function(){
+  var getOnlineUsers = function(){
     return $http({
       method: 'GET',
       url: '/api/users/getusers'
     })
-    .then(function(resp){
-      console.log(resp);
+    .then(function(res) {
+      return res.data;
     });
   };
 
   return {
-    getUsers : getUsers
+    getOnlineUsers : getOnlineUsers
   };
 })
 

@@ -6,29 +6,37 @@ var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
 var server = require('http').Server(app);
-
-
-var handler = require('./config/socketHandler.js')
-
-mongoose.connect('mongodb://localhost/battlescript'); // connect to mongo database named
+mongoose.connect('mongodb://localhost/battlescript');
 
 // configure our server with all the middleware and and routing
 require('./config/middleware.js')(app, express);
 
-// export our app for testing and flexibility, required by index.js
-
+// listen on port 8000
 server.listen(8000);
+
+////////////////////////////////////////////////////////////
+// init socket stuff
+////////////////////////////////////////////////////////////
+
 // Declare io for the socket... Just creating an instance of the sokcet library
 var io = require('socket.io')(server);
 
-module.exports = app;
+// set up two handlers for separate sockets
+var battleHandler = require('./config/battleHandler.js');
+var dashboardHandler = require('./config/dashboardHandler.js');
 
-// For handling various sockets, goto socket handler in config js
+
+// For handling various sockets, goto socket battleHandler in config js
 io.on('connection', function(socket){
-  console.log("query ", socket.handshake.query);
-  handler(socket, io);
+  console.log("BREAD", socket.handshake.query);
+
+  var handler = socket.handshake.query.handler;
+  if (handler === 'battle') battleHandler(socket, io);
+  if (handler === 'dashboard') dashboardHandler(socket, io);
 });
 
+// export our app for testing and flexibility, required by index.js
+module.exports = app;
 
 /* Walkthrough of the server
 
