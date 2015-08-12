@@ -28,8 +28,6 @@ var dashboardHandler = require('./config/dashboardHandler.js');
 
 // For handling various sockets, goto socket battleHandler in config js
 io.on('connection', function(socket){
-  console.log("BREAD", socket.handshake.query);
-
   var handler = socket.handshake.query.handler;
   if (handler === 'battle') battleHandler(socket, io);
   if (handler === 'dashboard') dashboardHandler(socket, io);

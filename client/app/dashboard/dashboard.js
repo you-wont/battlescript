@@ -2,6 +2,8 @@ angular.module('battlescript.dashboard', [])
 
 .controller('DashboardController', function ($scope, $timeout, Dashboard) {
   $scope.username = window.localStorage.getItem('username');
+  $scope.userHasBattleRequest = false;
+  $scope.battleRequestOpponentName = null;
 
   ////////////////////////////////////////////////////////////
   // set up sockets here
@@ -40,7 +42,6 @@ angular.module('battlescript.dashboard', [])
   $scope.getOnlineUsers();
 
   socket.on('updateUsers', function() {
-    console.log('UPDATING USERS');
     $scope.getOnlineUsers();
   });
 
@@ -49,11 +50,17 @@ angular.module('battlescript.dashboard', [])
     $event.preventDefault();
 
     // now, we need to emit to the socket
-    socket.emit('battleRequest', {
+    socket.emit('outgoingBattleRequest', {
       fromUser: $scope.username,
       toUser: opponentUsername
     });
   };
 
+  socket.on('incomingBattleRequest', function(user){
+    $scope.battleRequestOpponentName = user.fromUser;
+    $scope.userHasBattleRequest = true;
+    $scope.$apply();
+    console.log("opponent has challenged you: ", user.fromUser);
+  });
 
 });

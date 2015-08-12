@@ -40,7 +40,7 @@ angular.module('battlescript.battle', [])
 
   // What this does is when someone goes on a different page, it disconnects the "user"
   // So, it emits the event disconnect user
-  $scope.$on('$routeChangeStart', logout);
+  $scope.$on('$routeChangeStart', $scope.logout);
 
   // This does the same, for refresh. Now go to socket handler for more info
   window.onbeforeunload = function(e) {

@@ -23,8 +23,8 @@
   <div class="container">
     <div class="dashboard">
 
-      <div class="dashboard-notification">
-        <h2 class="dashboard-notification__title">Username challenged you!</h2>
+      <div class="dashboard-notification" ng-show="userHasBattleRequest">
+        <h2 class="dashboard-notification__title">{{ battleRequestOpponentName }} challenged you!</h2>
         <button>accept</button>
         <button>decline</button>
       </div>

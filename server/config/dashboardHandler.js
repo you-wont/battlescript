@@ -1,10 +1,12 @@
 // var roomModel = require('../room/roomModel.js');
 
+var socketList = {};
+
 module.exports = function(socket, io){
   socket.join('dashboard');
 
   var username = socket.handshake.query.username;
-  console.log(username, ' connected to dashboard!');
+  socketList[username] = socket.id;
   
   // send signal that user has connected to dashboard
   var updateUsers = function(){
@@ -13,15 +15,17 @@ module.exports = function(socket, io){
 
   // Update Users when first connected
   updateUsers();
-  // socket.emit('userJoinedDashboard');
   
   // look for signal that someone wants to battle
-  socket.on('battleRequest', function(users){
-    console.log('battle requested by: ', users.fromUser, ' to: ', users.toUser);
+  socket.on('outgoingBattleRequest', function(users){
+    var oppId = socketList[users.toUser];
+
+    socket.broadcast.to(oppId).emit('incomingBattleRequest', {
+      fromUser: users.fromUser
+    });
   });
 
   socket.on('userLoggedOut', function(){
-    console.log("USER HAS LOGGED OUT");
     updateUsers();
   });
 };
