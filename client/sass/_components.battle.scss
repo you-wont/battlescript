@@ -34,16 +34,20 @@
 
 .battle-field__header {
   margin-bottom: 24px;
-  padding: 12px 0;
+  padding: 4px 0;
   text-align: center;
-  background-color: $color--theme-grey-light;
+  border-bottom: solid 2px $color--theme-blue-mid;
 }
 
-.battle-field__header > h1 {
-  margin-bottom: 12px;
+.battle-field__header p {
+  margin: 0;
   color: $color--theme-orange;
+  font-size: $font-size--large;
 }
 
-.battle-field__header > p {
-  font-size: $font-size--large;
+.battle-field__header span {
+  display: inline-block;
+  margin: 0 24px;
+  color: $color--theme-blue-light;
+  font-style: italic;
 }
