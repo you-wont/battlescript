@@ -44,16 +44,16 @@ angular.module('battlescript.battle', [])
 
   // This does the same, for refresh. Now go to socket handler for more info
   window.onbeforeunload = function(e) {
-    logout();
+    $scope.logout();
   };
   
   // Logout on back button
-  window.addEventListener("hashchange", logout)
+  window.addEventListener("hashchange", $scope.logout)
 
-  var logout = function(){
+  $scope.logout = function(){
     socket.emit('updateUsers');
     socket.emit('disconnectedClient', {username: $scope.playerOne});
-  }
+  };
 
 
 

@@ -10,6 +10,19 @@ angular.module('battlescript.dashboard', [])
     query: 'username=' + $scope.username + '&handler=dashboard'
   });
 
+  $scope.$on('$routeChangeStart', $scope.logout);
+
+  // This does the same, for refresh. Now go to socket handler for more info
+  window.onbeforeunload = function(e) {
+    $scope.logout();
+  };
+  
+  // Logout on back button
+  window.addEventListener("hashchange", $scope.logout)
+
+  $scope.logout = function(){
+    socket.emit('userLoggedOut');
+  };
 
   ////////////////////////////////////////////////////////////
   // set up users
@@ -21,12 +34,15 @@ angular.module('battlescript.dashboard', [])
     Dashboard.getOnlineUsers()
       .then(function(data) {
         $scope.onlineUsers = data;
-        // $timeout(function() {
-        //   $scope.getOnlineUsers();
-        // }, 1000);
       });
   };
+
   $scope.getOnlineUsers();
+
+  socket.on('updateUsers', function() {
+    console.log('UPDATING USERS');
+    $scope.getOnlineUsers();
+  });
 
   // Open up socket with specific dashboard server handler
   $scope.requestBattle = function($event, opponentUsername) {
