@@ -54,4 +54,13 @@ module.exports = function(socket, io){
     }
 
   });
+
+
+  ////////////////////////////////////////////////////////////
+  // handle and emit player ready events
+  ////////////////////////////////////////////////////////////
+
+  socket.on('playerOneReady', function() {
+    socket.broadcast.to(joinedRoom.id).emit('playerTwoReady');
+  });
 };
