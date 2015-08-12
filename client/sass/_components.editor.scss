@@ -21,3 +21,12 @@
   padding: 12px;
   border: solid 1px $color--theme-blue-light;
 }
+
+/* code mirror theme overrides */
+
+.cm-s-material {
+  background-color: $color--theme-blue-dark;
+}
+.cm-s-material .CodeMirror-gutters {
+  background: $color--theme-blue-dark;
+}

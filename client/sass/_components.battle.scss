@@ -32,10 +32,18 @@
 
 /*  */
 
-.battle-description {
+.battle-field__header {
   margin-bottom: 24px;
+  padding: 12px 0;
+  text-align: center;
+  background-color: $color--theme-grey-light;
 }
 
-.battle-description__title {
-  margin-bottom: 4px;
+.battle-field__header > h1 {
+  margin-bottom: 12px;
+  color: $color--theme-orange;
+}
+
+.battle-field__header > p {
+  font-size: $font-size--large;
 }
