@@ -84,6 +84,10 @@ angular.module('battlescript', [
 // boot up app directives
 // 
 // - headerMain: the main header bar for auth'd users
+// - headerLogout: a directive specifically for logout
+// - headerNoAuthPartial: a directive for rendering a static
+//   HTML header on the signup/signin pages
+// - footerPartial: a static html directive for the footer
 ////////////////////////////////////////////////////////////
 
 .directive('headerMain', function() {
@@ -108,6 +112,20 @@ angular.module('battlescript', [
     link: link,
     restrict: 'E',
     templateUrl: 'app/directives/header-logout.html'
+  };
+})
+
+.directive('headerNonAuthPartial', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'app/directives/header-nonauth.html'
+  };
+})
+
+.directive('footerPartial', function() {
+  return {
+    restrict: 'E',
+    templateUrl: 'app/directives/footer.html'
   };
 })
 

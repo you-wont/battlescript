@@ -71,7 +71,7 @@ angular.module('battlescript.battle', [])
   // set up buttons
   $scope.playerOneButtonAttempt = 'Attempt Solution';
   $scope.playerOneButtonSubmitFinal = 'Submit Final';
-  $scope.playerOneNotes = null;
+  $scope.playerOneNotes = 'Nothing to show yet...';
 
   $scope.playerTwoButtonAttempt = 'Attempt Solution';
   $scope.playerTwoButtonSubmitFinal = 'Submit Final';
@@ -254,11 +254,6 @@ angular.module('battlescript.battle', [])
         console.log(err);
       });
   };
-
-  // call immediately
-  // TODO: DELETE THIS ONCE LAYOUT LOOKS GOOD ENOUGH, IT SHOULD NOT BE CALLED
-  // IMMEDIATELY.
-  $scope.getBattle();
 
 
 

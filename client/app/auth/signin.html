@@ -1,6 +1,6 @@
 <div class="auth">
   <div class="container">  
-    <ng-include src="'app/partials/header-auth.html'"></ng-include>
+    <header-non-auth-partial></header-non-auth-partial>
     <div class="auth__message" ng-show="!!message">{{ message }}</div>
     <form class="auth-form" ng-submit="signin()">
       <h2 class="auth-form__title">Sign in to battle</h2>
