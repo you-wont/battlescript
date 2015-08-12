@@ -238,7 +238,7 @@ angular.module('battlescript.battle', [])
 
         // set up the battle specifics
         $scope.battle = JSON.parse(data.body);
-        $scope.battleDescription = $scope.battle.description;
+        $scope.battleDescription = marked($scope.battle.description);
         $scope.battleProjectId = $scope.battle.session.projectId;
         $scope.battleSolutionId = $scope.battle.session.solutionId;
 
@@ -250,6 +250,7 @@ angular.module('battlescript.battle', [])
 
       })
       .catch(function(err) {
+        console.log('There was an error fetching the problem...');
         console.log(err);
       });
   };

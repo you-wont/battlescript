@@ -30,18 +30,18 @@
           
           <div class="grid__item grid__item--33-l">
             <h2>Prompt:</h2>
-            <div ng-show="!!battleDescription" style="white-space: pre-line;">
-              {{ battleDescription }}
-            </div>
+            <div class="battle-field__description" ng-show="!!battleDescription" ng-bind-html="battleDescription"></div>
           </div>
 
-          <div id="player1" class="grid__item grid__item--66-l">
+          <div class="grid__item grid__item--66-l">
+            
+            
             <h3 class="">{{ playerOne }}</h3>
-            <form id="player1__form" action="#" class="editor-form">
-              <div class="editor-form__field">
-                <textarea name="editor1" id="editor1" class="editor"></textarea>
+            <form action="#" class="editor">
+              <div class="editor__field">
+                <textarea name="editor1" id="editor1" class="editor__text"></textarea>
               </div>
-              <div class="editor-form__footer">
+              <div class="editor__footer">
                 <button type="submit" class="btn btn--secondary btn--small" ng-click="attemptBattle($event)">
                   {{ playerOneButtonAttempt }}
                 </button>
@@ -50,18 +50,25 @@
                 </button>
               </div>
             </form>
-            <div id="player1__notes" class="editor__notes" ng-show="!!playerOneNotes">
-              {{ playerOneNotes }}
+
+            <div class="grid grid--l">
+              <div class="grid__item grid__item--66-l">
+                <h3>Notifications:</h3>
+                {{ playerOneNotes }}
+              </div>
+              <div class="grid__item grid__item--33-l">
+                p2 editor
+              </div>
             </div>
           </div><!-- /player 1 -->
 
           <div id="player2" class="grid__item grid__item--25-m" ng-hide="true">
             <h3>{{ playerTwo }}</h3>
-            <form id="player2__form" action="#" class="editor-form">
-              <div class="editor-form__field">
+            <form id="player2__form" action="#" class="editor">
+              <div class="editor__field">
                 <textarea name="editor2" id="editor2" class="editor"></textarea>
               </div>
-              <div class="editor-form__footer">
+              <div class="editor__footer">
                 <button type="submit" class="btn btn--secondary btn--medium" ng-click="attemptBattle($event)">
                   {{ playerTwoButtonAttempt }}
                 </button>

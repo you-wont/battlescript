@@ -30,7 +30,7 @@
   text-align: center;
 }
 
-/*  */
+/* header */
 
 .battle-field__header {
   margin-bottom: 24px;
@@ -50,4 +50,24 @@
   margin: 0 24px;
   color: $color--theme-blue-light;
   font-style: italic;
+}
+
+/* description */
+
+.battle-field__description {
+
+  p,
+  ul,
+  ol {
+    margin-bottom: 12px;
+  }
+
+  pre {
+    overflow: auto;
+    padding: 8px;
+    background-color: $color--theme-grey-light;
+    font-size: $font-size--xsmall;
+    border: solid 1px $color--theme-blue-light;
+  }
+
 }

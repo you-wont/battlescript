@@ -775,22 +775,14 @@ button:focus {
   EDITOR COMPONENTS
   
 ----------------------------------------------------------------------------- */
-.editor {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: 360px;
-  font-size: 12px;
-}
-
-.editor-form__field {
+.editor__field {
   margin-bottom: 12px;
 }
 
-.editor__notes {
-  margin-top: 12px;
-  padding: 12px;
-  border: solid 1px #BDD4DE;
+.editor__text {
+  display: block;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* code mirror theme overrides */
@@ -829,7 +821,7 @@ button:focus {
   text-align: center;
 }
 
-/*  */
+/* header */
 .battle-field__header {
   margin-bottom: 24px;
   padding: 4px 0;
@@ -848,6 +840,21 @@ button:focus {
   margin: 0 24px;
   color: #BDD4DE;
   font-style: italic;
+}
+
+/* description */
+.battle-field__description p,
+.battle-field__description ul,
+.battle-field__description ol {
+  margin-bottom: 12px;
+}
+
+.battle-field__description pre {
+  overflow: auto;
+  padding: 8px;
+  background-color: #EFEFEF;
+  font-size: 12px;
+  border: solid 1px #BDD4DE;
 }
 
 /* -----------------------------------------------------------------------------
