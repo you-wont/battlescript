@@ -1,8 +1,15 @@
 angular.module('battlescript.dashboard', [])
 
-.controller('DashboardController', function ($scope, $timeout, Dashboard) {
+.controller('DashboardController', function ($scope, $timeout, Sockets, Dashboard) {
   // scope.username always refers to the curreng logged in user
+  // 
+  // TODO: extract this into the global set up, so we don't have to keep
+  // rededfining it in every controller
   $scope.username = window.localStorage.getItem('username');
+
+  ////////////////////////////////////////////////////////////
+  // sets up all the dashboard stuff here
+  ////////////////////////////////////////////////////////////
 
   // this defaults to false, because when the page first loads, there is 
   // no battle request for the logged in user
@@ -20,10 +27,10 @@ angular.module('battlescript.dashboard', [])
   ////////////////////////////////////////////////////////////
   // set up sockets
   ////////////////////////////////////////////////////////////
-  
-  var socket = io('http://localhost:8000', {
-    query: 'username=' + $scope.username + '&handler=dashboard'
-  });
+
+  // TODO: extract these out into a Socket factory for simple reuse
+
+  var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
 
   $scope.$on('$routeChangeStart', $scope.logout);
 
