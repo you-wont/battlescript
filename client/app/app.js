@@ -4,8 +4,7 @@ angular.module('battlescript', [
   'battlescript.home',
   'battlescript.dashboard',
   'battlescript.battle',
-  'ui.router',
-  'ngAnimate'
+  'ui.router'
 ])
 .config(function($stateProvider, $urlRouterProvider) {
   $stateProvider

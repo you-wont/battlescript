@@ -1,28 +1,16 @@
 angular.module('battlescript.services', [])
 
-// Home Factory
-.factory('Home',function ($http){
-  return {}
-})
-
-// Dashboard Factory
-.factory('Dashboard',function ($http){
-  var getOnlineUsers = function(){
-    return $http({
-      method: 'GET',
-      url: '/api/users/getusers'
-    })
-    .then(function(res) {
-      return res.data;
-    });
-  };
-
-  return {
-    getOnlineUsers : getOnlineUsers
-  };
-})
-
+////////////////////////////////////////////////////////////
 // Auth factory
+// 
+// This takes care of all things auth related:
+// 
+// - user sign in
+// - user sign up
+// - user is authenticated
+// - user logged out
+////////////////////////////////////////////////////////////
+
 .factory('Auth', function ($http, $location, $window) {
   
   // signs users in
@@ -87,7 +75,122 @@ angular.module('battlescript.services', [])
   };
 })
 
-// The battle factory
+////////////////////////////////////////////////////////////
+// Users factory
+// 
+// Handles all things to do with users:
+// 
+// - fetching the currently logged in user
+// - fetching online users
+// - fetching all users
+////////////////////////////////////////////////////////////
+
+.factory('Users', function() {
+
+  // gets the currently logged in user
+  var getAuthUser = function() {
+
+  };
+
+  // gets all the users
+  var getUsers = function(){
+    // return $http({
+    //   method: 'GET',
+    //   url: '/api/users/getusers'
+    // })
+    // .then(function(res) {
+    //   return res.data;
+    // });
+  };
+
+  // gets only the online users
+  var getOnlineUsers = function(){
+    // return $http({
+    //   method: 'GET',
+    //   url: '/api/users/getusers'
+    // })
+    // .then(function(res) {
+    //   return res.data;
+    // });
+  };
+
+  return {
+    getAuthUser: getAuthUser,
+    getUsers : getUsers,
+    getOnlineUsers: getOnlineUsers
+  };
+
+})
+
+////////////////////////////////////////////////////////////
+// Sockets factory
+// 
+// A set of reusable functions to handle socket connections
+// inside various controllers
+////////////////////////////////////////////////////////////
+
+.factory('Sockets', function() {
+
+  // creates a new socket base on the passed in params. Params
+  // is an array of relationships, where each relationship is a
+  // key pair value in string format
+  var createSocket = function(params) {
+    var query = params.join('&');
+    return io('http://localhost:8000', {query: query});
+  };
+
+  return {
+    createSocket: createSocket
+  }
+})
+
+////////////////////////////////////////////////////////////
+// Notifications factory
+// 
+// A set of reusable functions to handle user notifications
+// throughout the app
+////////////////////////////////////////////////////////////
+
+.factory('Notifications', function() {
+
+})
+
+////////////////////////////////////////////////////////////
+// Dashboard factory
+// 
+// Handles all things on the user dashboard. Might be
+// factored out depending on the state of the Users 
+// factory
+////////////////////////////////////////////////////////////
+
+.factory('Dashboard',function ($http){
+  var getOnlineUsers = function(){
+    return $http({
+      method: 'GET',
+      url: '/api/users/getusers'
+    })
+    .then(function(res) {
+      return res.data;
+    });
+  };
+
+  return {
+    getOnlineUsers : getOnlineUsers
+  };
+})
+
+////////////////////////////////////////////////////////////
+// Battle factory
+// 
+// Handles all things to do when users engage in a battle
+// against each other:
+// 
+// - get battle, gets a battle from the api
+// - attempt battle, for when users attempt a solution
+// - submit battle, for when a user wants to submit a 
+//   final solution for a battle
+////////////////////////////////////////////////////////////
+
 .factory('Battle', function($http) {
 
   // gets a battle
@@ -115,54 +218,8 @@ angular.module('battlescript.services', [])
     });
   };
 
-  // return all funcs as an obj
   return {
     getBattle: getBattle,
     attemptBattle: attemptBattle
   }
-})
-
-// The search factory (if we need it)
-.factory('Search', function ($http){
-  
-  // gets results
-  var getResults = function(searchData, callback){
-    $http({
-      method: 'POST',
-      url: '/api/search',
-      data: searchData
-    })
-    .then(function(resp){
-      console.log("got respons");
-      callback(resp.data);
-    });
-  };
-
-  // return all funcs as an obj
-  return {
-    getResults: getResults
-  }
-
-})
-
-// The preference factory (if we need it)
-.factory('Preference', function ($http){
-  
-  // save preferences
-  var save = function(preferences, callback){
-    $http({
-      method: 'POST',
-      url: '/api/search/preferences',
-      data: preferences
-    })
-    .then(function(resp){
-      console.log("GOT RESPONSE FROM SERVER!")
-      callback(resp.data);
-    });
-  };
-
-  return {
-    save: save
-  }
-
 });
