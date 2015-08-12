@@ -7,7 +7,7 @@ angular.module('battlescript.battle', [])
   ////////////////////////////////////////////////////////////
 
   $scope.playerOne = window.localStorage.getItem('username');
-  $scope.playerTwo = "Waiting for 2nd player";
+  $scope.playerTwo = "...";
 
 
 
@@ -24,7 +24,7 @@ angular.module('battlescript.battle', [])
     // THIS WILL ONLY WORK FOR TWO USERS RIGHT NOW
     // loop over array looking for other users
     if (userArray.length === 1){
-      $scope.playerTwo = "Waiting for 2nd player";
+      $scope.playerTwo = "...";
     }
     userArray.forEach(function(name){
       if(name !== $scope.playerOne){
@@ -153,31 +153,45 @@ angular.module('battlescript.battle', [])
   // handle when both players are ready
   ////////////////////////////////////////////////////////////
   
+  // set up player one states
   $scope.playerOneReadyState = false;
   $scope.playerOneReadyClass = '';
-  $scope.playerOneReadyText = 'Waiting on you...';
+  $scope.playerOneReadyText = 'Waiting on you';
 
   $scope.updatePlayerOneReadyState = function() {
     if ($scope.playerOneReadyState === false) {
       $scope.playerOneReadyState = true;
       $scope.playerOneReadyClass = 'active';
       $scope.playerOneReadyText = 'Ready for battle!';
+
+      socket.emit('playerOneReady');
+
       $scope.ifBothPlayersReady();
     }
   };
 
+  // set up player two states
   $scope.playerTwoReadyState = false;
   $scope.playerTwoReadyClass = '';
-  $scope.playerTwoReadyText = 'Waiting on playerTwo...';
+  $scope.playerTwoReadyText = 'Waiting on opponent';
 
-  $scope.updatePlayerTwoReadyState = function() {
+  socket.on('playerTwoReady', function() {
     if ($scope.playerTwoReadyState === false) {
       $scope.playerTwoReadyState = true;
       $scope.playerTwoReadyClass = 'active';
       $scope.playerTwoReadyText = 'Ready for battle!';
       $scope.ifBothPlayersReady();
     }
-  };
+  });
+
+  // $scope.updatePlayerTwoReadyState = function() {
+  //   if ($scope.playerTwoReadyState === false) {
+  //     $scope.playerTwoReadyState = true;
+  //     $scope.playerTwoReadyClass = 'active';
+  //     $scope.playerTwoReadyText = 'Ready for battle!';
+  //     $scope.ifBothPlayersReady();
+  //   }
+  // };
 
 
 
