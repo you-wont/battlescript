@@ -23,10 +23,15 @@
   <div class="container">
     <div class="dashboard">
 
-      <div class="dashboard-notification" ng-show="userHasBattleRequest">
+      <div class="dashboard-notification" ng-show="userHasBattleRequest && battleRequestStatus === 'open'">
         <h2 class="dashboard-notification__title">{{ battleRequestOpponentName }} challenged you!</h2>
-        <button>accept</button>
-        <button>decline</button>
+        <button class="dashboard-notification__button btn btn--secondary btn--medium btn--block" ng-click="battleAccepted()">Accept</button>
+        <button class="dashboard-notification__button btn btn--primary btn--medium btn--block" ng-click="battleDeclined()">Decline</button>
+      </div>
+
+      <div class="dashboard-notification" ng-show="userHasBattleRequest && battleRequestStatus === 'init'">
+        <h2 class="dashboard-notification__title">Challenge ready!</h2>
+        <p>Go to this url to face your opponent: <a href="/#/battle/12345">localhost:8000/#/battle/12345</a></p>
       </div>
 
       <div class="dashboard-stats">
@@ -60,13 +65,13 @@
         </div>
       </div>
 
-      <div class="grid grid--m">
-        <div class="grid__item grid__item--50-m">
+      <div class="grid grid--l">
+        <div class="grid__item grid__item--50-l">
           <div class="dashboar-widget dashboard-leaderboard">
             <h2 class="dashboar-widget__title">Leaderboard</h2>
           </div><!-- /dashboar widget -->
         </div><!-- /grid item -->
-        <div class="grid__item grid__item--50-m">
+        <div class="grid__item grid__item--50-l">
           <div class="dashboar-widget dashboard-online">
             <h2 class="dashboar-widget__title">Online Now</h2>
             <ul class="dashboard-online__list">
