@@ -158,14 +158,17 @@ angular.module('battlescript.battle', [])
   $scope.playerOneReadyClass = '';
   $scope.playerOneReadyText = 'Waiting on you';
 
+  // this updates player one's ready state
   $scope.updatePlayerOneReadyState = function() {
     if ($scope.playerOneReadyState === false) {
       $scope.playerOneReadyState = true;
       $scope.playerOneReadyClass = 'active';
       $scope.playerOneReadyText = 'Ready for battle!';
 
+      // emit a socket event
       socket.emit('playerOneReady');
 
+      // check if both players ready
       $scope.ifBothPlayersReady();
     }
   };
@@ -175,6 +178,7 @@ angular.module('battlescript.battle', [])
   $scope.playerTwoReadyClass = '';
   $scope.playerTwoReadyText = 'Waiting on opponent';
 
+  // this time, let sockets listen for player two ready event
   socket.on('playerTwoReady', function() {
     if ($scope.playerTwoReadyState === false) {
       $scope.playerTwoReadyState = true;
@@ -183,15 +187,6 @@ angular.module('battlescript.battle', [])
       $scope.ifBothPlayersReady();
     }
   });
-
-  // $scope.updatePlayerTwoReadyState = function() {
-  //   if ($scope.playerTwoReadyState === false) {
-  //     $scope.playerTwoReadyState = true;
-  //     $scope.playerTwoReadyClass = 'active';
-  //     $scope.playerTwoReadyText = 'Ready for battle!';
-  //     $scope.ifBothPlayersReady();
-  //   }
-  // };
 
 
 

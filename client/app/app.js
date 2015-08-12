@@ -35,8 +35,8 @@ angular.module('battlescript', [
       controller: 'DashboardController',
       authenticate: true
     })
-    .state('battle', {
-      url: '/battle',
+    .state('battleroom', {
+      url: '/battle/:id',
       templateUrl: 'app/battle/battle.html',
       controller: 'BattleController',
       authenticate: true

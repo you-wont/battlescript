@@ -12,23 +12,13 @@
 
 .dashboard-stats {
   margin: 0 0 24px 0;
-  padding: 24px;
-  background-color: $color--theme-blue-dark;
 }
 
 .dashboard-stats__title {
   margin-bottom: 24px;
-  color: #fff;
+  color: $color--theme-orange;
   font-size: $font-size--xlarge;
   font-weight: 400;
-}
-
-@media all and (min-width: 600px) {
-
-  .dashboard-stats {
-    padding: 48px;
-  }
-
 }
 
 /* stats entry */
@@ -46,11 +36,11 @@
 
 .dashboard-stats-entry__body {
   padding: 12px;
-  background-color: $color--theme-blue-mid;
+  background-color: $color--theme-grey-light;
 }
 
 .dashboard-stats-entry__stat {
-  color: #fff;
+  
 }
 
 .dashboard-stats-entry__stat > span {
@@ -70,5 +60,5 @@
 /* leaderboard */
 
 .dashboard-leaderboard {
-  padding: 12px;
+  
 }

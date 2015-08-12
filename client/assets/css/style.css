@@ -609,21 +609,13 @@ button:focus {
 /* stats */
 .dashboard-stats {
   margin: 0 0 24px 0;
-  padding: 24px;
-  background-color: #2B3A42;
 }
 
 .dashboard-stats__title {
   margin-bottom: 24px;
-  color: #fff;
+  color: #EB7F00;
   font-size: 28px;
   font-weight: 400;
-}
-
-@media all and (min-width: 600px) {
-  .dashboard-stats {
-    padding: 48px;
-  }
 }
 
 /* stats entry */
@@ -637,11 +629,7 @@ button:focus {
 
 .dashboard-stats-entry__body {
   padding: 12px;
-  background-color: #3F5765;
-}
-
-.dashboard-stats-entry__stat {
-  color: #fff;
+  background-color: #EFEFEF;
 }
 
 .dashboard-stats-entry__stat > span {
@@ -658,10 +646,6 @@ button:focus {
 }
 
 /* leaderboard */
-.dashboard-leaderboard {
-  padding: 12px;
-}
-
 /* -----------------------------------------------------------------------------
 
   EDITOR COMPONENTS
