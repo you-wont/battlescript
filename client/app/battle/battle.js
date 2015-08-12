@@ -17,7 +17,9 @@ angular.module('battlescript.battle', [])
   // open up socket and handle socket events
   ////////////////////////////////////////////////////////////
 
-  var socket = io('http://localhost:8000', {query: "username=" + $scope.playerOne});
+  var socket = io('http://localhost:8000', {
+    query: 'username=' + $scope.playerOne + '&handler=battle'
+  });
 
   socket.emit('updateUsers');
   socket.on('userList', function(userArray){
@@ -38,20 +40,20 @@ angular.module('battlescript.battle', [])
 
   // What this does is when someone goes on a different page, it disconnects the "user"
   // So, it emits the event disconnect user
-  $scope.$on('$routeChangeStart', logout);
+  $scope.$on('$routeChangeStart', $scope.logout);
 
   // This does the same, for refresh. Now go to socket handler for more info
   window.onbeforeunload = function(e) {
-    logout();
+    $scope.logout();
   };
   
   // Logout on back button
-  window.addEventListener("hashchange", logout)
+  window.addEventListener("hashchange", $scope.logout)
 
-  var logout = function(){
+  $scope.logout = function(){
     socket.emit('updateUsers');
     socket.emit('disconnectedClient', {username: $scope.playerOne});
-  }
+  };
 
 
 
@@ -158,14 +160,17 @@ angular.module('battlescript.battle', [])
   $scope.playerOneReadyClass = '';
   $scope.playerOneReadyText = 'Waiting on you';
 
+  // this updates player one's ready state
   $scope.updatePlayerOneReadyState = function() {
     if ($scope.playerOneReadyState === false) {
       $scope.playerOneReadyState = true;
       $scope.playerOneReadyClass = 'active';
       $scope.playerOneReadyText = 'Ready for battle!';
 
+      // emit a socket event
       socket.emit('playerOneReady');
 
+      // check if both players ready
       $scope.ifBothPlayersReady();
     }
   };
@@ -175,6 +180,7 @@ angular.module('battlescript.battle', [])
   $scope.playerTwoReadyClass = '';
   $scope.playerTwoReadyText = 'Waiting on opponent';
 
+  // this time, let sockets listen for player two ready event
   socket.on('playerTwoReady', function() {
     if ($scope.playerTwoReadyState === false) {
       $scope.playerTwoReadyState = true;
@@ -183,15 +189,6 @@ angular.module('battlescript.battle', [])
       $scope.ifBothPlayersReady();
     }
   });
-
-  // $scope.updatePlayerTwoReadyState = function() {
-  //   if ($scope.playerTwoReadyState === false) {
-  //     $scope.playerTwoReadyState = true;
-  //     $scope.playerTwoReadyClass = 'active';
-  //     $scope.playerTwoReadyText = 'Ready for battle!';
-  //     $scope.ifBothPlayersReady();
-  //   }
-  // };
 
 
 

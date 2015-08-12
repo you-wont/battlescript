@@ -15,13 +15,19 @@
         </a>
       </div>
 
-    </div>
-  </div>
-</div>
+    </div><!-- /header inner -->
+  </div><!-- /container -->
+</div><!-- /header main -->
 
 <main class="main">
   <div class="container">
     <div class="dashboard">
+
+      <div class="dashboard-notification" ng-show="userHasBattleRequest">
+        <h2 class="dashboard-notification__title">{{ battleRequestOpponentName }} challenged you!</h2>
+        <button>accept</button>
+        <button>decline</button>
+      </div>
 
       <div class="dashboard-stats">
         <h1 class="dashboard-stats__title">Welcome back, Nick!</h1>
@@ -47,7 +53,7 @@
             <div class="dashboard-stats-entry">
               <h3 class="dashboard-stats-entry__title">All Time</h3>
               <div class="dashboard-stats-entry__body">
-                <p class="dashboard-stats-entry__stat"><span>22</span> wins &mdash; <span>5</span> losses</p>
+                <p class="dashboard-stats-entry__stat"><span>22</span> wins, <span>2005</span> points</p>
               </div>
             </div>
           </div>
@@ -56,16 +62,24 @@
 
       <div class="grid grid--m">
         <div class="grid__item grid__item--50-m">
-          <div class="dashboard-leaderboard">
-            <h2 class="dashboard-leaderboard__title">Leaderboard</h2>
-          </div>
-        </div>
+          <div class="dashboar-widget dashboard-leaderboard">
+            <h2 class="dashboar-widget__title">Leaderboard</h2>
+          </div><!-- /dashboar widget -->
+        </div><!-- /grid item -->
         <div class="grid__item grid__item--50-m">
-          <div class="dashboard-online">
-            <h2>Online now</h2>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-</main>
+          <div class="dashboar-widget dashboard-online">
+            <h2 class="dashboar-widget__title">Online Now</h2>
+            <ul class="dashboard-online__list">
+              <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
+                <span>{{ value.username }}</span>
+                <span>Rank: (1)</span>
+                <span><a href="#" ng-click="requestBattle($event, value.username)">Challenge?</a></span>
+              </li>
+            </ul>
+          </div><!-- /dashboar widget -->
+        </div><!-- /grid item -->
+      </div><!-- /grid -->
+
+    </div><!-- dashboard -->
+  </div><!-- /container -->
+</main><!-- /main -->

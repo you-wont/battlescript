@@ -3,6 +3,7 @@ var roomModel = require('../room/roomModel.js');
 module.exports = function(socket, io){
   var username = socket.handshake.query.username;
   console.log('connected');
+
   var joinedRoom = roomModel.createOrGetRoom();
   joinedRoom.users.push(username);
   console.log("CURRENT STATE OF ROOMS: ", roomModel.rooms);

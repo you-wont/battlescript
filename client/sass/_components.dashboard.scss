@@ -12,23 +12,13 @@
 
 .dashboard-stats {
   margin: 0 0 24px 0;
-  padding: 24px;
-  background-color: $color--theme-blue-dark;
 }
 
 .dashboard-stats__title {
   margin-bottom: 24px;
-  color: #fff;
+  color: $color--theme-orange;
   font-size: $font-size--xlarge;
   font-weight: 400;
-}
-
-@media all and (min-width: 600px) {
-
-  .dashboard-stats {
-    padding: 48px;
-  }
-
 }
 
 /* stats entry */
@@ -46,11 +36,11 @@
 
 .dashboard-stats-entry__body {
   padding: 12px;
-  background-color: $color--theme-blue-mid;
+  background-color: $color--theme-grey-light;
 }
 
 .dashboard-stats-entry__stat {
-  color: #fff;
+  
 }
 
 .dashboard-stats-entry__stat > span {
@@ -70,5 +60,38 @@
 /* leaderboard */
 
 .dashboard-leaderboard {
-  padding: 12px;
+  
+}
+
+/* online users */
+
+.dashboard-online__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.dashboard-online__item {
+  display: flex;
+  padding: 4px 0;
+  border-bottom: solid 1px $color--theme-grey-light;
+}
+
+.dashboard-online__item:last-child {
+  border-bottom: none;
+}
+
+.dashboard-online__item > span {
+  flex: 1;
+}
+
+/* notifications */
+
+.dashboard-notification {
+  position: fixed;
+  top: 12px;
+  right: 12px;
+  padding: 24px;
+  background-color: #fff;
+  box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.4);
 }
