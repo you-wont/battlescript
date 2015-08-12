@@ -19,9 +19,14 @@
   justify-content: space-between;
 }
 
+.header-main__user {
+  position: relative;
+}
+
 .header-main__user-details {
   display: flex;
   align-items: center;
+  padding: 12px 0;
 }
 
 .header-main__user-avatar {
@@ -36,6 +41,62 @@
   margin: 0;
   color: $color--theme-orange;
   font-weight: 300;
+}
+
+.header-main__user-dropdown {
+  visibility: hidden;
+  list-style: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: -1;
+  margin: 0;
+  padding: 12px;
+  width: 240px;
+  background-color: #fff;
+  box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.4);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.header-main__user-dropdown::before {
+  display: block;
+  position: absolute;
+  top: -6px;
+  right: 12px;
+  width: 12px;
+  height: 6px;
+  border-bottom: solid 6px #fff;
+  border-left: solid 6px transparent;
+  border-right: solid 6px transparent;
+  content: "";
+}
+
+.header-main__user-dropdown-item {
+  padding: 4px 0;
+}
+
+.header-main__user-dropdown-sep {
+  border-bottom: solid 1px $color--theme-blue-light;
+}
+
+.header-main__user-dropdown-item a {
+  display: block;
+  padding: 4px 8px;
+  color: $color--theme-blue-mid;
+}
+
+.header-main__user-dropdown-item a:hover {
+  color: #fff;
+  background-color: $color--theme-orange;
+}
+
+/* hover state */
+
+.header-main__user:hover .header-main__user-dropdown {
+  visibility: visible;
+  z-index: 100;
+  opacity: 1;
 }
 
 /**
