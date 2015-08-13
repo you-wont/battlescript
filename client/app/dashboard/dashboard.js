@@ -1,6 +1,6 @@
 angular.module('battlescript.dashboard', [])
 
-.controller('DashboardController', function ($scope, $timeout, Sockets, Dashboard) {
+.controller('DashboardController', function ($scope, $timeout, Dashboard, Users) {
   // scope.username always refers to the curreng logged in user
   // 
   // TODO: extract this into the global set up, so we don't have to keep
@@ -35,23 +35,55 @@ angular.module('battlescript.dashboard', [])
   // set up sockets
   ////////////////////////////////////////////////////////////
 
+  // initial dash socket connection
+  // $scope.dashboardSocket = Sockets.createSocket('dashboard');
+  
+  // $scope.dashboardSocket.on('connect', function() {
+  //   console.log('dashboard socket connected');
+
+  //   // if ($scope.dashboardSocket && $scope.dashboardSocket.id === undefined) {
+  //   //   console.log($scope.dashboardSocket);
+  //   //   console.log('?');
+  //   // }
+
+  //   $scope.handleDashboardSocketEvents();
+  // });
+
+  // $scope.dashboardSocket.on('reconnect', function() {
+  //   console.log('?????????????');
+  // });
+
+  // $scope.handleDashboardSocketEvents = function() {
+  //   console.log('dash sock evts');
+
+  //   $scope.$on('$stateChangeStart', function() {
+  //     console.log('state changed, about to disconn socket');
+  //     $scope.dashboardSocket.disconnect();
+  //   });
+  // };
+
+  // var dashboardSocket = io.connect('http://localhost:8000/#/dashboard');
+  // dashboardSocket.on('connect', function() {
+  //   dashboardSocket.emit('hi!');
+  // });
+
   // TODO: extract these out into a Socket factory for simple reuse
 
-  var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
+  // var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
 
-  $scope.$on('$routeChangeStart', $scope.logout);
+  // $scope.$on('$routeChangeStart', $scope.logout);
 
-  // This does the same, for refresh. Now go to socket handler for more info
-  window.onbeforeunload = function(e) {
-    $scope.logout();
-  };
+  // // This does the same, for refresh. Now go to socket handler for more info
+  // window.onbeforeunload = function(e) {
+  //   $scope.logout();
+  // };
   
-  // Logout on back button
-  window.addEventListener("hashchange", $scope.logout)
+  // // Logout on back button
+  // window.addEventListener("hashchange", $scope.logout)
 
-  $scope.logout = function(){
-    socket.emit('userLoggedOut');
-  };
+  // $scope.logout = function(){
+  //   socket.emit('userLoggedOut');
+  // };
 
   ////////////////////////////////////////////////////////////
   // set up online users
@@ -60,17 +92,18 @@ angular.module('battlescript.dashboard', [])
   $scope.onlineUsers;
 
   $scope.getOnlineUsers = function(){
-    Dashboard.getOnlineUsers()
+    Users.getOnlineUsers()
       .then(function(data) {
+        console.log(data);
         $scope.onlineUsers = data;
       });
   };
 
   $scope.getOnlineUsers();
 
-  socket.on('updateUsers', function() {
-    $scope.getOnlineUsers();
-  });
+  // socket.on('updateUsers', function() {
+  //   $scope.getOnlineUsers();
+  // });
 
   ////////////////////////////////////////////////////////////
   // handle battle requests
@@ -88,13 +121,13 @@ angular.module('battlescript.dashboard', [])
   };
 
   // listen for incoming battle request
-  socket.on('incomingBattleRequest', function(user){
-    $scope.battleRequestOpponentName = user.fromUser;
-    $scope.userHasBattleRequest = true;
-    $scope.battleRequestStatus = 'open';
-    $scope.$apply();
-    console.log("opponent has challenged you: ", user.fromUser);
-  });
+  // socket.on('incomingBattleRequest', function(user){
+  //   $scope.battleRequestOpponentName = user.fromUser;
+  //   $scope.userHasBattleRequest = true;
+  //   $scope.battleRequestStatus = 'open';
+  //   $scope.$apply();
+  //   console.log("opponent has challenged you: ", user.fromUser);
+  // });
 
   // battle has been accepted
   $scope.battleAccepted = function() {
@@ -111,18 +144,18 @@ angular.module('battlescript.dashboard', [])
 
   // prepare for battle, only gets fired when a user has sent a battle request,
   // and another user has accepted.
-  socket.on('prepareForBattle', function() {
-    // at this point, the opponent (i.e. the person who sent the initial battle
-    // request) should be notified that the person he/she challenged has
-    // accepted.
-    console.log('prepare for battle');
+  // socket.on('prepareForBattle', function() {
+  //   // at this point, the opponent (i.e. the person who sent the initial battle
+  //   // request) should be notified that the person he/she challenged has
+  //   // accepted.
+  //   console.log('prepare for battle');
 
-    // on this notification, the url hash needs to be generated and sent to the
-    // opponent.
+  //   // on this notification, the url hash needs to be generated and sent to the
+  //   // opponent.
     
     
-    // the url hash needs to also be sent to the player who accepted the
-    // challenge
-  });
+  //   // the url hash needs to also be sent to the player who accepted the
+  //   // challenge
+  // });
   
 });

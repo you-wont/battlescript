@@ -21,6 +21,10 @@ module.exports = {
                 var token = jwt.encode(user, 'secret');
                 res.json({token: token});
 
+                //Set the user to be online
+                user.onlineStatus = true;
+                user.save();
+
                 //save the user to currentUsers array
                 currentUsers[user.username] = user;
                 console.log("CURRENT USER LIST :", currentUsers);
@@ -61,6 +65,11 @@ module.exports = {
       })
       .then(function (user) {
         
+        //Set the user to be online
+        user.onlineStatus = true;
+        user.save();
+
+        // save user to current user array - DELETE THIS LATER
         currentUsers[user.username] = user;
         console.log("CURRENT USER LIST :", currentUsers);
 
@@ -105,16 +114,30 @@ module.exports = {
       
       findUser({username: username})
         .then(function (user) {
-          console.log('THIS IS USER', user)
+
+          // set user to be offline
+          user.onlineStatus = false;
+          user.save();
+          
+          // remove user from currentonline user list - DELETE THIS LATER
           var username = user.username;
-          console.log("this is username", username);
           delete currentUsers[username];
-          console.log(">>>> when log out",currentUsers)
+
+          // console.log('THIS IS USER', user)
+          // console.log("this is username", username);
+          // console.log(">>>> when log out",currentUsers)
         });
   },
 
-  getUsers: function (req, res, next){
-    console.log("SENDING CURRENT USERS ", currentUsers);
-    res.send(currentUsers);
+  getOnlineUsers: function (req, res, next){
+    //console.log("SENDING CURRENT USERS ", currentUsers);
+    var findUsers = Q.nbind(User.find, User);
+    findUsers({onlineStatus: true})
+    .then(function(onlineUsers){
+      console.log("SENDING ONLINE USERS");
+      res.send(onlineUsers)
+    })
+
+    // res.send(currentUsers);
   }
 };

@@ -85,11 +85,11 @@ angular.module('battlescript.services', [])
 // - fetching all users
 ////////////////////////////////////////////////////////////
 
-.factory('Users', function() {
+.factory('Users', function($http) {
 
   // gets the currently logged in user
   var getAuthUser = function() {
-
+    return window.localStorage.getItem('username');
   };
 
   // gets all the users
@@ -105,13 +105,13 @@ angular.module('battlescript.services', [])
 
   // gets only the online users
   var getOnlineUsers = function(){
-    // return $http({
-    //   method: 'GET',
-    //   url: '/api/users/getusers'
-    // })
-    // .then(function(res) {
-    //   return res.data;
-    // });
+    return $http({
+      method: 'GET',
+      url: '/api/users/getOnlineUsers'
+    })
+    .then(function(res) {
+      return res.data;
+    });
   };
 
   return {
@@ -129,14 +129,15 @@ angular.module('battlescript.services', [])
 // inside various controllers
 ////////////////////////////////////////////////////////////
 
-.factory('Sockets', function() {
+.factory('Socket', function() {
 
   // creates a new socket base on the passed in params. Params
   // is an array of relationships, where each relationship is a
   // key pair value in string format
-  var createSocket = function(params) {
+  var createSocket = function(route, params) {
     var query = params.join('&');
-    return io('http://localhost:8000', {query: query});
+
+    return io.connect('http://localhost:8000/#/' + route, {query: query});
   };
 
   return {
@@ -164,19 +165,9 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Dashboard',function ($http){
-  var getOnlineUsers = function(){
-    return $http({
-      method: 'GET',
-      url: '/api/users/getusers'
-    })
-    .then(function(res) {
-      return res.data;
-    });
-  };
 
-  return {
-    getOnlineUsers : getOnlineUsers
-  };
+
+  return {};
 })
 
 ////////////////////////////////////////////////////////////

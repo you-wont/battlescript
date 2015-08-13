@@ -10,7 +10,7 @@ angular.module('battlescript.auth', [])
     Auth.signin($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('battlepro', token);
-        $location.path('/');
+        $location.path('/dashboard');
       })
       .catch(function (error) {
         $scope.message = "Invalid Username or Password";
@@ -22,7 +22,7 @@ angular.module('battlescript.auth', [])
     Auth.signup($scope.user)
       .then(function (token) {
         $window.localStorage.setItem('battlepro', token);
-        $location.path('/');
+        $location.path('/dashboard');
       })
       .catch(function (error) {
         $scope.message = "Username Already Taken";

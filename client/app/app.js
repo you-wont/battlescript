@@ -133,7 +133,50 @@ angular.module('battlescript', [
 // run the style
 ////////////////////////////////////////////////////////////
 
-.run(function ($rootScope, $location, Auth) {
+.run(function ($rootScope, $location, Auth, Users, Socket) {
+
+  ////////////////////////////////////////////////////////////
+  // dashboard sockets
+  ////////////////////////////////////////////////////////////
+
+  // start it up but leave it empty
+  $rootScope.dashboardSocket;
+  
+  // only create socket first time when auth and hits dash
+  $rootScope.$on('$stateChangeStart', function(evt, next, current) {
+    if (next && Auth.isAuth() && next.name === 'dashboard' && !$rootScope.dashboardSocket) {
+      $rootScope.dashboardSocket = Socket.createSocket('dashboard', ['name=' + Users.getAuthUser(), 'handler=dashboard']);
+
+      $rootScope.dashboardSocket.on('connect', function() {
+        $rootScope.initDashboardSocketEvents();
+      });
+    }
+  });
+
+  // initialise dash socket events
+  $rootScope.initDashboardSocketEvents = function() {
+    // state change and socket handling
+    $rootScope.$on('$stateChangeStart', function(evt, next, current) {
+      if (next.name !== 'dashboard') {
+        console.log('leaving the dash...');
+        $rootScope.dashboardSocket.disconnect();
+      } else if (next.name === 'dashboard') {
+        console.log('came back to dash...');
+        $rootScope.dashboardSocket.connect();
+      }
+    });
+
+    // listen for socket disconnection
+    $rootScope.dashboardSocket.on('disconnect', function() {
+      console.log('socket disconnected');
+    });
+  };
+
+
+  ////////////////////////////////////////////////////////////
+  // handle auth stuffs
+  ////////////////////////////////////////////////////////////
+
   $rootScope.$on('$stateChangeStart', function (evt, next, current) {
     // redirect home if auth required and user isn't auth
     if (next && next.authenticate && !Auth.isAuth()) {
