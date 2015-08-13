@@ -145,7 +145,7 @@ angular.module('battlescript', [
   // only create socket first time when auth and hits dash
   $rootScope.$on('$stateChangeStart', function(evt, next, current) {
     if (next && Auth.isAuth() && next.name === 'dashboard' && !$rootScope.dashboardSocket) {
-      $rootScope.dashboardSocket = Socket.createSocket('dashboard', ['name=' + Users.getAuthUser(), 'handler=dashboard']);
+      $rootScope.dashboardSocket = Socket.createSocket('dashboard', ['username=' + Users.getAuthUser(), 'handler=dashboard']);
 
       $rootScope.dashboardSocket.on('connect', function() {
         $rootScope.initDashboardSocketEvents();

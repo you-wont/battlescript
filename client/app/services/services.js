@@ -136,7 +136,7 @@ angular.module('battlescript.services', [])
   // key pair value in string format
   var createSocket = function(route, params) {
     var query = params.join('&');
-
+    console.log(query);
     return io.connect('http://localhost:8000/#/' + route, {query: query});
   };
 
