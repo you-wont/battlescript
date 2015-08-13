@@ -1,6 +1,25 @@
 angular.module('battlescript.battle', [])
 
-.controller('BattleController', function($scope, $timeout, Battle) {
+.controller('BattleController', function($scope, $timeout, $location, $stateParams, Battle) {
+
+  ////////////////////////////////////////////////////////////
+  // check first to see if valid battle room id
+  ////////////////////////////////////////////////////////////
+
+  $scope.battleRoomId = $stateParams.id;
+
+  Battle.isValidBattleRoom($scope.battleRoomId)
+    .then(function(valid) {
+      if (valid) {
+        // $scope.
+      } else {
+        // redirect to dashboard
+        $location.path('/dashboard');
+      }
+    })
+    .catch(function(err) {
+      console.log(err);
+    });
   
   ////////////////////////////////////////////////////////////
   // init players

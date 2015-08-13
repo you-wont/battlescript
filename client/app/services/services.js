@@ -184,6 +184,17 @@ angular.module('battlescript.services', [])
 
 .factory('Battle', function($http) {
 
+  // checks if valid battle room
+  var isValidBattleRoom = function(hash) {
+    return $http({
+      method: 'POST',
+      url: '/api/battles/checkvalidbattleroom',
+      data: {hash: hash}
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
   // gets a battle
   var getBattle = function() {
     return $http({
@@ -210,6 +221,7 @@ angular.module('battlescript.services', [])
   };
 
   return {
+    isValidBattleRoom: isValidBattleRoom,
     getBattle: getBattle,
     attemptBattle: attemptBattle
   }
