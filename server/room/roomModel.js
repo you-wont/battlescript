@@ -23,11 +23,8 @@ var Room = function(roomhash) {
 // creates a new room
 var createRoom = function(roomhash){
   var newRoom = Room(roomhash);
-  
   updateRooms(newRoom);
-  
   rooms.roomCount += 1;
-
   return newRoom;
 };
 

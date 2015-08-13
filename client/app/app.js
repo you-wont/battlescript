@@ -179,7 +179,7 @@ angular.module('battlescript', [
 
   $rootScope.battleSocket;
 
-  $rootScope.initBattleSocket = function(roomhash) {
+  $rootScope.initBattleSocket = function(roomhash, cb) {
     console.log('init battle socket');
     // still check here
     if (Auth.isAuth() && !$rootScope.battleSocket) {
@@ -192,29 +192,35 @@ angular.module('battlescript', [
       ]);
 
       $rootScope.battleSocket.on('connect', function() {
-        $rootScope.initBattleSocketEvents();
+        $rootScope.initBattleSocketEvents(cb);
       });
     }
   };
 
   // initialise dash socket events
-  $rootScope.initBattleSocketEvents = function() {
+  $rootScope.initBattleSocketEvents = function(cb) {
     console.log('init the battle events');
     // state change and socket handling
     $rootScope.$on('$stateChangeStart', function(evt, next, current) {
       if (next.name !== 'battleroom') {
+        $rootScope.battleSocket.emit('disconnectedClient', {username: Users.getAuthUser()});
         $rootScope.battleSocket.disconnect();
       }
-      // else if (next.name === 'battleroom') {
-      //   console.log('reconnect to battle room...');
-      //   $rootScope.battleSocket.connect();
-      // }
     });
+
+    // refresh handler
+    window.onbeforeunload = function(e) {
+      $rootScope.battleSocket.emit('disconnectedClient', {username: Users.getAuthUser()});
+      $rootScope.battleSocket.disconnect();
+    };
 
     // listen for socket disconnection
     $rootScope.battleSocket.on('disconnect', function() {
       // console.log('battle socket disconnected');
     });
+
+    // run the callback
+    cb();
   };
 
 

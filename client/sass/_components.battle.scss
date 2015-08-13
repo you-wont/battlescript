@@ -143,6 +143,10 @@
   white-space: nowrap;
 }
 
+.battle-player--p2 .CodeMirror pre {
+  padding: 0 20px; /* Horizontal padding of content */
+}
+
 /**
  * battle-notices
  *

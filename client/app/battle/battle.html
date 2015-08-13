@@ -4,14 +4,14 @@
   <div class="container">
     <div class="battle">
       
-      <div class="battle-waiting" ng-hide="playerOneReadyState && playerTwoReadyState">
+      <div class="battle-waiting" ng-hide="userReadyState && opponentReadyState">
         <h1>Waiting for players</h1>
         <div class="grid grid--l battle-waiting__buttons">
           <div class="grid__item grid__item--50-l battle-waiting__opp">
-            <button ng-class="playerOneReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updatePlayerOneReadyState()">{{ playerOneReadyText }}</button>
+            <button ng-class="userReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateUserReadyState()">{{ userReadyText }}</button>
           </div>
           <div class="grid__item grid__item--50-l battle-waiting__opp">
-            <button ng-class="playerTwoReadyClass" class="btn btn--primary btn--large btn--block">{{ playerTwoReadyText }}</button>
+            <button ng-class="opponentReadyClass" class="btn btn--primary btn--large btn--block">{{ opponentReadyText }}</button>
           </div>
         </div>
         <div class="battle-waiting__timer">
@@ -44,10 +44,10 @@
                 </div>
                 <div class="editor__footer">
                   <button type="submit" class="btn btn--secondary btn--small" ng-click="attemptBattle($event)">
-                    {{ playerOneButtonAttempt }}
+                    {{ userButtonAttempt }}
                   </button>
                   <button type="submit" class="btn btn--primary btn--small" ng-click="attemptBattle($event)" disabled>
-                    {{ playerOneButtonSubmitFinal }}
+                    {{ userButtonSubmitFinal }}
                   </button>
                 </div>
               </form><!-- /editor -->
@@ -58,7 +58,7 @@
                 <div class="battle-notices">
                   <h3 class="battle-notices__heading">Notifications:</h3>
                   <div class="battle-notices__notes">
-                    {{ playerOneNotes }}
+                    {{ userNotes }}
                   </div>
                 </div><!-- /battle-notices -->
               </div><!-- /grid__item -->
@@ -79,7 +79,11 @@
         </div><!-- /grid -->
       </div><!-- battle-field -->
 
-      <div class="spinner-container" ng-show="playerOneReadyState && playerTwoReadyState && !battlePromptLoaded">
+      <div class="spinner-container" ng-show="userReadyState && opponentReadyState && !battlePromptLoaded">
+        <div class="spinner"></div>
+      </div>
+
+      <div class="spinner-container" ng-show="!battleInitialized">
         <div class="spinner"></div>
       </div>
   
