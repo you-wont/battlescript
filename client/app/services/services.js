@@ -85,11 +85,11 @@ angular.module('battlescript.services', [])
 // - fetching all users
 ////////////////////////////////////////////////////////////
 
-.factory('Users', function() {
+.factory('Users', function($http) {
 
   // gets the currently logged in user
   var getAuthUser = function() {
-
+    return window.localStorage.getItem('username');
   };
 
   // gets all the users
@@ -105,13 +105,13 @@ angular.module('battlescript.services', [])
 
   // gets only the online users
   var getOnlineUsers = function(){
-    // return $http({
-    //   method: 'GET',
-    //   url: '/api/users/getusers'
-    // })
-    // .then(function(res) {
-    //   return res.data;
-    // });
+    return $http({
+      method: 'GET',
+      url: '/api/users/getOnlineUsers'
+    })
+    .then(function(res) {
+      return res.data;
+    });
   };
 
   return {
@@ -129,14 +129,18 @@ angular.module('battlescript.services', [])
 // inside various controllers
 ////////////////////////////////////////////////////////////
 
-.factory('Sockets', function() {
+.factory('Socket', function() {
 
   // creates a new socket base on the passed in params. Params
   // is an array of relationships, where each relationship is a
   // key pair value in string format
-  var createSocket = function(params) {
+  var createSocket = function(route, params) {
+    console.log('attempt to create');
     var query = params.join('&');
-    return io('http://localhost:8000', {query: query});
+    return io.connect('http://localhost:8000/#/' + route, {
+      query: query,
+      'force new connection': true
+    });
   };
 
   return {
@@ -164,19 +168,9 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Dashboard',function ($http){
-  var getOnlineUsers = function(){
-    return $http({
-      method: 'GET',
-      url: '/api/users/getusers'
-    })
-    .then(function(res) {
-      return res.data;
-    });
-  };
 
-  return {
-    getOnlineUsers : getOnlineUsers
-  };
+
+  return {};
 })
 
 ////////////////////////////////////////////////////////////
@@ -192,6 +186,17 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Battle', function($http) {
+
+  // checks if valid battle room
+  var isValidBattleRoom = function(hash) {
+    return $http({
+      method: 'POST',
+      url: '/api/battles/checkvalidbattleroom',
+      data: {hash: hash}
+    }).then(function(res) {
+      return res.data;
+    });
+  };
 
   // gets a battle
   var getBattle = function() {
@@ -219,6 +224,7 @@ angular.module('battlescript.services', [])
   };
 
   return {
+    isValidBattleRoom: isValidBattleRoom,
     getBattle: getBattle,
     attemptBattle: attemptBattle
   }

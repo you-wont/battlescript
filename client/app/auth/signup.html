@@ -1,6 +1,6 @@
 <div class="auth">
   <div class="container">      
-    <ng-include src="'app/partials/header-auth.html'"></ng-include>
+    <header-non-auth-partial></header-non-auth-partial>
     <div class="auth__message" ng-show="!!message">{{ message }}</div>
     <form class="auth-form" ng-submit="signup()">
       <h2 class="auth-form__title">Sign up now!</h2>
@@ -13,7 +13,7 @@
         <input class="form-control" type="password" ng-model="user.password">
       </div>
       <div class="auth-form__footer">
-        <button type="submit" class="btn btn--large btn--secondary">Sign In</button>
+        <button type="submit" class="btn btn--large btn--secondary">Sign Up</button>
       </div>
     </form>
     <div class="auth__footer">

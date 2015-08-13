@@ -1,4 +1,5 @@
-// var roomModel = require('../room/roomModel.js');
+// requirements
+var BattleController = require('../battles/BattleController');
 
 var socketList = {};
 
@@ -7,6 +8,8 @@ module.exports = function(socket, io){
 
   var username = socket.handshake.query.username;
   socketList[username] = socket.id;
+
+  console.log('LINE 11, DASBOARD HANDLER: ', username);
   
   // send signal that user has connected to dashboard
   var updateUsers = function(){
@@ -27,13 +30,22 @@ module.exports = function(socket, io){
 
   // look for signal that a battle has been accepted
   socket.on('battleAccepted', function(users) {
+    var userId = socketList[users.user];
     var opponentId = socketList[users.opponent];
 
-    // now, need to broadcast to the opponent that it's time for battle
-    socket.broadcast.to(opponentId).emit('prepareForBattle');
+    BattleController.addBattleRoom(function(roomhash) {
+      // now, need to broadcast to the opponent that it's time for battle
+      socket.broadcast.to(opponentId).emit('prepareForBattle', {roomhash: roomhash});
+
+      // and also, broadcast back to user
+      io.sockets.connected[userId].emit('prepareForBattle', {roomhash: roomhash});
+    });
   });
 
-  socket.on('userLoggedOut', function(){
-    updateUsers();
+  socket.on('disconnect', function(){
+    console.log('SERVER DISCONNECTing DASHBOARD SOCKET');
+    setTimeout(function() {
+      updateUsers();
+    }, 100);
   });
 };

@@ -1,18 +1,13 @@
 angular.module('battlescript.dashboard', [])
 
-.controller('DashboardController', function ($scope, $timeout, Sockets, Dashboard) {
-  // scope.username always refers to the curreng logged in user
-  // 
-  // TODO: extract this into the global set up, so we don't have to keep
-  // rededfining it in every controller
-  $scope.username = window.localStorage.getItem('username');
+.controller('DashboardController', function ($scope, $rootScope, $timeout, Dashboard, Users, Battle) {
+  // get current auth username
+  $scope.username = Users.getAuthUser();
 
   // this gets passed into the directive.
   // it definitely needs to be refactored depending on what happens
   // up above.
-  $scope.userInfo = {
-    username: $scope.username
-  };
+  $scope.userInfo = {username: $scope.username};
 
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
@@ -31,27 +26,26 @@ angular.module('battlescript.dashboard', [])
   // the logged in user
   $scope.battleRequestOpponentName = null;
 
-  ////////////////////////////////////////////////////////////
-  // set up sockets
-  ////////////////////////////////////////////////////////////
+  // 
+  $scope.battleRoomHash;
 
   // TODO: extract these out into a Socket factory for simple reuse
 
-  var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
+  // var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
 
-  $scope.$on('$routeChangeStart', $scope.logout);
+  // $scope.$on('$routeChangeStart', $scope.logout);
 
-  // This does the same, for refresh. Now go to socket handler for more info
-  window.onbeforeunload = function(e) {
-    $scope.logout();
-  };
+  // // This does the same, for refresh. Now go to socket handler for more info
+  // window.onbeforeunload = function(e) {
+  //   $scope.logout();
+  // };
   
-  // Logout on back button
-  window.addEventListener("hashchange", $scope.logout)
+  // // Logout on back button
+  // window.addEventListener("hashchange", $scope.logout)
 
-  $scope.logout = function(){
-    socket.emit('userLoggedOut');
-  };
+  // $scope.logout = function(){
+  //   socket.emit('userLoggedOut');
+  // };
 
   ////////////////////////////////////////////////////////////
   // set up online users
@@ -60,15 +54,17 @@ angular.module('battlescript.dashboard', [])
   $scope.onlineUsers;
 
   $scope.getOnlineUsers = function(){
-    Dashboard.getOnlineUsers()
+    Users.getOnlineUsers()
       .then(function(data) {
+        console.log(data);
         $scope.onlineUsers = data;
       });
   };
 
+  // run it on init
   $scope.getOnlineUsers();
 
-  socket.on('updateUsers', function() {
+  $rootScope.dashboardSocket.on('updateUsers', function() {
     $scope.getOnlineUsers();
   });
 
@@ -81,14 +77,14 @@ angular.module('battlescript.dashboard', [])
     $event.preventDefault();
 
     // now, we need to emit to the socket
-    socket.emit('outgoingBattleRequest', {
+    $rootScope.dashboardSocket.emit('outgoingBattleRequest', {
       fromUser: $scope.username,  // request from the logged in user
       toUser: opponentUsername    // request to the potential opponent
     });
   };
 
   // listen for incoming battle request
-  socket.on('incomingBattleRequest', function(user){
+  $rootScope.dashboardSocket.on('incomingBattleRequest', function(user){
     $scope.battleRequestOpponentName = user.fromUser;
     $scope.userHasBattleRequest = true;
     $scope.battleRequestStatus = 'open';
@@ -99,27 +95,31 @@ angular.module('battlescript.dashboard', [])
   // battle has been accepted
   $scope.battleAccepted = function() {
     // need to somehow notify challenger that the battle has been accepted
-    socket.emit('battleAccepted', {
+    $rootScope.dashboardSocket.emit('battleAccepted', {
+      user: $scope.username,                      // the user who accepted the battle
       opponent: $scope.battleRequestOpponentName  // the opponent needs to be notified
     });
   };
 
   // battle has been declined
   $scope.battleDeclined = function() {
-
+    // TODO: make it work.
   };
 
   // prepare for battle, only gets fired when a user has sent a battle request,
   // and another user has accepted.
-  socket.on('prepareForBattle', function() {
+  $rootScope.dashboardSocket.on('prepareForBattle', function(data) {
     // at this point, the opponent (i.e. the person who sent the initial battle
     // request) should be notified that the person he/she challenged has
     // accepted.
-    console.log('prepare for battle');
+    console.log('prepare for battle!', data);
 
-    // on this notification, the url hash needs to be generated and sent to the
-    // opponent.
-    
+    $scope.battleRoomHash = data.roomhash;
+
+    // a notification should pop up on both screens
+    $scope.userHasBattleRequest = true;
+    $scope.battleRequestStatus = 'init';
+    $scope.$apply();
     
     // the url hash needs to also be sent to the player who accepted the
     // challenge

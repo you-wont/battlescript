@@ -570,6 +570,26 @@ button:focus {
 
 /* -----------------------------------------------------------------------------
 
+  FOOTER
+  
+----------------------------------------------------------------------------- */
+.footer {
+  padding: 48px 0;
+  text-align: center;
+}
+
+.footer__heading {
+  margin-bottom: 12px;
+  color: #fff;
+  font-weight: 400;
+}
+
+.footer__copyright {
+  color: #3F5765;
+}
+
+/* -----------------------------------------------------------------------------
+
   AUTH
   
 ----------------------------------------------------------------------------- */
@@ -758,6 +778,7 @@ button:focus {
   top: 12px;
   right: 12px;
   padding: 24px;
+  width: 300px;
   background-color: #fff;
   box-shadow: -4px 4px 24px rgba(0, 0, 0, 0.4);
 }
@@ -775,22 +796,14 @@ button:focus {
   EDITOR COMPONENTS
   
 ----------------------------------------------------------------------------- */
-.editor {
-  display: block;
-  width: 100%;
-  max-width: 100%;
-  height: 360px;
-  font-size: 12px;
-}
-
-.editor-form__field {
+.editor__field {
   margin-bottom: 12px;
 }
 
-.editor__notes {
-  margin-top: 12px;
-  padding: 12px;
-  border: solid 1px #BDD4DE;
+.editor__text {
+  display: block;
+  width: 100%;
+  max-width: 100%;
 }
 
 /* code mirror theme overrides */
@@ -807,6 +820,15 @@ button:focus {
   BATTLE
   
 ----------------------------------------------------------------------------- */
+.battle {
+  /**/
+}
+
+/**
+ * battle-waiting
+ *
+ * This is the waiting area for the two battle players. 
+ */
 .battle-waiting {
   text-align: center;
 }
@@ -829,9 +851,14 @@ button:focus {
   text-align: center;
 }
 
-/*  */
+/**
+ * battle-field
+ *
+ * this is the official showdown area, where the prompt, both editors, and the
+ * notifications for users get loaded into.
+ */
 .battle-field__header {
-  margin-bottom: 24px;
+  margin-bottom: 48px;
   padding: 4px 0;
   text-align: center;
   border-bottom: solid 2px #3F5765;
@@ -848,6 +875,95 @@ button:focus {
   margin: 0 24px;
   color: #BDD4DE;
   font-style: italic;
+}
+
+/**
+ * battle-prompt
+ *
+ * This resides inside the battle field, but governs the prompt area
+ * specifically.
+ */
+.battle-prompt__description p,
+.battle-prompt__description ul,
+.battle-prompt__description ol {
+  margin-bottom: 12px;
+}
+
+.battle-prompt__description pre {
+  overflow: auto;
+  padding: 8px;
+  background-color: #EFEFEF;
+  font-size: 12px;
+  border: solid 1px #BDD4DE;
+}
+
+/**
+ * battle-player
+ *
+ * These are the battle player areas. Different styles will be rendered
+ * for different players (p1 and p2).
+ */
+.battle-player--p1 {
+  margin-bottom: 24px;
+}
+
+.battle-player__heading {
+  padding: 8px;
+  color: #3F5765;
+  background-color: #EFEFEF;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+/* code mirror player/editor size overrides */
+.battle-player--p2 .CodeMirror {
+  position: relative;
+  height: 120px;
+  font-size: 9px;
+  line-height: 1.2;
+  -webkit-filter: blur(1.5px);
+          filter: blur(1.5px);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+}
+
+.battle-player--p2 .CodeMirror-linenumber {
+  padding: 0 3px 0 5px;
+  min-width: 10px;
+  text-align: right;
+  color: #999;
+  white-space: nowrap;
+}
+
+.battle-player--p2 .CodeMirror pre {
+  padding: 0 20px;
+  /* Horizontal padding of content */
+}
+
+/**
+ * battle-notices
+ *
+ * Notices for the player in action!
+ */
+.battle-notices {
+  /**/
+}
+
+.battle-notices__heading {
+  padding: 8px;
+  color: #fff;
+  background-color: #EB7F00;
+  font-size: 12px;
+  font-weight: 400;
+  text-transform: uppercase;
+}
+
+.battle-notices__notes {
+  padding: 8px;
+  border: solid 1px #EB7F00;
 }
 
 /* -----------------------------------------------------------------------------
