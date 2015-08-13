@@ -22,14 +22,9 @@ server.listen(8000);
 var io = require('socket.io')(server);
 
 io.on('connection', function(socket) {
-  
   var handler = socket.handshake.query.handler;
   if (handler === 'dashboard') dashboardHandler(socket, io);
-
-
-  socket.on('disconnect', function() {
-    console.log('---------------------> SERVER SOCK DISCONNCETING');
-  });
+  if (handler === 'battle') battleHandler(socket, io);
 });
 
 // set up two handlers for separate sockets

@@ -1,35 +1,35 @@
+// keep a global obj for all rooms
 var rooms = {
   storage: {},
   roomCount: 0
 };
-var totalInRoom = 2;
 
-var Room = function(){
+var Room = function(roomhash) {
   var roomInstance = {};
   
   roomInstance.users =[];
   roomInstance.members = 0;
-  roomInstance.maxOccupancy = totalInRoom;
-  roomInstance.id = rooms.roomCount;
+  roomInstance.maxOccupancy = 2;
+  roomInstance.id = roomhash;
 
 
-  roomInstance.needsMember = function(){
-    if (this.members < this.maxOccupancy) {
-      return true;
-    } else {
-      return false;
-    }
+  roomInstance.needsMember = function() {
+    return this.members < this.maxOccupancy;
   }
 
   return roomInstance;
-}
+};
 
-var createRoom = function(){
-  var newRoom = Room();
+// creates a new room
+var createRoom = function(roomhash){
+  var newRoom = Room(roomhash);
+  
   updateRooms(newRoom);
+  
   rooms.roomCount += 1;
+
   return newRoom;
-}
+};
 
 
 var updateRooms = function(room){
@@ -46,24 +46,30 @@ var getOpenRoom = function(){
   }
   console.log("DIDNT FIND A SUITABLE ROOM");
   return null;
-}
+};
 
 var removeRoom = function(id){
   console.log("DELETING ROOM");
   delete rooms.storage[id];
-}
+};
 
-var createOrGetRoom = function(){
-  var openRoom = getOpenRoom();
-  if(!openRoom){ // returns null if there are no open rooms
-    console.log("CREATING A NEW ROOM");
-    var openRoom = createRoom();
-  } else {
-    console.log("FETCHED AN OPEN ROOM");
+var checkForRoomWithHash = function(roomhash){
+  // if (rooms.storage.[roomhash]) 
+};
+
+// check if room with roomhash id has already been created
+// if yes, send back that room
+// if no, create that room, with roomhash id, and send it back
+var createOrGetRoom = function(roomhash){
+  var room = rooms.storage[roomhash] || createRoom(roomhash);
+
+  if (room.needsMember()) {
+    room.members++;
+    return room;
   }
-  openRoom.members++;
-  return openRoom;
-}
+
+  return null;
+};
 
 
 
@@ -71,5 +77,3 @@ module.exports.createOrGetRoom = createOrGetRoom;
 module.exports.updateRooms = updateRooms;
 module.exports.removeRoom = removeRoom;
 module.exports.rooms = rooms;
-
-

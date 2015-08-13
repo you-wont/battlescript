@@ -135,9 +135,12 @@ angular.module('battlescript.services', [])
   // is an array of relationships, where each relationship is a
   // key pair value in string format
   var createSocket = function(route, params) {
+    console.log('attempt to create');
     var query = params.join('&');
-    console.log(query);
-    return io.connect('http://localhost:8000/#/' + route, {query: query});
+    return io.connect('http://localhost:8000/#/' + route, {
+      query: query,
+      'force new connection': true
+    });
   };
 
   return {

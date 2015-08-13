@@ -9,7 +9,7 @@ module.exports = function(socket, io){
   var username = socket.handshake.query.username;
   socketList[username] = socket.id;
 
-  console.log('LINE 11: ', username);
+  console.log('LINE 11, DASBOARD HANDLER: ', username);
   
   // send signal that user has connected to dashboard
   var updateUsers = function(){
@@ -43,7 +43,7 @@ module.exports = function(socket, io){
   });
 
   socket.on('disconnect', function(){
-    console.log('SERVER TRYING TO DISCONNECT -----------> here');
+    console.log('SERVER DISCONNECTing DASHBOARD SOCKET');
     setTimeout(function() {
       updateUsers();
     }, 100);

@@ -18,11 +18,6 @@ BattleSchema.methods.generateHash = function () {
   return shasum.digest('hex').slice(0, 10);
 };
 
-// Constains returns false, or the index of the hash
-BattleSchema.methods.contains = function (hash) {
-  
-};
-
 BattleSchema.pre('save', function (next) {
   var roomhash = this.generateHash();
   this.roomhash = roomhash;
