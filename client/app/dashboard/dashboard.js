@@ -1,18 +1,13 @@
 angular.module('battlescript.dashboard', [])
 
-.controller('DashboardController', function ($scope, $rootScope, $timeout, Dashboard, Users) {
-  // scope.username always refers to the curreng logged in user
-  // 
-  // TODO: extract this into the global set up, so we don't have to keep
-  // rededfining it in every controller
-  $scope.username = window.localStorage.getItem('username');
+.controller('DashboardController', function ($scope, $rootScope, $timeout, Dashboard, Users, Battle) {
+  // get current auth username
+  $scope.username = Users.getAuthUser();
 
   // this gets passed into the directive.
   // it definitely needs to be refactored depending on what happens
   // up above.
-  $scope.userInfo = {
-    username: $scope.username
-  };
+  $scope.userInfo = {username: $scope.username};
 
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
@@ -30,6 +25,9 @@ angular.module('battlescript.dashboard', [])
   // this defaults to null, because by default, no opponents have challenged
   // the logged in user
   $scope.battleRequestOpponentName = null;
+
+  // 
+  $scope.battleRoomHash;
 
   // TODO: extract these out into a Socket factory for simple reuse
 
@@ -105,16 +103,18 @@ angular.module('battlescript.dashboard', [])
 
   // battle has been declined
   $scope.battleDeclined = function() {
-
+    // TODO: make it work.
   };
 
   // prepare for battle, only gets fired when a user has sent a battle request,
   // and another user has accepted.
-  $rootScope.dashboardSocket.on('prepareForBattle', function() {
+  $rootScope.dashboardSocket.on('prepareForBattle', function(data) {
     // at this point, the opponent (i.e. the person who sent the initial battle
     // request) should be notified that the person he/she challenged has
     // accepted.
-    console.log('prepare for battle!');
+    console.log('prepare for battle!', data);
+
+    $scope.battleRoomHash = data.roomhash;
 
     // a notification should pop up on both screens
     $scope.userHasBattleRequest = true;

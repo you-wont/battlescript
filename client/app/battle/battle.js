@@ -12,9 +12,7 @@ angular.module('battlescript.battle', [])
   // this gets passed into the directive.
   // it definitely needs to be refactored depending on what happens
   // up above.
-  $scope.userInfo = {
-    username: $scope.playerOne
-  };
+  $scope.userInfo = {username: $scope.username};
 
 
 

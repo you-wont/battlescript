@@ -1,4 +1,5 @@
-// var roomModel = require('../room/roomModel.js');
+// requirements
+var BattleController = require('../battles/BattleController');
 
 var socketList = {};
 
@@ -32,11 +33,13 @@ module.exports = function(socket, io){
     var userId = socketList[users.user];
     var opponentId = socketList[users.opponent];
 
-    // now, need to broadcast to the opponent that it's time for battle
-    socket.broadcast.to(opponentId).emit('prepareForBattle');
+    BattleController.addBattleRoom(function(roomhash) {
+      // now, need to broadcast to the opponent that it's time for battle
+      socket.broadcast.to(opponentId).emit('prepareForBattle', {roomhash: roomhash});
 
-    // and also, broadcast back to user
-    io.sockets.connected[userId].emit('prepareForBattle');
+      // and also, broadcast back to user
+      io.sockets.connected[userId].emit('prepareForBattle', {roomhash: roomhash});
+    });
   });
 
   socket.on('disconnect', function(){
