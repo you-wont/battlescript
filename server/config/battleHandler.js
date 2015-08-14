@@ -4,7 +4,6 @@ module.exports = function(socket, io){
   var username = socket.handshake.query.username;
   var roomhash = socket.handshake.query.roomhash;
 
-  console.log(username, ' connected to room: ', roomhash);
 
   var joinedRoom = roomModel.createOrGetRoom(roomhash);
 
@@ -12,7 +11,7 @@ module.exports = function(socket, io){
     console.log('full');
   } else {
     // you have joined the room!!!
-    console.log('hi');
+    console.log(username, ' connected to room: ', roomhash);
 
     joinedRoom.users.push(username);
     socket.join(joinedRoom.id);

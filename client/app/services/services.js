@@ -195,10 +195,11 @@ angular.module('battlescript.services', [])
   };
 
   // gets a battle
-  var getBattle = function() {
+  var getBattle = function(battleHash) {
     return $http({
-      method: 'GET',
+      method: 'POST',
       url: '/api/duels/getduel',
+      data: {battleHash: battleHash}
     }).then(function(res) {
       return res.data;
     });

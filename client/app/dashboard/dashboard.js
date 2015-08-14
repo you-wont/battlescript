@@ -9,6 +9,7 @@ angular.module('battlescript.dashboard', [])
   // up above.
   $scope.userInfo = {username: $scope.username};
 
+  $scope.challengeLevel = 8;
   $scope.currentStreak = 0;
   $scope.longestStreak = 0;
   $scope.totalWins = 0;
@@ -79,29 +80,34 @@ angular.module('battlescript.dashboard', [])
   // Open up socket with specific dashboard server handler
   $scope.requestBattle = function($event, opponentUsername) {
     $event.preventDefault();
+    console.log("CHALLENGE LEVEL: ", $scope.challengeLevel);
 
     // now, we need to emit to the socket
     $rootScope.dashboardSocket.emit('outgoingBattleRequest', {
       fromUser: $scope.username,  // request from the logged in user
-      toUser: opponentUsername    // request to the potential opponent
+      toUser: opponentUsername,    // request to the potential opponent
+      challengeLevel: $scope.challengeLevel
     });
   };
 
   // listen for incoming battle request
-  $rootScope.dashboardSocket.on('incomingBattleRequest', function(user){
-    $scope.battleRequestOpponentName = user.fromUser;
+  $rootScope.dashboardSocket.on('incomingBattleRequest', function(userData){
+    $scope.battleRequestOpponentName = userData.fromUser;
+    $scope.battleRequestChallengeLevel = userData.challengeLevel;
     $scope.userHasBattleRequest = true;
     $scope.battleRequestStatus = 'open';
     $scope.$apply();
-    console.log("opponent has challenged you: ", user.fromUser);
+    console.log("opponent has challenged you: ", userData.fromUser);
   });
 
   // battle has been accepted
   $scope.battleAccepted = function() {
+    console.log("CHALLENGE ACCEPTED, CHALLENGE LEVEL: ", $scope.battleRequestChallengeLevel);
     // need to somehow notify challenger that the battle has been accepted
     $rootScope.dashboardSocket.emit('battleAccepted', {
       user: $scope.username,                      // the user who accepted the battle
-      opponent: $scope.battleRequestOpponentName  // the opponent needs to be notified
+      opponent: $scope.battleRequestOpponentName,  // the opponent needs to be notified
+      challengeLevel: $scope.battleRequestChallengeLevel
     });
   };
 

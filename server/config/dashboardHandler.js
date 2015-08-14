@@ -22,20 +22,23 @@ module.exports = function(socket, io){
   updateUsers();
   
   // look for signal that someone wants to battle
-  socket.on('outgoingBattleRequest', function(users){
-    var oppId = socketList[users.toUser];
+  socket.on('outgoingBattleRequest', function(userData){
+    var oppId = socketList[userData.toUser];
 
     socket.broadcast.to(oppId).emit('incomingBattleRequest', {
-      fromUser: users.fromUser
+      fromUser: userData.fromUser,
+      challengeLevel: userData.challengeLevel
     });
   });
 
   // look for signal that a battle has been accepted
-  socket.on('battleAccepted', function(users) {
-    var userId = socketList[users.user];
-    var opponentId = socketList[users.opponent];
+  socket.on('battleAccepted', function(userData) {
+    var userId = socketList[userData.user];
+    var opponentId = socketList[userData.opponent];
+    var challengeLevel = userData.challengeLevel;
+    console.log("BATTLE ACCEPTED, CHALLENGE LEVEL: ", challengeLevel);
 
-    BattleController.addBattleRoom(function(roomhash) {
+    BattleController.addBattleRoom(challengeLevel, function(roomhash) {
       // now, need to broadcast to the opponent that it's time for battle
       socket.broadcast.to(opponentId).emit('prepareForBattle', {roomhash: roomhash});
 

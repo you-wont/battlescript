@@ -211,7 +211,8 @@ angular.module('battlescript.battle', [])
 
     // fetch a battle
     $scope.getBattle = function() {
-      Battle.getBattle()
+      // console.log("THIS IS THE BATTLE HASH: ", $scope.battleRoomId);
+      Battle.getBattle($scope.battleRoomId)
         .then(function(data) {
           // battle prompt loaded is now true
           $scope.battlePromptLoaded = true;
