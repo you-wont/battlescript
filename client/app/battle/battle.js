@@ -190,10 +190,15 @@ angular.module('battlescript.battle', [])
     // we also need to check if both players are ready, to immediately prepare
     // the battle down below
     $scope.ifBothPlayersReady = function() {
-      if ($scope.userReadyState && $scope.opponentReadyState) {
+      if ($scope.userReadyState && $scope.opponentReadyState || window.localStorage.getItem('battleInitiated-' + $scope.battleRoomId)) {
+        // Save battle initiated to local storage: this will reload battle automatically
+        // if user refreshes page, or comes back to battle after leaving accidentally
+        window.localStorage.setItem('battleInitiated-' + $scope.battleRoomId, true);
         $scope.getBattle();
       }
     };
+
+    
 
 
 
@@ -267,6 +272,9 @@ angular.module('battlescript.battle', [])
           }
         });
     };
+
+    $scope.ifBothPlayersReady(); // calls the function immediately, in case of refresh
+
   };
 
 });
