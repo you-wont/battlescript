@@ -86,7 +86,9 @@ angular.module('battlescript.dashboard', [])
 
   // battle has been declined
   $scope.battleDeclined = function() {
-    // TODO: make it work.
+    // Reset everything :)
+    $scope.userHasBattleRequest = false;
+    $scope.battleRequestStatus = 'none';
   };
 
   // prepare for battle, only gets fired when a user has sent a battle request,
