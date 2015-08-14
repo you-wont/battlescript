@@ -8,6 +8,8 @@ angular.module('battlescript.battle', [])
 
   $scope.battleRoomId = $stateParams.id;
   $scope.battleInitialized = false;
+  $scope.currentUser = Users.getAuthUser();
+  $scope.opponent = 'waiting... '
 
   console.log('we are here....');
 
@@ -34,51 +36,13 @@ angular.module('battlescript.battle', [])
 
     $scope.battleInitialized = true;
 
-    $scope.user = Users.getAuthUser();
+    $scope.user = $scope.currentUser;
     $scope.opponent = 'waiting...';
 
     // this gets passed into the directive.
     // it definitely needs to be refactored depending on what happens
     // up above.
     $scope.userInfo = {username: $scope.user};
-
-
-    ////////////////////////////////////////////////////////////
-    // handle socket events
-    ////////////////////////////////////////////////////////////
-
-    $rootScope.battleSocket.emit('updateUsers');
-
-    $rootScope.battleSocket.on('userList', function(userArray){
-      // THIS WILL ONLY WORK FOR TWO USERS RIGHT NOW
-      // loop over array looking for other users
-      if (userArray.length === 1){
-        $scope.opponent = 'waiting...';
-      }
-      userArray.forEach(function(name){
-        if(name !== $scope.user){
-          $scope.opponent = name;    
-          $scope.$apply();
-        }
-      });
-    });
-
-    // What this does is when someone goes on a different page, it disconnects the "user"
-    // So, it emits the event disconnect user
-    // $scope.$on('$stateChangeStart', $scope.logout);
-
-    // This does the same, for refresh. Now go to socket handler for more info
-    // window.onbeforeunload = function(e) {
-    //   $scope.logout();
-    // };
-    
-    // Logout on back button
-    // window.addEventListener("hashchange", $scope.logout)
-
-    // $scope.logout = function(){
-    //   socket.emit('updateUsers');
-    //   socket.emit('disconnectedClient', {username: $scope.user});
-    // };
 
     ////////////////////////////////////////////////////////////
     // configure both editors and wire them to socket
@@ -95,7 +59,7 @@ angular.module('battlescript.battle', [])
       theme: 'material',
       indentUnit: 2,
       tabSize: 2,
-      lineNumbers: true
+      lineNumbers: false
     });
 
     // set up editor 2
@@ -180,7 +144,7 @@ angular.module('battlescript.battle', [])
         $scope.userReadyText = 'Ready for battle!';
 
         // emit a socket event
-        $rootScope.battleSocket.emit('userReady');
+        $rootScope.battleSocket.emit('userReady', $scope.currentUser);
 
         // check if both players ready
         $scope.ifBothPlayersReady();
@@ -193,11 +157,12 @@ angular.module('battlescript.battle', [])
     $scope.opponentReadyText = 'Waiting on opponent';
 
     // this time, let sockets listen for player two ready event
-    $rootScope.battleSocket.on('opponentReady', function() {
+    $rootScope.battleSocket.on('opponentReady', function(opponent) {
       if ($scope.opponentReadyState === false) {
         $scope.opponentReadyState = true;
         $scope.opponentReadyClass = 'active';
         $scope.opponentReadyText = 'Ready for battle!';
+        $scope.opponent = opponent;
         $scope.ifBothPlayersReady();
       }
     });

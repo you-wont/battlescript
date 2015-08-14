@@ -59,8 +59,8 @@ module.exports = function(socket, io){
     // handle and emit player ready events
     ////////////////////////////////////////////////////////////
 
-    socket.on('userReady', function() {
-      socket.broadcast.to(joinedRoom.id).emit('opponentReady');
+    socket.on('userReady', function(data) {
+      socket.broadcast.to(joinedRoom.id).emit('opponentReady', data);
     });
   }
 
