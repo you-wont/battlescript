@@ -20,13 +20,6 @@ module.exports = function(socket, io){
     // Emit array of all users to a room when someone joins
     socket.in(joinedRoom.id).emit('userJoined', joinedRoom.users);
 
-    // TODO: used to be updateUsers in the battle.js file
-    socket.on('updateBattleRoomMembers', function(){
-      setTimeout(function(){
-        io.in(joinedRoom.id).emit('userList', joinedRoom.users);
-      }, 100);
-    });
-
     // handle text changes
     socket.on('textChange', function(data){
       socket.broadcast.to(joinedRoom.id).emit('updateEnemy', data);

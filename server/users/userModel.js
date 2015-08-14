@@ -17,11 +17,6 @@ var UserSchema = new mongoose.Schema({
   },
   salt: String,
 
-  onlineStatus: {
-    type: Boolean,
-    default: false
-  }
-  
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {

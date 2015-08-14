@@ -29,43 +29,26 @@ angular.module('battlescript.dashboard', [])
   // 
   $scope.battleRoomHash;
 
-  // TODO: extract these out into a Socket factory for simple reuse
-
-  // var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
-
-  // $scope.$on('$routeChangeStart', $scope.logout);
-
-  // // This does the same, for refresh. Now go to socket handler for more info
-  // window.onbeforeunload = function(e) {
-  //   $scope.logout();
-  // };
-  
-  // // Logout on back button
-  // window.addEventListener("hashchange", $scope.logout)
-
-  // $scope.logout = function(){
-  //   socket.emit('userLoggedOut');
-  // };
-
   ////////////////////////////////////////////////////////////
   // set up online users
   ////////////////////////////////////////////////////////////
 
   $scope.onlineUsers;
 
-  $scope.getOnlineUsers = function(){
-    Users.getOnlineUsers()
-      .then(function(data) {
-        console.log(data);
-        $scope.onlineUsers = data;
-      });
-  };
 
-  // run it on init
-  $scope.getOnlineUsers();
+  $rootScope.dashboardSocket.on('updateUsers', function(data) {
+    //TODO: Online users.
 
-  $rootScope.dashboardSocket.on('updateUsers', function() {
-    $scope.getOnlineUsers();
+    console.log('NEED TO UPDATE USERS CUZ OF SOME EVENT');
+    console.log(data);
+
+    if (data[$scope.username]) {
+      delete data[$scope.username];
+    }
+
+    $scope.onlineUsers = data;
+    $scope.$apply();
+
   });
 
   ////////////////////////////////////////////////////////////

@@ -57,9 +57,9 @@
             <h2 class="dashboar-widget__title">Online Now</h2>
             <ul class="dashboard-online__list">
               <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
-                <span>{{ value.username }}</span>
+                <span>{{ key }}</span>
                 <span>Rank: (1)</span>
-                <span><a href="#" ng-click="requestBattle($event, value.username)">Challenge?</a></span>
+                <span><a href="#" ng-click="requestBattle($event, key)">Challenge?</a></span>
               </li>
             </ul>
           </div><!-- /dashboar widget -->
