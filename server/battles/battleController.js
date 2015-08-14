@@ -4,8 +4,9 @@ var Battle = require('./battleModel.js'),
 module.exports = {
 
   // use on the server only
-  addBattleRoom: function (cb) {
-    Battle.create({}, function(err, battleRoom) {
+  addBattleRoom: function (challengeLevel, cb) {
+    console.log("ADDING BATTLE ROOM, CHALLENGE LEVEL: ", challengeLevel);
+    Battle.create({challengeLevel: challengeLevel}, function(err, battleRoom) {
       if (err) console.log(err);
 
       cb(battleRoom.roomhash);

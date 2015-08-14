@@ -5,7 +5,7 @@
     <div class="dashboard">
 
       <div class="dashboard-notification" ng-show="userHasBattleRequest && battleRequestStatus === 'open'">
-        <h2 class="dashboard-notification__title">{{ battleRequestOpponentName }} challenged you!</h2>
+        <h2 class="dashboard-notification__title">{{ battleRequestOpponentName }} challenged you! (level: {{battleRequestChallengeLevel}})</h2>
         <button class="dashboard-notification__button btn btn--secondary btn--medium btn--block" ng-click="battleAccepted()">Accept</button>
         <button class="dashboard-notification__button btn btn--primary btn--medium btn--block" ng-click="battleDeclined()">Decline</button>
       </div>
@@ -44,6 +44,10 @@
             </div>
           </div>
         </div>
+      </div>
+
+      <div class="challenge-level">
+        <input class="challenge-input" type="text" placeholder="enter a challenge level" ng-model="challengeLevel"/>
       </div>
 
       <div class="grid grid--l">
