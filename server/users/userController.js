@@ -2,8 +2,6 @@ var User = require('./userModel.js'),
     Q    = require('q'),
     jwt  = require('jwt-simple');
 
-var currentUsers = {};
-
 module.exports = {
   signin: function (req, res, next) {
     var username = req.body.username,
@@ -22,12 +20,7 @@ module.exports = {
                 res.json({token: token});
 
                 //Set the user to be online
-                user.onlineStatus = true;
                 user.save();
-
-                //save the user to currentUsers array
-                currentUsers[user.username] = user;
-                console.log("CURRENT USER LIST :", currentUsers);
 
               } else {
                 return next(new Error('No user'));
@@ -65,13 +58,7 @@ module.exports = {
       })
       .then(function (user) {
         
-        //Set the user to be online
-        user.onlineStatus = true;
         user.save();
-
-        // save user to current user array - DELETE THIS LATER
-        currentUsers[user.username] = user;
-        console.log("CURRENT USER LIST :", currentUsers);
 
         // create token to send back for auth
         var token = jwt.encode(user, 'secret');
@@ -115,29 +102,44 @@ module.exports = {
       findUser({username: username})
         .then(function (user) {
 
-          // set user to be offline
-          user.onlineStatus = false;
           user.save();
-          
-          // remove user from currentonline user list - DELETE THIS LATER
-          var username = user.username;
-          delete currentUsers[username];
-
-          // console.log('THIS IS USER', user)
-          // console.log("this is username", username);
-          // console.log(">>>> when log out",currentUsers)
         });
   },
 
-  getOnlineUsers: function (req, res, next){
-    //console.log("SENDING CURRENT USERS ", currentUsers);
-    var findUsers = Q.nbind(User.find, User);
-    findUsers({onlineStatus: true})
-    .then(function(onlineUsers){
-      console.log("SENDING ONLINE USERS");
-      res.send(onlineUsers)
-    })
+  stats: function(req, res, next){
 
-    // res.send(currentUsers);
+    var username = req.query.username;
+
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: username})
+      .then(function (user) {
+        console.log(user);
+        res.send({
+          totalWins: user.totalWins,
+          currentStreak: user.currentStreak,
+          longestStreak: user.longestStreak
+        })
+      })
+    
+  }, 
+
+  statChange: function(req, res, next) {
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: req.body.username})
+      .then(function (user) {
+        if (req.body.winIncrease > 0) {
+          user.winIncrease += req.body.winIncrease;
+          user.currentStreak += req.body.winIncrease;
+          user.totalWins += req.body.winIncrease;
+
+          if (user.currentStreak > user.longestStreak) {
+            user.longestStreak = user.currentStreak;
+          }
+
+        } else {
+          user.currentStreak = 0;
+        }
+        user.save();
+      });
   }
 };

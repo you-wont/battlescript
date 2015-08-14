@@ -92,33 +92,29 @@ angular.module('battlescript.services', [])
     return window.localStorage.getItem('username');
   };
 
-  // gets all the users
-  var getUsers = function(){
-    // return $http({
-    //   method: 'GET',
-    //   url: '/api/users/getusers'
-    // })
-    // .then(function(res) {
-    //   return res.data;
-    // });
-  };
-
-  // gets only the online users
-  var getOnlineUsers = function(){
+  var getStats = function(username) {
     return $http({
       method: 'GET',
-      url: '/api/users/getOnlineUsers'
-    })
-    .then(function(res) {
+      url: '/api/users/stats',
+      params: {username: username}
+    }).then(function(res) {
       return res.data;
     });
   };
 
+  var statChange = function(username, winIncrease) {
+    return $http({
+      method: 'POST',
+      url: '/api/users/statchange',
+      data: {username: username, winIncrease: winIncrease}
+    })
+  }
+
   return {
     getAuthUser: getAuthUser,
-    getUsers : getUsers,
-    getOnlineUsers: getOnlineUsers
-  };
+    getStats: getStats,
+    statChange: statChange
+  }
 
 })
 

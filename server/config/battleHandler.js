@@ -20,17 +20,14 @@ module.exports = function(socket, io){
     // Emit array of all users to a room when someone joins
     socket.in(joinedRoom.id).emit('userJoined', joinedRoom.users);
 
-    // TODO: used to be updateUsers in the battle.js file
-    socket.on('updateBattleRoomMembers', function(){
-      setTimeout(function(){
-        io.in(joinedRoom.id).emit('userList', joinedRoom.users);
-      }, 100);
-    });
-
     // handle text changes
     socket.on('textChange', function(data){
       socket.broadcast.to(joinedRoom.id).emit('updateEnemy', data);
     });
+
+    socket.on('winnerFound', function(){
+      socket.broadcast.to(joinedRoom.id).emit('opponentWon');
+    })
     
     // I catch the disconnected client. What I do is 'remove' the memeber from the room
     // I also delete it if there are no people in the room
@@ -59,8 +56,8 @@ module.exports = function(socket, io){
     // handle and emit player ready events
     ////////////////////////////////////////////////////////////
 
-    socket.on('userReady', function() {
-      socket.broadcast.to(joinedRoom.id).emit('opponentReady');
+    socket.on('userReady', function(data) {
+      socket.broadcast.to(joinedRoom.id).emit('opponentReady', data);
     });
   }
 

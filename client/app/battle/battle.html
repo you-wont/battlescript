@@ -22,7 +22,7 @@
       <div class="battle-field" ng-show="battlePromptLoaded">
         
         <div class="battle-field__header">
-          <p>nick <span>-vs-</span> bob</p>
+          <p>{{currentUser}} <span>-vs-</span> {{opponent}}</p>
         </div><!-- /battlefield header -->
 
         <div class="grid grid--l">
@@ -45,9 +45,6 @@
                 <div class="editor__footer">
                   <button type="submit" class="btn btn--secondary btn--small" ng-click="attemptBattle($event)">
                     {{ userButtonAttempt }}
-                  </button>
-                  <button type="submit" class="btn btn--primary btn--small" ng-click="attemptBattle($event)" disabled>
-                    {{ userButtonSubmitFinal }}
                   </button>
                 </div>
               </form><!-- /editor -->

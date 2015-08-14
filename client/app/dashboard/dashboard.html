@@ -16,14 +16,14 @@
       </div>
 
       <div class="dashboard-stats">
-        <h1 class="dashboard-stats__title">Welcome back, Nick!</h1>
+        <h1 class="dashboard-stats__title">Welcome back, {{ username }}!</h1>
 
         <div class="grid grid--l">
           <div class="grid__item grid__item--33-l">
             <div class="dashboard-stats-entry">
               <h3 class="dashboard-stats-entry__title">Current Streak</h3>
               <div class="dashboard-stats-entry__body">
-                <p class="dashboard-stats-entry__stat"><span>2</span> wins</p>
+                <p class="dashboard-stats-entry__stat"><span>{{ currentStreak }}</span> wins</p>
               </div>
             </div>
           </div>
@@ -31,7 +31,7 @@
             <div class="dashboard-stats-entry">
               <h3 class="dashboard-stats-entry__title">Longest Streak</h3>
               <div class="dashboard-stats-entry__body">
-                <p class="dashboard-stats-entry__stat"><span>5</span> wins</p>
+                <p class="dashboard-stats-entry__stat"><span>{{ longestStreak }}</span> wins</p>
               </div>
             </div>
           </div>
@@ -39,7 +39,7 @@
             <div class="dashboard-stats-entry">
               <h3 class="dashboard-stats-entry__title">All Time</h3>
               <div class="dashboard-stats-entry__body">
-                <p class="dashboard-stats-entry__stat"><span>22</span> wins, <span>2005</span> points</p>
+                <p class="dashboard-stats-entry__stat"><span>{{ totalWins }}</span> wins, <span>{{ points }}</span> points</p>
               </div>
             </div>
           </div>
@@ -57,9 +57,9 @@
             <h2 class="dashboar-widget__title">Online Now</h2>
             <ul class="dashboard-online__list">
               <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
-                <span>{{ value.username }}</span>
+                <span>{{ key }}</span>
                 <span>Rank: (1)</span>
-                <span><a href="#" ng-click="requestBattle($event, value.username)">Challenge?</a></span>
+                <span><a href="#" ng-click="requestBattle($event, key)">Challenge?</a></span>
               </li>
             </ul>
           </div><!-- /dashboar widget -->

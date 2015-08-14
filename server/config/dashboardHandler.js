@@ -13,10 +13,12 @@ module.exports = function(socket, io){
   
   // send signal that user has connected to dashboard
   var updateUsers = function(){
-    socket.in('dashboard').emit('updateUsers');
+    socket.in('dashboard').emit('updateUsers', socketList);
+    socket.emit('updateUsers', socketList);
   }
 
   // Update Users when first connected
+  
   updateUsers();
   
   // look for signal that someone wants to battle
@@ -44,6 +46,8 @@ module.exports = function(socket, io){
 
   socket.on('disconnect', function(){
     console.log('SERVER DISCONNECTing DASHBOARD SOCKET');
+    delete socketList[username];
+
     setTimeout(function() {
       updateUsers();
     }, 100);

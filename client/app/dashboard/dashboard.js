@@ -9,6 +9,10 @@ angular.module('battlescript.dashboard', [])
   // up above.
   $scope.userInfo = {username: $scope.username};
 
+  $scope.currentStreak = 0;
+  $scope.longestStreak = 0;
+  $scope.totalWins = 0;
+
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
   ////////////////////////////////////////////////////////////
@@ -29,44 +33,44 @@ angular.module('battlescript.dashboard', [])
   // 
   $scope.battleRoomHash;
 
-  // TODO: extract these out into a Socket factory for simple reuse
-
-  // var socket = Sockets.createSocket(['username=nick', 'handler=dashboard']);
-
-  // $scope.$on('$routeChangeStart', $scope.logout);
-
-  // // This does the same, for refresh. Now go to socket handler for more info
-  // window.onbeforeunload = function(e) {
-  //   $scope.logout();
-  // };
-  
-  // // Logout on back button
-  // window.addEventListener("hashchange", $scope.logout)
-
-  // $scope.logout = function(){
-  //   socket.emit('userLoggedOut');
-  // };
-
   ////////////////////////////////////////////////////////////
   // set up online users
   ////////////////////////////////////////////////////////////
 
   $scope.onlineUsers;
 
-  $scope.getOnlineUsers = function(){
-    Users.getOnlineUsers()
-      .then(function(data) {
-        console.log(data);
-        $scope.onlineUsers = data;
-      });
-  };
 
-  // run it on init
-  $scope.getOnlineUsers();
+  $rootScope.dashboardSocket.on('updateUsers', function(data) {
+    //TODO: Online users.
 
-  $rootScope.dashboardSocket.on('updateUsers', function() {
-    $scope.getOnlineUsers();
+    console.log('NEED TO UPDATE USERS CUZ OF SOME EVENT');
+    console.log(data);
+
+    if (data[$scope.username]) {
+      delete data[$scope.username];
+    }
+
+    $scope.onlineUsers = data;
+    $scope.$apply();
+
   });
+
+
+  ////////////////////////////////////////////////////////////
+  // get user stats for dashboard
+  ////////////////////////////////////////////////////////////
+
+  $scope.getStats = function(username) {
+    Users.getStats(username)
+      .then(function(stats){
+        $scope.currentStreak = stats.currentStreak;
+        $scope.longestStreak = stats.longestStreak;
+        $scope.totalWins = stats.totalWins;
+        $scope.points = $scope.totalWins * 10;
+      });
+  }
+
+  $scope.getStats($scope.username);
 
   ////////////////////////////////////////////////////////////
   // handle battle requests
@@ -103,7 +107,9 @@ angular.module('battlescript.dashboard', [])
 
   // battle has been declined
   $scope.battleDeclined = function() {
-    // TODO: make it work.
+    // Reset everything :)
+    $scope.userHasBattleRequest = false;
+    $scope.battleRequestStatus = 'none';
   };
 
   // prepare for battle, only gets fired when a user has sent a battle request,
