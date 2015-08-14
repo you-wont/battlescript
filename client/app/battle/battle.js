@@ -50,7 +50,6 @@ angular.module('battlescript.battle', [])
 
     // set up buttons
     $scope.userButtonAttempt = 'Attempt Solution';
-    $scope.userButtonSubmitFinal = 'Submit Final';
     $scope.userNotes = 'Nothing to show yet...';
 
     // set up editor 1
@@ -249,6 +248,10 @@ angular.module('battlescript.battle', [])
           // TODO: polling is successful at this point in time, time to send
           // and recieve the correct data
           console.log(data);
+          if (data['passed'] === true) {
+            alert('You have the answer. Good job!');
+            $scope.userNotes = "All tests passing!";
+          }
         });
     };
   };
