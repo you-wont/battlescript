@@ -28,27 +28,29 @@ BattleSchema.methods.generateHash = function () {
   return shasum.digest('hex').slice(0, 10);
 };
 
-BattleSchema.methods.pickChallenge = function (challengeLevel) {
+BattleSchema.methods.pickChallenge = function (challengeLevel, callback) {
   var challengeName;
   var filePath = __dirname + '/../challenges/level-' + challengeLevel;
-  console.log("FILEPATH: ", filePath);
-  // fs.readFile(filePath, function(err, data){
-  //   var challenges = data.toString().split('\n');
-
-  //   // pick random challenge
-  // })
-
-  return "sum-of-intervals";
+  // console.log("FILEPATH: ", filePath);
+  fs.readFile(filePath, function(err, data){
+    var challenges = data.toString().split('\n');
+    var randomPick = Math.floor(Math.random(0, challenges.length));
+    var challenge = challenges[randomPick];
+    var challengeSlug = challenge.split('/kata/')[1]; // separates slug from full url
+    // console.log("CHALLENGE SLUG: ", challengeSlug);
+    callback(challengeSlug);
+  })
 };
 
 BattleSchema.pre('save', function (next) {
   var roomhash = this.generateHash();
+  var that = this;
   this.roomhash = roomhash;
-
-  //select a specific challenge
-  this.challengeName = this.pickChallenge(this.challengeLevel);
-
-  next();
+  this.pickChallenge(this.challengeLevel, function(challengeName){
+    that.challengeName = challengeName;
+    console.log("CHALLENGE PRE SAVE NAME: ", that.challengeName);
+    next();
+  });
 });
 
 module.exports = mongoose.model('battles', BattleSchema);

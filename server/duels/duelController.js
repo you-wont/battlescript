@@ -1,16 +1,22 @@
 var request = require('request');
+var Battle = require('../battles/battleModel.js')
 
 module.exports = {
   getDuel: function(req, res) {
-    var options = {
-      url: 'https://www.codewars.com/api/v1/code-challenges/5513795bd3fafb56c200049e/javascript/train',
-      headers: {
-        'Authorization': process.env.CODEWARS_AUTHORIZATION
-      }
-    };
-    
-    request.post(options, function(error, response, body) {
-      res.send(response);
+    // if(Battle) console.log("BATTLE MODEL EXISTS");
+    console.log("REQ BODY: ", req.body);
+    Battle.findOne({roomhash: req.body.battleHash}, function(err, battleRoom){
+      console.log("BATTLEROOM: ", battleRoom);
+      var options = {
+        // url: 'https://www.codewars.com/api/v1/code-challenges/5513795bd3fafb56c200049e/javascript/train',
+        url: 'https://www.codewars.com/api/v1/code-challenges/'+ battleRoom.challengeName + '/javascript/train',
+        headers: {
+          'Authorization': process.env.CODEWARS_AUTHORIZATION
+        }
+      };
+      request.post(options, function(error, response, body) {
+        res.send(response);
+      });
     });
   },
 
