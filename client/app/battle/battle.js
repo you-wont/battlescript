@@ -168,6 +168,7 @@ angular.module('battlescript.battle', [])
 
     $rootScope.battleSocket.on('opponentWon', function(){
       alert('Looks like your opponent got the answer first!');
+      $location.path('/dashboard'); //redirect back. winner found
     })
 
 
@@ -253,9 +254,10 @@ angular.module('battlescript.battle', [])
           // and recieve the correct data
           console.log(data);
           if (data['passed'] === true) {
-            alert('You have the answer. Good job!');
             $rootScope.battleSocket.emit('winnerFound');
             $scope.userNotes = "All tests passing!";
+            alert('You have the answer. Good job!');
+            $location.path('/dashboard'); //redirect back. winner found
           }
         });
     };
