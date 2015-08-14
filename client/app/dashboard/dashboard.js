@@ -66,6 +66,7 @@ angular.module('battlescript.dashboard', [])
         $scope.currentStreak = stats.currentStreak;
         $scope.longestStreak = stats.longestStreak;
         $scope.totalWins = stats.totalWins;
+        $scope.points = $scope.totalWins * 10;
       });
   }
 
