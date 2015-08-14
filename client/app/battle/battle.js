@@ -166,6 +166,10 @@ angular.module('battlescript.battle', [])
       }
     });
 
+    $rootScope.battleSocket.on('opponentWon', function(){
+      alert('Looks like your opponent got the answer first!');
+    })
+
 
 
 
@@ -250,6 +254,7 @@ angular.module('battlescript.battle', [])
           console.log(data);
           if (data['passed'] === true) {
             alert('You have the answer. Good job!');
+            $rootScope.battleSocket.emit('winnerFound');
             $scope.userNotes = "All tests passing!";
           }
         });

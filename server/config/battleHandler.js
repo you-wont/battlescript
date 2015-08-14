@@ -24,6 +24,10 @@ module.exports = function(socket, io){
     socket.on('textChange', function(data){
       socket.broadcast.to(joinedRoom.id).emit('updateEnemy', data);
     });
+
+    socket.on('winnerFound', function(){
+      socket.broadcast.to(joinedRoom.id).emit('opponentWon');
+    })
     
     // I catch the disconnected client. What I do is 'remove' the memeber from the room
     // I also delete it if there are no people in the room
