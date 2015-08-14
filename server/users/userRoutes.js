@@ -9,5 +9,6 @@ module.exports = function (app) {
   app.get('/signedin', userController.checkAuth);
   app.post('/signout', userController.signout);
   app.get('/stats', userController.stats);
+  app.post('/statchange', userController.statChange);
 
 };

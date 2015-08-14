@@ -121,5 +121,25 @@ module.exports = {
         })
       })
     
+  }, 
+
+  statChange: function(req, res, next) {
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: req.body.username})
+      .then(function (user) {
+        if (req.body.winIncrease > 0) {
+          user.winIncrease += req.body.winIncrease;
+          user.currentStreak += req.body.winIncrease;
+          user.totalWins += req.body.winIncrease;
+
+          if (user.currentStreak > user.longestStreak) {
+            user.longestStreak = user.currentStreak;
+          }
+
+        } else {
+          user.currentStreak = 0;
+        }
+        user.save();
+      });
   }
 };

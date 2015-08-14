@@ -102,9 +102,18 @@ angular.module('battlescript.services', [])
     });
   };
 
+  var statChange = function(username, winIncrease) {
+    return $http({
+      method: 'POST',
+      url: '/api/users/statchange',
+      data: {username: username, winIncrease: winIncrease}
+    })
+  }
+
   return {
     getAuthUser: getAuthUser,
-    getStats: getStats
+    getStats: getStats,
+    statChange: statChange
   }
 
 })
