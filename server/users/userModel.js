@@ -11,12 +11,27 @@ var UserSchema = new mongoose.Schema({
     unique: true
   },
 
+
   password: {
     type: String,
     required: true
   },
   salt: String,
 
+  currentStreak: {
+    type: Number,
+    default: 0
+  },
+
+  longestStreak: {
+    type: Number,
+    default: 0
+  },
+
+  totalWins: {
+    type: Number,
+    default: 0
+  }
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {
