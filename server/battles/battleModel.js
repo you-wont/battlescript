@@ -30,11 +30,12 @@ BattleSchema.methods.generateHash = function () {
 
 BattleSchema.methods.pickChallenge = function (challengeLevel, callback) {
   var challengeName;
-  var filePath = __dirname + '/../challenges/level-' + challengeLevel;
+  var filePath = __dirname + '/../challenges/Level-' + challengeLevel;
   // console.log("FILEPATH: ", filePath);
   fs.readFile(filePath, function(err, data){
     var challenges = data.toString().split('\n');
-    var randomPick = Math.floor(Math.random(0, challenges.length));
+    var randomPick = Math.floor(Math.random()*challenges.length);
+    console.log("RANDOM PICK ", randomPick);
     var challenge = challenges[randomPick];
     var challengeSlug = challenge.split('/kata/')[1]; // separates slug from full url
     // console.log("CHALLENGE SLUG: ", challengeSlug);
