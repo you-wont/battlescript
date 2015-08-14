@@ -104,5 +104,22 @@ module.exports = {
 
           user.save();
         });
+  },
+
+  stats: function(req, res, next){
+
+    var username = req.query.username;
+
+    var findUser = Q.nbind(User.findOne, User);
+    findUser({username: username})
+      .then(function (user) {
+        console.log(user);
+        res.send({
+          totalWins: user.totalWins,
+          currentStreak: user.currentStreak,
+          longestStreak: user.longestStreak
+        })
+      })
+    
   }
 };

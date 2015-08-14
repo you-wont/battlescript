@@ -92,8 +92,19 @@ angular.module('battlescript.services', [])
     return window.localStorage.getItem('username');
   };
 
+  var getStats = function(username) {
+    return $http({
+      method: 'GET',
+      url: '/api/users/stats',
+      params: {username: username}
+    }).then(function(res) {
+      return res.data;
+    });
+  };
+
   return {
-    getAuthUser: getAuthUser
+    getAuthUser: getAuthUser,
+    getStats: getStats
   }
 
 })

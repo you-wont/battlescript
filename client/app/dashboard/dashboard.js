@@ -9,6 +9,10 @@ angular.module('battlescript.dashboard', [])
   // up above.
   $scope.userInfo = {username: $scope.username};
 
+  $scope.currentStreak = 0;
+  $scope.longestStreak = 0;
+  $scope.totalWins = 0;
+
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
   ////////////////////////////////////////////////////////////
@@ -50,6 +54,22 @@ angular.module('battlescript.dashboard', [])
     $scope.$apply();
 
   });
+
+
+  ////////////////////////////////////////////////////////////
+  // get user stats for dashboard
+  ////////////////////////////////////////////////////////////
+
+  $scope.getStats = function(username) {
+    Users.getStats(username)
+      .then(function(stats){
+        $scope.currentStreak = stats.currentStreak;
+        $scope.longestStreak = stats.longestStreak;
+        $scope.totalWins = stats.totalWins;
+      });
+  }
+
+  $scope.getStats($scope.username);
 
   ////////////////////////////////////////////////////////////
   // handle battle requests
