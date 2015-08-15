@@ -9,6 +9,7 @@ angular.module('battlescript.dashboard', [])
   // up above.
   $scope.userInfo = {username: $scope.username};
 
+  // Set up all dashboard info.
   $scope.challengeLevel = 8;
   $scope.currentStreak = 0;
   $scope.longestStreak = 0;
@@ -31,7 +32,7 @@ angular.module('battlescript.dashboard', [])
   // the logged in user
   $scope.battleRequestOpponentName = null;
 
-  // 
+  // Set up a unique hash for battling.
   $scope.battleRoomHash;
 
   ////////////////////////////////////////////////////////////
@@ -80,6 +81,7 @@ angular.module('battlescript.dashboard', [])
   // Open up socket with specific dashboard server handler
   $scope.requestBattle = function($event, opponentUsername) {
     $event.preventDefault();
+    if (!$scope.challengeLevel) $scope.challengeLevel = 4;
     console.log("CHALLENGE LEVEL: ", $scope.challengeLevel);
 
     // now, we need to emit to the socket
