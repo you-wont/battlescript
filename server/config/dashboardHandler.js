@@ -1,5 +1,5 @@
 // requirements
-var BattleController = require('../battles/BattleController');
+var BattleController = require('../battles/battleController');
 
 var socketList = {};
 
@@ -53,6 +53,6 @@ module.exports = function(socket, io){
 
     setTimeout(function() {
       updateUsers();
-    }, 100);
+    }, 200);
   });
 };
