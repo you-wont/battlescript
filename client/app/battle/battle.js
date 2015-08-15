@@ -33,6 +33,7 @@ angular.module('battlescript.battle', [])
   ////////////////////////////////////////////////////////////
 
   $scope.initBattle = function() {
+    console.log("BATTLE INITIALIZING")
 
     $scope.battleInitialized = true;
 

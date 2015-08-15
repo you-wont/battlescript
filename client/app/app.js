@@ -180,9 +180,11 @@ angular.module('battlescript', [
   $rootScope.battleSocket;
 
   $rootScope.initBattleSocket = function(roomhash, cb) {
-    console.log('init battle socket');
+    
+    console.log("BATTLE SOCKET UNDEFINED? ", $rootScope.battleSocket);
     // still check here
-    if (Auth.isAuth() && !$rootScope.battleSocket) {
+    if (Auth.isAuth() /* && !$rootScope.battleSocket */) {
+      console.log('authorized and battleSocket not initiated');
       // now time to set up the battle socket
 
       $rootScope.battleSocket = Socket.createSocket('battle', [
@@ -192,6 +194,7 @@ angular.module('battlescript', [
       ]);
 
       $rootScope.battleSocket.on('connect', function() {
+        // console.log("BATTLE SOCKET CONNECTED");
         $rootScope.initBattleSocketEvents(cb);
       });
     }
@@ -199,7 +202,7 @@ angular.module('battlescript', [
 
   // initialise dash socket events
   $rootScope.initBattleSocketEvents = function(cb) {
-    console.log('init the battle events');
+    // console.log('init the battle events');
     // state change and socket handling
     $rootScope.$on('$stateChangeStart', function(evt, next, current) {
       if (next.name !== 'battleroom') {
