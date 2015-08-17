@@ -145,14 +145,6 @@ module.exports = {
 
   leaderboard: function(req, res, next){
 
-    // var findUsers = Q.nbind(User.find, User);
-    // findUsers({}).sort({totalWins: -1})
-    // .then(function(users){
-    //   console.log(users);
-    //   console.log('--------------------------')
-    //   res.send(users);
-    // })
-  
     User.find()
       .select('-_id -salt -password')
       .sort({totalWins: -1})
