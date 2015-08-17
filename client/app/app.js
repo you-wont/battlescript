@@ -52,7 +52,7 @@ angular.module('battlescript', [
       authenticate: true
     })
     .state('collaborationroom', {
-      url: '/collaboration:id',
+      url: '/collaboration/:id',
       templateUrl: 'app/collab/collab.html',
       controller: 'CollabController',
       authenticate: true
