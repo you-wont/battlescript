@@ -24,7 +24,7 @@ angular.module('battlescript.collab', [])
         console.log('Firebase data: ', firepadRef.toString());
 
 
-      var editor = ace.edit("firepad-container ");
+      var editor = ace.edit("firepad-container");
       editor.setTheme("ace/theme/textmate");
       var session = editor.getSession();
       session.setUseWrapMode(true);
