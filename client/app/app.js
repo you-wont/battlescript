@@ -186,17 +186,17 @@ angular.module('battlescript', [
 
   $rootScope.battleSocket;
 
-  $rootScope.initBattleSocket = function(roomhash, cb) {
+  $rootScope.initBattleSocket = function(roomhash, cb, isCollab) {
     
     console.log("BATTLE SOCKET UNDEFINED? ", $rootScope.battleSocket);
     // still check here
     if (Auth.isAuth() /* && !$rootScope.battleSocket */) {
       console.log('authorized and battleSocket not initiated');
       // now time to set up the battle socket
-
+      var handler = isCollab || 'battle'
       $rootScope.battleSocket = Socket.createSocket('battle', [
         'username=' + Users.getAuthUser(),
-        'handler=battle',
+        'handler=' + handler,
         'roomhash=' + roomhash
       ]);
 
