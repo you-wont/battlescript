@@ -29,9 +29,11 @@
           
           <div class="grid__item grid__item--33-l">
             <div class="battle-prompt">
-              <h2 class="battle-prompt__title">Prompt:</h2>
+              <h1 class = "promptName"> {{promptName}}</h1><br>
+              <h3 class="battle-prompt__title">Prompt:</h3>
               <div class="battle-prompt__description" ng-show="!!battleDescription" ng-bind-html="battleDescription"></div>
             </div><!-- /battle-prompt -->
+            <div class = "exampleFixture">{{ exampleFixture}} </div>
           </div><!-- grid item -->
 
           <div class="grid__item grid__item--66-l">

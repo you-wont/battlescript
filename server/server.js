@@ -6,6 +6,7 @@ var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
 var server = require('http').Server(app);
+
 mongoose.connect('mongodb://localhost/battlescript');
 
 // configure our server with all the middleware and and routing

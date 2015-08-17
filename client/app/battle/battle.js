@@ -232,6 +232,8 @@ angular.module('battlescript.battle', [])
 
           // set up the battle specifics
           $scope.battle = JSON.parse(data.body);
+          $scope.promptName = $scope.battle.name;
+          $scope.exampleFixture = $scope.battle.session.exampleFixture;
           $scope.battleDescription = marked($scope.battle.description);
           $scope.battleProjectId = $scope.battle.session.projectId;
           $scope.battleSolutionId = $scope.battle.session.solutionId;
