@@ -830,7 +830,12 @@ button:focus {
  * This is the waiting area for the two battle players. 
  */
 .battle-waiting {
+  display: none;
   text-align: center;
+}
+
+.battle-waiting.active {
+  display: block;
 }
 
 .battle-waiting__buttons {
@@ -857,6 +862,14 @@ button:focus {
  * this is the official showdown area, where the prompt, both editors, and the
  * notifications for users get loaded into.
  */
+.battle-field {
+  display: none;
+}
+
+.battle-field.active {
+  display: block;
+}
+
 .battle-field__header {
   margin-bottom: 48px;
   padding: 4px 0;
@@ -883,6 +896,10 @@ button:focus {
  * This resides inside the battle field, but governs the prompt area
  * specifically.
  */
+.battle-prompt__description {
+  word-wrap: break-word;
+}
+
 .battle-prompt__description p,
 .battle-prompt__description ul,
 .battle-prompt__description ol {
@@ -903,7 +920,7 @@ button:focus {
  * These are the battle player areas. Different styles will be rendered
  * for different players (p1 and p2).
  */
-.battle-player--p1 {
+.battle-player--user {
   margin-bottom: 24px;
 }
 
@@ -917,7 +934,7 @@ button:focus {
 }
 
 /* code mirror player/editor size overrides */
-.battle-player--p2 .CodeMirror {
+.battle-player--opponent .CodeMirror {
   position: relative;
   height: 120px;
   font-size: 9px;
@@ -930,7 +947,7 @@ button:focus {
           user-select: none;
 }
 
-.battle-player--p2 .CodeMirror-linenumber {
+.battle-player--opponent .CodeMirror-linenumber {
   padding: 0 3px 0 5px;
   min-width: 10px;
   text-align: right;
@@ -938,7 +955,7 @@ button:focus {
   white-space: nowrap;
 }
 
-.battle-player--p2 .CodeMirror pre {
+.battle-player--opponent .CodeMirror pre {
   padding: 0 20px;
   /* Horizontal padding of content */
 }
@@ -1070,6 +1087,7 @@ button:focus {
   
 ----------------------------------------------------------------------------- */
 .spinner-container {
+  display: none;
   position: fixed;
   top: 0;
   right: 0;
@@ -1077,6 +1095,10 @@ button:focus {
   left: 0;
   z-index: 100;
   background-color: #2B3A42;
+}
+
+.spinner-container.active {
+  display: block;
 }
 
 .spinner {

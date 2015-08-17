@@ -20,8 +20,8 @@ module.exports = function(socket, io){
     socket.in(joinedRoom.id).emit('userJoined', joinedRoom.users);
 
     // handle text changes
-    socket.on('textChange', function(data){
-      socket.broadcast.to(joinedRoom.id).emit('updateEnemy', data);
+    socket.on('userTextChange', function(data){
+      socket.broadcast.to(joinedRoom.id).emit('updateOpponent', data);
     });
 
     socket.on('winnerFound', function(){

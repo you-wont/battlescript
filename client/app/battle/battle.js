@@ -1,6 +1,27 @@
 angular.module('battlescript.battle', [])
 
-.controller('BattleController', function($rootScope, $scope, $timeout, $location, $stateParams, Users, Battle) {
+.controller('BattleController', function($rootScope, $scope, $timeout, $location, $stateParams, Users, Battle, Editor) {
+
+  ////////////////////////////////////////////////////////////
+  // fetch auth user and pass in info to directive
+  ////////////////////////////////////////////////////////////
+
+  $scope.user = Users.getAuthUser();
+  $scope.userInfo = {username: $scope.user};
+
+
+
+
+
+  ////////////////////////////////////////////////////////////
+  // set up spinner class and display it by default
+  ////////////////////////////////////////////////////////////
+
+  $scope.spinnerClass = 'active';
+
+
+
+
 
   ////////////////////////////////////////////////////////////
   // check first to see if valid battle room id
@@ -8,157 +29,91 @@ angular.module('battlescript.battle', [])
 
   $scope.battleRoomId = $stateParams.id;
   $scope.battleInitialized = false;
-  $scope.currentUser = Users.getAuthUser();
-  $scope.opponent = 'waiting... '
-
-  console.log('we are here....');
 
   Battle.isValidBattleRoom($scope.battleRoomId)
-    .then(function(valid) {
-      if (valid) {
-        $rootScope.initBattleSocket($scope.battleRoomId, function() {
-          $scope.initBattle();
-        });
-      } else {
-        // redirect to dashboard
-        $location.path('/dashboard');
-      }
-    })
-    .catch(function(err) {
-      console.log(err);
-    });
-  
+  .then(function(valid) {
+    if (valid) {
+      // if we have a valid battle room, then do this
+      $rootScope.initBattleSocket($scope.battleRoomId, function() {
+        // hide the spinner, display waiting area, and apply scope changes
+        $scope.spinnerClass = '';
+        $scope.battleWaitingAreaClass = 'active';
+        $scope.$apply();
+
+        // initialize battle socket events
+        $scope.initBattle();
+      });
+    } else {
+      // redirect to dashboard if battle id not valid
+      $location.path('/dashboard');
+    }
+  })
+  .catch(function(err) {
+    console.log(err);
+  });
+
+
+
+
+
   ////////////////////////////////////////////////////////////
-  // init players
+  // set up user and opponent defaults
+  ////////////////////////////////////////////////////////////
+
+  // set up user states
+  $scope.userReadyState = false;
+  $scope.userReadyClass = '';
+  $scope.userReadyText = 'Waiting on you';
+
+  // set up opponent states
+  $scope.opponentReadyState = false;
+  $scope.opponentReadyClass = '';
+  $scope.opponentReadyText = 'Waiting on opponent';
+
+
+
+
+
+  ////////////////////////////////////////////////////////////
+  // this updates the user's ready state depending on whether
+  // they clicks the button
+  ////////////////////////////////////////////////////////////
+
+  $scope.updateUserReadyState = function() {
+    if ($scope.userReadyState === false) {
+      $scope.userReadyState = true;
+      $scope.userReadyClass = 'active';
+      $scope.userReadyText = 'Ready for battle!';
+      $rootScope.battleSocket.emit('userReady', $scope.user);
+      $scope.ifBothPlayersReady();
+    }
+  };
+
+
+
+
+
+  ////////////////////////////////////////////////////////////
+  // initialize the battle
+  // 
+  // this, importantly, needs to be set up here after the
+  // battle socket itself has been initialized and set up
+  // above.
+  // 
+  // unlike the updateUserReadyState function, this works
+  // in tandem with the sockets. Hence, it needs to wait for
+  // the socket to be initialized in the first place.
   ////////////////////////////////////////////////////////////
 
   $scope.initBattle = function() {
-    console.log("BATTLE INITIALIZING")
+    // default opponents name
+    $scope.opponent = '...';
 
-    $scope.battleInitialized = true;
+    // calls the function immediately, in case of refresh
+    $scope.ifBothPlayersReady();
 
-    $scope.user = $scope.currentUser;
-    $scope.opponent = 'waiting...';
-
-    // this gets passed into the directive.
-    // it definitely needs to be refactored depending on what happens
-    // up above.
-    $scope.userInfo = {username: $scope.user};
-
-    ////////////////////////////////////////////////////////////
-    // configure both editors and wire them to socket
-    ////////////////////////////////////////////////////////////
-
-    // set up buttons
-    $scope.userButtonAttempt = 'Attempt Solution';
-    $scope.userNotes = 'Nothing to show yet...';
-
-    // set up editor 1
-    var editor1 = CodeMirror.fromTextArea(document.querySelector('#editor1'), {
-      mode: 'javascript',
-      theme: 'material',
-      indentUnit: 2,
-      tabSize: 2,
-      lineNumbers: false
-    });
-
-    // set up editor 2
-    var editor2 = CodeMirror.fromTextArea(document.querySelector('#editor2'), {
-      mode: 'javascript',
-      theme: 'material',
-      indentUnit: 2,
-      tabSize: 2,
-      lineNumbers: true,
-      readOnly: 'nocursor'
-    });
-
-    // list for changes on editor
-    editor1.on('change', function(e) {
-      $rootScope.battleSocket.emit('textChange', editor1.getValue());
-    });
-
-    // 
-    $rootScope.battleSocket.emit('getUsers');
-
-    $rootScope.battleSocket.on('userList', function(userArray){
-      // THIS WILL ONLY WORK FOR TWO USERS RIGHT NOW
-      // loop over array looking for other users
-      userArray.forEach(function(name){
-        if(name !== $scope.user){
-          $scope.playerTwo = name;    
-          $scope.$apply();
-        }
-      });
-      // set other user to player2 variable
-      // if only one user, don't change player 2
-    });
-
-    $rootScope.battleSocket.on('updateEnemy', function(text){
-      editor2.setValue(text);
-    });
-
-
-
-
-
-    ////////////////////////////////////////////////////////////
-    // stuff to handle the waiting on both players
-    ////////////////////////////////////////////////////////////
-    
-    // initial battle wait time when two players enter battle room
-    $scope.battleWaitTime = 300000;
-
-    // updates the battle wait time
-    $scope.updateBattleWaitTime = function() {
-      if ($scope.battleWaitTime === 0) {
-        // we've timed out, need to do something...
-      } else {
-        $timeout(function() {
-          $scope.battleWaitTime = $scope.battleWaitTime - 1000;
-          $scope.updateBattleWaitTime();
-        }, 1000);
-      }
-    };
-
-    // call func immediately
-    $scope.updateBattleWaitTime();
-
-
-
-
-
-    ////////////////////////////////////////////////////////////
-    // handle when both players are ready
-    ////////////////////////////////////////////////////////////
-    
-    // set up player one states
-    $scope.userReadyState = false;
-    $scope.userReadyClass = '';
-    $scope.userReadyText = 'Waiting on you';
-
-    // this updates player one's ready state
-    $scope.updateUserReadyState = function() {
-      if ($scope.userReadyState === false) {
-        $scope.userReadyState = true;
-        $scope.userReadyClass = 'active';
-        $scope.userReadyText = 'Ready for battle!';
-
-        // emit a socket event
-        $rootScope.battleSocket.emit('userReady', $scope.currentUser);
-
-        // check if both players ready
-        $scope.ifBothPlayersReady();
-      }
-    };
-
-    // set up player two states
-    $scope.opponentReadyState = false;
-    $scope.opponentReadyClass = '';
-    $scope.opponentReadyText = 'Waiting on opponent';
-
-    // this time, let sockets listen for player two ready event
+    // now listen for events
     $rootScope.battleSocket.on('opponentReady', function(opponent) {
-      console.log('--------------------- caught exec');
       if ($scope.opponentReadyState === false) {
         $scope.opponentReadyState = true;
         $scope.opponentReadyClass = 'active';
@@ -170,57 +125,90 @@ angular.module('battlescript.battle', [])
       }
     });
 
-    $rootScope.battleSocket.on('opponentWon', function(){
-      Users.statChange($scope.currentUser, -1); // Any negative is regarded as a loss. 
-                                                // now u might be thinking... y not booleans?
-                                                // maybe double wins in the future, based on how
-                                                // fast u finish the problem? Lotsa things.
-      alert('Looks like your opponent got the answer first!');
-      $location.path('/dashboard'); //redirect back. winner found
-    })
+  };
 
-    $rootScope.battleSocket.on('nameReq', function(){
-      $rootScope.battleSocket.emit('nameSend', $scope.currentUser);
-    });
 
-    ////////////////////////////////////////////////////////////
-    // both players ready, prepare for battle
-    ////////////////////////////////////////////////////////////
 
-    // the battle prompt loaded is initially false, and we will only udpate it
-    // on success down below.
-    $scope.battlePromptLoaded = false;
 
-    // we also need to check if both players are ready, to immediately prepare
-    // the battle down below
-    $scope.ifBothPlayersReady = function() {
-      if ($scope.userReadyState && $scope.opponentReadyState || window.localStorage.getItem('battleInitiated-' + $scope.battleRoomId)) {
-        // If battle has already been initiated, set user and opponent ready state to true
-        // so that waiting screen will not show
-        if (window.localStorage.getItem('battleInitiated-' + $scope.battleRoomId)){
-          $scope.userReadyState = true;
-          $scope.opponentReadyState = true;
-          $rootScope.battleSocket.emit('getOpponent');
-
-        } else {
+  ////////////////////////////////////////////////////////////
+  // checks if both players ready
+  // 
+  // this gets called each time a user clicks a "ready state"
+  // button.
+  ////////////////////////////////////////////////////////////
+  
+  $scope.ifBothPlayersReady = function() {
+    if ($scope.userReadyState && $scope.opponentReadyState || window.localStorage.getItem('battleInitiated-' + $scope.battleRoomId)) {
+      // If battle has already been initiated, set user and opponent ready state to true
+      // so that waiting screen will not show
+      if (window.localStorage.getItem('battleInitiated-' + $scope.battleRoomId)){
+        $scope.userReadyState = true;
+        $scope.opponentReadyState = true;
+      } else {
         // Save battle initiated to local storage: this will allow battle to reload automatically
         // if user refreshes page, or comes back to battle after leaving accidentally
-          window.localStorage.setItem('battleInitiated-' + $scope.battleRoomId, true);
-        }
-        $scope.getBattle();
+        window.localStorage.setItem('battleInitiated-' + $scope.battleRoomId, true);
       }
-    };
+      
+      $scope.setUpBattle();
+    }
+  };
+  
 
-    
+
+
+
+  ////////////////////////////////////////////////////////////
+  // set up the battle here
+  ////////////////////////////////////////////////////////////
+
+  $scope.setUpBattle = function() {
+    // show the spinner
+    $scope.spinnerClass = 'active';
+
+    // set up both editors
+    $scope.userEditor = Editor.makeEditor('#editor--user', false);
+    $scope.opponentEditor = Editor.makeEditor('#editor--opponent', true);
+    $scope.handleEditorEvents();
+
+    // set up various fields
+    $scope.userButtonAttempt = 'Attempt Solution';
+    $scope.userNotes = 'Nothing to show yet...';
+
+    // apply scope vars
+    $scope.$apply();
+
+    // get the battle
+    $scope.getBattle();
+  };
 
 
 
 
 
-    ////////////////////////////////////////////////////////////
-    // battle logistics
-    ////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////
+  // handle editor events
+  ////////////////////////////////////////////////////////////
 
+  $scope.handleEditorEvents = function() {
+    $scope.userEditor.on('change', function(e) {
+      $rootScope.battleSocket.emit('userTextChange', $scope.userEditor.getValue());
+    });
+
+    $rootScope.battleSocket.on('updateOpponent', function(text){
+      $scope.opponentEditor.setValue(text);
+    });
+  };
+
+
+
+
+
+  ////////////////////////////////////////////////////////////
+  // get the battle, get ready for showdown!
+  ////////////////////////////////////////////////////////////
+  
+  $scope.getBattle = function() {
     // first, cache some vars
     $scope.battle;
     $scope.battleDescription = null;
@@ -228,68 +216,106 @@ angular.module('battlescript.battle', [])
     $scope.battleSolutionId = null;
 
     // fetch a battle
-    $scope.getBattle = function() {
-      // console.log("THIS IS THE BATTLE HASH: ", $scope.battleRoomId);
-      Battle.getBattle($scope.battleRoomId)
-        .then(function(data) {
-          // battle prompt loaded is now true
-          $scope.battlePromptLoaded = true;
+    Battle.getBattle($scope.battleRoomId)
+    .then(function(data) {
+      // display the battle field
+      $scope.displayBattleField();
 
-          // set up the battle specifics
-          $scope.battle = JSON.parse(data.body);
-          $scope.promptName = $scope.battle.name;
-          $scope.exampleFixture = $scope.battle.session.exampleFixture;
-          $scope.battleDescription = marked($scope.battle.description);
-          $scope.battleProjectId = $scope.battle.session.projectId;
-          $scope.battleSolutionId = $scope.battle.session.solutionId;
+      // set up the battle specifics
+      $scope.battle = JSON.parse(data.body);
+      $scope.battleDescription = marked($scope.battle.description);
+      $scope.battleProjectId = $scope.battle.session.projectId;
+      $scope.battleSolutionId = $scope.battle.session.solutionId;
 
-          // update editors
-          $timeout(function() {
-            editor1.setValue($scope.battle.session.setup);
-            editor2.setValue($scope.battle.session.setup);
-          }, 50);
+      // update editors
+      $timeout(function() {
+        $scope.userEditor.setValue($scope.battle.session.setup);
+        $scope.opponentEditor.setValue($scope.battle.session.setup);
+        $scope.$apply();
+      }, 50);
 
-        })
-        .catch(function(err) {
-          console.log('There was an error fetching the problem...');
-          console.log(err);
-        });
-    };
+    })
+    .catch(function(err) {
+      console.log('There was an error fetching the problem...');
+      console.log(err);
+    });
+  };
 
 
 
 
 
+  ////////////////////////////////////////////////////////////
+  // display the battle field
+  ////////////////////////////////////////////////////////////
 
-    ////////////////////////////////////////////////////////////
-    // handle battle attempts
-    ////////////////////////////////////////////////////////////
+  $scope.displayBattleField = function() {
+    // hide the spinner, hide the waiting area, and show the battle field
+    $scope.spinnerClass = '';
+    $scope.battleWaitingAreaClass = '';
+    $scope.battleFieldClass = 'active';
 
-    $scope.attemptBattle = function($event) {
-      $event.preventDefault();
+    // handle battle field events
+    $scope.handleBattleFieldEvents();
+  };
 
-      $scope.userButtonAttempt = 'Attempting...';
 
-      Battle.attemptBattle($scope.battleProjectId, $scope.battleSolutionId, editor1.getValue())
-        .then(function(data) {
-          $scope.userButtonAttempt = 'Attempt Solution';
-          $scope.userNotes = data.reason;
 
-          // TODO: polling is successful at this point in time, time to send
-          // and recieve the correct data
-          console.log(data);
-          if (data['passed'] === true) {
-            Users.statChange($scope.currentUser, 1); // # of times to increase the wins. Should be 1 always
-            $rootScope.battleSocket.emit('winnerFound');
-            $scope.userNotes = "All tests passing!";
-            alert('You have the answer. Good job!');
-            $location.path('/dashboard'); //redirect back. winner found
-          }
-        });
-    };
 
-    $scope.ifBothPlayersReady(); // calls the function immediately, in case of refresh
 
+  ////////////////////////////////////////////////////////////
+  // handle battle events
+  ////////////////////////////////////////////////////////////
+
+  $scope.handleBattleFieldEvents = function() {
+    $rootScope.battleSocket.on('opponentWon', function(){
+      // Any negative is regarded as a loss. 
+      Users.statChange($scope.user, -1);
+
+      // alert to the user!
+      alert('Looks like your opponent got the answer first!');
+
+      //redirect back. winner found
+      $location.path('/dashboard'); 
+    });
+
+    $rootScope.battleSocket.on('nameReq', function(){
+      $rootScope.battleSocket.emit('nameSend', $scope.currentUser);
+    });
+  };
+  
+
+
+
+
+
+
+
+  ////////////////////////////////////////////////////////////
+  // handle battle attempts
+  ////////////////////////////////////////////////////////////
+
+  $scope.attemptBattle = function($event) {
+    $event.preventDefault();
+
+    $scope.userButtonAttempt = 'Attempting...';
+
+    Battle.attemptBattle($scope.battleProjectId, $scope.battleSolutionId, $scope.userEditor.getValue())
+      .then(function(data) {
+        $scope.userButtonAttempt = 'Attempt Solution';
+        $scope.userNotes = data.reason;
+
+        // TODO: polling is successful at this point in time, time to send
+        // and recieve the correct data
+        console.log(data);
+        if (data['passed'] === true) {
+          Users.statChange($scope.user, 1); // # of times to increase the wins. Should be 1 always
+          $rootScope.battleSocket.emit('winnerFound');
+          $scope.userNotes = "All tests passing!";
+          alert('You have the answer. Good job!');
+          $location.path('/dashboard'); //redirect back. winner found
+        }
+      });
   };
 
 });

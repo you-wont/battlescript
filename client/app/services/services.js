@@ -160,7 +160,7 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Notifications', function() {
-  
+  return {};
 })
 
 ////////////////////////////////////////////////////////////
@@ -172,8 +172,6 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Dashboard',function ($http){
-
-
   return {};
 })
 
@@ -233,4 +231,33 @@ angular.module('battlescript.services', [])
     getBattle: getBattle,
     attemptBattle: attemptBattle
   }
+})
+
+////////////////////////////////////////////////////////////
+// Editor factory
+// 
+// Handles all things to do with setting up CodeMirror
+// editors
+////////////////////////////////////////////////////////////
+
+.factory('Editor', function() {
+
+  // makes a CodeMirror editor
+  var makeEditor = function(el, readOnly) {
+    if (readOnly === true) { readOnly = 'nocursor'; }
+
+    return CodeMirror.fromTextArea(document.querySelector(el), {
+      mode: 'javascript',
+      theme: 'material',
+      indentUnit: 2,
+      tabSize: 2,
+      lineNumbers: true,
+      readOnly: readOnly
+    });
+  };
+
+  return {
+    makeEditor: makeEditor
+  };
+
 });

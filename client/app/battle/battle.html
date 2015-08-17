@@ -4,8 +4,9 @@
   <div class="container">
     <div class="battle">
       
-      <div class="battle-waiting" ng-hide="userReadyState && opponentReadyState">
-        <h1>Waiting for players</h1>
+      <div class="battle-waiting" ng-class="battleWaitingAreaClass">
+        <h1>Waiting for opponent...</h1>
+        <p>When both of you are ready, click the buttons!</p>
         <div class="grid grid--l battle-waiting__buttons">
           <div class="grid__item grid__item--50-l battle-waiting__opp">
             <button ng-class="userReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateUserReadyState()">{{ userReadyText }}</button>
@@ -14,15 +15,12 @@
             <button ng-class="opponentReadyClass" class="btn btn--primary btn--large btn--block">{{ opponentReadyText }}</button>
           </div>
         </div>
-        <div class="battle-waiting__timer">
-          <p>Waiting for <span>{{ battleWaitTime | date:'m:ss' }}</span> more minutes</p>
-        </div>
       </div>
 
-      <div class="battle-field" ng-show="battlePromptLoaded">
+      <div class="battle-field" ng-class="battleFieldClass">
         
         <div class="battle-field__header">
-          <p>{{currentUser}} <span>-vs-</span> {{opponent}}</p>
+          <p>{{ user }} <span>-vs-</span> {{ opponent }}</p>
         </div><!-- /battlefield header -->
 
         <div class="grid grid--l">
@@ -38,11 +36,11 @@
 
           <div class="grid__item grid__item--66-l">
 
-            <div class="battle-player battle-player--p1">
+            <div class="battle-player battle-player--user">
               <h3 class="battle-player__heading">Your solution:</h3>
               <form action="#" class="editor">
                 <div class="editor__field">
-                  <textarea name="editor1" id="editor1" class="editor__text"></textarea>
+                  <textarea name="editor--user" id="editor--user" class="editor__text"></textarea>
                 </div>
                 <div class="editor__footer">
                   <button type="submit" class="btn btn--secondary btn--small" ng-click="attemptBattle($event)">
@@ -50,7 +48,7 @@
                   </button>
                 </div>
               </form><!-- /editor -->
-            </div><!-- /battle-player battle-player p1 -->
+            </div><!-- /battle-player battle-player user -->
 
             <div class="grid grid--l">
               <div class="grid__item grid__item--66-l">
@@ -62,14 +60,14 @@
                 </div><!-- /battle-notices -->
               </div><!-- /grid__item -->
               <div class="grid__item grid__item--33-l">
-                <div class="battle-player battle-player--p2">
+                <div class="battle-player battle-player--opponent">
                   <h3 class="battle-player__heading">Opponent:</h3>
                   <form action="#" class="editor">
                     <div class="editor__field">
-                      <textarea name="editor2" id="editor2" class="editor__text"></textarea>
+                      <textarea name="editor--opponent" id="editor--opponent" class="editor__text"></textarea>
                     </div>
                   </form><!-- /editor -->
-                </div><!-- /battle-player battle-player p2 -->
+                </div><!-- /battle-player battle-player opponent -->
               </div><!-- /grid__item -->
             </div><!-- /grid -->
 
@@ -78,13 +76,9 @@
         </div><!-- /grid -->
       </div><!-- battle-field -->
 
-      <div class="spinner-container" ng-show="userReadyState && opponentReadyState && !battlePromptLoaded">
+      <div class="spinner-container" ng-class="spinnerClass">
         <div class="spinner"></div>
-      </div>
-
-      <div class="spinner-container" ng-show="!battleInitialized">
-        <div class="spinner"></div>
-      </div>
+      </div><!-- /spinner -->
   
     </div><!-- /battle -->
   </div><!-- /container -->
