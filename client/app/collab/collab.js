@@ -17,7 +17,7 @@ angular.module('battlescript.collab', [])
       if (valid) {
         $rootScope.initBattleSocket($scope.battleRoomId, function() {
           $scope.initBattle();
-        });
+        }, 'collab'); // Modded to work with a 3rd, collab var. Starts a so called collab mode :)
       } else {
         // redirect to dashboard
         $location.path('/dashboard');
@@ -59,16 +59,6 @@ angular.module('battlescript.collab', [])
       indentUnit: 2,
       tabSize: 2,
       lineNumbers: false
-    });
-
-    // set up editor 2
-    var editor2 = CodeMirror.fromTextArea(document.querySelector('#editor2'), {
-      mode: 'javascript',
-      theme: 'material',
-      indentUnit: 2,
-      tabSize: 2,
-      lineNumbers: true,
-      readOnly: 'nocursor'
     });
 
     // list for changes on editor
