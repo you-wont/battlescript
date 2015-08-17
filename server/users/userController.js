@@ -141,5 +141,18 @@ module.exports = {
         }
         user.save();
       });
+  },
+
+  leaderboard: function(req, res, next){
+
+    User.find()
+      .select('-_id -salt -password')
+      .sort({totalWins: -1})
+      .limit(5) // Get every user. Exclude password, id, salt.
+      .then(function(users){
+        console.log("USERS: ", users);
+        res.send(users);
+      })
+
   }
 };

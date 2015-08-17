@@ -59,6 +59,12 @@
         <div class="grid__item grid__item--50-l">
           <div class="dashboar-widget dashboard-leaderboard">
             <h2 class="dashboar-widget__title">Leaderboard</h2>
+             <ul class="dashboard-online__list">
+              <li class="dashboard-online__item" ng-repeat="user in leaderboard">
+                <span>{{ user.username }}</span>
+                <span>{{ user.totalWins }}</span>
+              </li>
+            </ul>
           </div><!-- /dashboar widget -->
         </div><!-- /grid item -->
         <div class="grid__item grid__item--50-l">

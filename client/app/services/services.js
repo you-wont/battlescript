@@ -110,10 +110,18 @@ angular.module('battlescript.services', [])
     })
   }
 
+  var getLeaderboard = function(){
+    return $http({
+      method: 'GET',
+      url: '/api/users/leaderboard'
+    })
+  }
+
   return {
     getAuthUser: getAuthUser,
     getStats: getStats,
-    statChange: statChange
+    statChange: statChange,
+    getLeaderboard: getLeaderboard
   }
 
 })
