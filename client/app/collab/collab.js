@@ -24,7 +24,7 @@ angular.module('battlescript.collab', [])
         console.log('Firebase data: ', firepadRef.toString());
 
 
-      var editor = ace.edit("firepad-container");
+      var editor = ace.edit("firepad-container ");
       editor.setTheme("ace/theme/textmate");
       var session = editor.getSession();
       session.setUseWrapMode(true);
@@ -40,21 +40,6 @@ angular.module('battlescript.collab', [])
 
       var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
           document.getElementById('userlist'), userId);
-
-  // // Helper to get hash from end of URL or generate a random one.
-  // $scope.getExampleRef = function() {
-  //     var ref = new Firebase('https://battlescript.firebaseio.com/');
-  //     var hash = window.location.hash.replace(/#/g, '');
-  //     if (hash) {
-  //       ref = ref.child(hash);
-  //     } else {
-  //       ref = ref.push(); // generate unique location.
-  //       window.location = window.location + '#' + ref.key(); // add it as a hash to the URL.
-  //     }
-  //     if (typeof console !== 'undefined')
-  //       console.log('Firebase data: ', ref.toString());
-  //     return ref;
-  // }
 
 });
 
