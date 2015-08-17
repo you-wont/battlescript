@@ -58,6 +58,15 @@ module.exports = function(socket, io){
     socket.on('userReady', function(data) {
       socket.broadcast.to(joinedRoom.id).emit('opponentReady', data);
     });
+
+
+    socket.on('getOpponent', function(data){
+      socket.broadcast.to(joinedRoom.id).emit('nameReq');
+    });
+
+    socket.on('nameSend', function(data){
+      socket.broadcast.to(joinedRoom.id).emit('opponentReady', data);
+    })
   }
 
 
