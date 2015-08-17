@@ -1152,10 +1152,10 @@ button:focus {
 
 .firepad-userlist {
     /* default height */
-    height: 400px;
+    height: 600px;
     min-width: 175px;
 
-    background: #ebebeb; /* Old browsers */
+    background: #2B3A42; /* Old browsers */
     background: -moz-linear-gradient(left, #ebebeb 0%, #eaeaea 93%, #d9d9d9 100%); /* FF3.6+ */
     background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ebebeb), color-stop(93%,#eaeaea), color-stop(100%,#d9d9d9)); /* Chrome,Safari4+ */
     background: -webkit-linear-gradient(left, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* Chrome10+,Safari5.1+ */
@@ -1169,23 +1169,6 @@ button:focus {
     text-align: left;
     font-family: 'Helvetica Neue', sans-serif;
     line-height: normal;
-  }
-
-  .firepad-userlist-heading {
-    margin: 20px 15px 0;
-    font-size: 12px;
-    font-weight: bold;
-    border-bottom: 2px solid #c9c9c9;
-  }
-
-  .firepad-userlist-users {
-    position: absolute;
-    left: 15px;
-    right: 15px;
-    top: 38px;
-    bottom: 10px;
-    overflow-y: auto;
-    overflow-x: hidden;
   }
 
   .firepad-userlist-user {
@@ -1239,16 +1222,18 @@ button:focus {
     font-size: 13px;
   }
 
-
-  #firepad-container {
-      position: relative; left: 0px; top: 0; bottom: 0; right: 0; height: auto;
-  }
-
-  .firepad{
-     position: relative; left: 0px; top: 0; bottom: 0; right: 0; height: auto;
+  #firepad-container.ace_editor.ace-tm{
+    float: left;
+    height: 600px;
+    width: 700px;
+    width: calc(100% - 175px);
   }
 
   #userlist {
-      position: relative; left: 0; top: 0; bottom: 0; height: auto;
-      width: 175px;
+    float: left;
+    width: 175px;
   }
+
+.collab {
+  overflow: auto;
+}
