@@ -39,7 +39,7 @@ angular.module('battlescript.collab', [])
       });
 
       var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
-          document.getElementById('userlist'), userId);
+          document.getElementById('userlist'), userId, $scope.currentUser );
 
 });
 
