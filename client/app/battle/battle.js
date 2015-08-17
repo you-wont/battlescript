@@ -158,15 +158,12 @@ angular.module('battlescript.battle', [])
 
     // this time, let sockets listen for player two ready event
     $rootScope.battleSocket.on('opponentReady', function(opponent) {
-      console.log('--------------------- caught exec');
       if ($scope.opponentReadyState === false) {
         $scope.opponentReadyState = true;
         $scope.opponentReadyClass = 'active';
         $scope.opponentReadyText = 'Ready for battle!';
         $scope.opponent = opponent;
         $scope.ifBothPlayersReady();
-      } else {
-        $scope.opponent = opponent;
       }
     });
 
@@ -179,9 +176,9 @@ angular.module('battlescript.battle', [])
       $location.path('/dashboard'); //redirect back. winner found
     })
 
-    $rootScope.battleSocket.on('nameReq', function(){
-      $rootScope.battleSocket.emit('nameSend', $scope.currentUser);
-    });
+
+
+
 
     ////////////////////////////////////////////////////////////
     // both players ready, prepare for battle
@@ -200,12 +197,10 @@ angular.module('battlescript.battle', [])
         if (window.localStorage.getItem('battleInitiated-' + $scope.battleRoomId)){
           $scope.userReadyState = true;
           $scope.opponentReadyState = true;
-          $rootScope.battleSocket.emit('getOpponent');
-
         } else {
         // Save battle initiated to local storage: this will allow battle to reload automatically
         // if user refreshes page, or comes back to battle after leaving accidentally
-          window.localStorage.setItem('battleInitiated-' + $scope.battleRoomId, true);
+        window.localStorage.setItem('battleInitiated-' + $scope.battleRoomId, true);
         }
         $scope.getBattle();
       }
