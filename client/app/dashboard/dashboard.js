@@ -14,6 +14,7 @@ angular.module('battlescript.dashboard', [])
   $scope.currentStreak = 0;
   $scope.longestStreak = 0;
   $scope.totalWins = 0;
+  $scope.leaderboard = [];
 
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
@@ -73,6 +74,21 @@ angular.module('battlescript.dashboard', [])
   }
 
   $scope.getStats($scope.username);
+
+  ////////////////////////////////////////////////////////////
+  // get user stats for leaderboard
+  ////////////////////////////////////////////////////////////
+
+  $scope.getLeaderboard = function(username) {
+    // $scope.leaderboard = Users.getLeaderboard();
+    Users.getLeaderboard()
+      .then(function(leaderboard){ 
+        $scope.leaderboard = leaderboard.data;
+        console.log($scope.leaderboard);
+      });
+  }
+
+  $scope.getLeaderboard();
 
   ////////////////////////////////////////////////////////////
   // handle battle requests

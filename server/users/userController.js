@@ -141,5 +141,26 @@ module.exports = {
         }
         user.save();
       });
+  },
+
+  leaderboard: function(req, res, next){
+
+    // var findUsers = Q.nbind(User.find, User);
+    // findUsers({}).sort({totalWins: -1})
+    // .then(function(users){
+    //   console.log(users);
+    //   console.log('--------------------------')
+    //   res.send(users);
+    // })
+  
+    User.find()
+      .select('-_id -salt -password')
+      .sort({totalWins: -1})
+      .limit(5) // Get every user. Exclude password, id, salt.
+      .then(function(users){
+        console.log("USERS: ", users);
+        res.send(users);
+      })
+
   }
 };
