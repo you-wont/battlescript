@@ -50,7 +50,7 @@ angular.module('battlescript', [
       templateUrl: 'app/battle/battle.html',
       controller: 'BattleController',
       authenticate: true
-    })    
+    })
     .state('collaborationroom', {
       url: '/collaboration:id',
       templateUrl: 'app/collab/collab.html',
@@ -151,9 +151,7 @@ angular.module('battlescript', [
   
   // only create socket first time when auth and hits dash
   $rootScope.$on('$stateChangeStart', function(evt, next, current) {
-
-    if (next && Auth.isAuth() && next.name === 'dashboard' /*&& !$rootScope.dashboardSocket*/) {
-
+    if (next && Auth.isAuth() && next.name === 'dashboard' && !$rootScope.dashboardSocket) {
       $rootScope.dashboardSocket = Socket.createSocket('dashboard', [
         'username=' + Users.getAuthUser(),
         'handler=dashboard'
@@ -195,7 +193,6 @@ angular.module('battlescript', [
     if (Auth.isAuth() /* && !$rootScope.battleSocket */) {
       console.log('authorized and battleSocket not initiated');
       // now time to set up the battle socket
-
 
       $rootScope.battleSocket = Socket.createSocket('battle', [
         'username=' + Users.getAuthUser(),
