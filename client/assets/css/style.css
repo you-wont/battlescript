@@ -1222,10 +1222,10 @@ button:focus {
     font-size: 13px;
   }
 
-  #firepad-container.ace_editor.ace-tm{
-    float: left;
+  #firepad-container .firepad .CodeMirror.cm-s-default{
+    position: relative;
     height: 600px;
-    width: 700px;
+    width: 400px;
     width: calc(100% - 175px);
   }
 

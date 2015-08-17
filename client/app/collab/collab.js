@@ -23,20 +23,22 @@ angular.module('battlescript.collab', [])
       if (typeof console !== 'undefined')
         console.log('Firebase data: ', firepadRef.toString());
 
-
-      var editor = ace.edit("firepad-container");
-      editor.setTheme("ace/theme/textmate");
-      var session = editor.getSession();
-      session.setUseWrapMode(true);
-      session.setUseWorker(false);
-      session.setMode("ace/mode/javascript");
-
       var userId = Math.floor(Math.random() * 9999999999).toString();
+      var codeMirror = CodeMirror(document.getElementById('firepad-container'), 
+        { mode:  "javascript" });
+      // var session = codeMirror.getSession();
+      // session.setUseWrapMode(true);
+      // session.setUseWorker(false);
+      // session.setMode("ace/mode/javascript");
 
       //// Create Firepad.
-      var firepad = Firepad.fromACE(firepadRef, editor, {
-        defaultText: '// JavaScript Editing with Firepad!\nfunction go() {\n  var message = "Hello, world.";\n  console.log(message);\n}', userId: userId
-      });
+      var firepad = Firepad.fromCodeMirror(firepadRef, codeMirror,
+          {defaultText: '// JavaScript Editing with Firepad!', userId: userId});
+
+
+
+      // var editor = ace.edit("firepad-container");
+      // editor.setTheme("ace/theme/textmate");
 
       var firepadUserList = FirepadUserList.fromDiv(firepadRef.child('users'),
           document.getElementById('userlist'), userId, $scope.currentUser );
