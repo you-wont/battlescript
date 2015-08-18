@@ -1,6 +1,8 @@
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var helpers = require('./helpers.js');
+var passport = require('passport');
+var expressSession = require('express-session');
 
 module.exports = function (app, express) {
   // define routers
@@ -14,6 +16,20 @@ module.exports = function (app, express) {
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
 
+  //passport authentication middleware
+  app.use(expressSession({secret: 'mySecretKey'}));
+  app.use(passport.initialize());
+  app.use(passport.session());
+
+
+//************
+  // Initialize Passport
+  
+  var initPassport = require('../passport/init');
+  initPassport(passport);
+
+//************
+
   // api paths for various routes
   app.use('/api/users', userRouter);
   app.use('/api/duels', duelRouter);
@@ -24,7 +40,7 @@ module.exports = function (app, express) {
   app.use(helpers.errorHandler);
   
   // require necessary route files
-  require('../users/userRoutes.js')(userRouter);
+  require('../users/userRoutes.js')(userRouter,passport);
   require('../duels/duelRoutes.js')(duelRouter);
   require('../battles/battleRoutes.js')(battleRouter);
 };
