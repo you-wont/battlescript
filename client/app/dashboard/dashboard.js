@@ -15,6 +15,7 @@ angular.module('battlescript.dashboard', [])
   $scope.longestStreak = 0;
   $scope.totalWins = 0;
   $scope.leaderboard = [];
+  $scope.challengeClicked = {};
 
   ////////////////////////////////////////////////////////////
   // sets up all the dashboard stuff here
@@ -97,6 +98,7 @@ angular.module('battlescript.dashboard', [])
   // Open up socket with specific dashboard server handler
   $scope.requestBattle = function($event, opponentUsername) {
     $event.preventDefault();
+    $scope.challengeClicked[opponentUsername] = true;
     if (!$scope.challengeLevel) $scope.challengeLevel = 4;
     console.log("CHALLENGE LEVEL: ", $scope.challengeLevel);
 

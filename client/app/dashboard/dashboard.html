@@ -73,7 +73,8 @@
             <ul class="dashboard-online__list">
               <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
                 <span>{{ key }}</span>
-                <span><a href="#" ng-click="requestBattle($event, key)">Challenge?</a></span>
+                <span><a href="#" ng-click="requestBattle($event, key)" ng-hide="challengeClicked[key]">Challenge?</a></span>
+                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
               </li>
             </ul>
           </div><!-- /dashboar widget -->
