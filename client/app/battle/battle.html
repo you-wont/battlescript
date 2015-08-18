@@ -4,7 +4,7 @@
   <div class="container">
     <div class="battle">
       
-      <div class="battle-waiting" ng-class="battleWaitingAreaClass">
+      <div class="battle-waiting" ng-class="{'active': showBattleWaitingArea == true}">
         <h1>Waiting for opponent...</h1>
         <p>When both of you are ready, click the buttons!</p>
         <div class="grid grid--l battle-waiting__buttons">
@@ -76,7 +76,7 @@
         </div><!-- /grid -->
       </div><!-- battle-field -->
 
-      <div class="spinner-container" ng-class="spinnerClass">
+      <div class="spinner-container" ng-class="{active: spinnerOn === true}">
         <div class="spinner"></div>
       </div><!-- /spinner -->
   
