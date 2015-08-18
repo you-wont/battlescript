@@ -8,7 +8,6 @@ angular.module('battlescript', [
   'battlescript.home',
   'battlescript.dashboard',
   'battlescript.battle',
-  'battlescript.collab',
   'ui.router',
   'ngSanitize'
 ])
@@ -49,12 +48,6 @@ angular.module('battlescript', [
       url: '/battle/:id',
       templateUrl: 'app/battle/battle.html',
       controller: 'BattleController',
-      authenticate: true
-    })
-    .state('collaborationroom', {
-      url: '/collaboration/:id',
-      templateUrl: 'app/collab/collab.html',
-      controller: 'CollabController',
       authenticate: true
     });
 
@@ -186,22 +179,18 @@ angular.module('battlescript', [
 
   $rootScope.battleSocket;
 
-  $rootScope.initBattleSocket = function(roomhash, cb, isCollab) {
+  $rootScope.initBattleSocket = function(roomhash, cb) {
     
-    console.log("BATTLE SOCKET UNDEFINED? ", $rootScope.battleSocket);
     // still check here
     if (Auth.isAuth() /* && !$rootScope.battleSocket */) {
-      console.log('authorized and battleSocket not initiated');
       // now time to set up the battle socket
-      var handler = isCollab || 'battle'
       $rootScope.battleSocket = Socket.createSocket('battle', [
         'username=' + Users.getAuthUser(),
-        'handler=' + handler,
+        'handler=battle',
         'roomhash=' + roomhash
       ]);
 
       $rootScope.battleSocket.on('connect', function() {
-        // console.log("BATTLE SOCKET CONNECTED");
         $rootScope.initBattleSocketEvents(cb);
       });
     }

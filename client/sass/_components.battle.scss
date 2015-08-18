@@ -15,7 +15,12 @@
  */
 
 .battle-waiting {
+  display: none;
   text-align: center;
+}
+
+.battle-waiting.active {
+  display: block;
 }
 
 .battle-waiting__opp {
@@ -48,7 +53,11 @@
  */
 
 .battle-field {
+  display: none;
+}
 
+.battle-field.active {
+  display: block;
 }
 
 .battle-field__header {
@@ -84,6 +93,8 @@
 
 .battle-prompt__description {
 
+  word-wrap: break-word;
+
   p,
   ul,
   ol {
@@ -111,7 +122,7 @@
 
 }
 
-.battle-player--p1 {
+.battle-player--user {
   margin-bottom: 24px;
 }
 
@@ -126,7 +137,7 @@
 
 /* code mirror player/editor size overrides */
 
-.battle-player--p2 .CodeMirror {
+.battle-player--opponent .CodeMirror {
   position: relative;
   height: 120px;
   font-size: 9px;
@@ -135,7 +146,7 @@
   user-select: none;
 }
 
-.battle-player--p2 .CodeMirror-linenumber {
+.battle-player--opponent .CodeMirror-linenumber {
   padding: 0 3px 0 5px;
   min-width: 10px;
   text-align: right;
@@ -143,7 +154,7 @@
   white-space: nowrap;
 }
 
-.battle-player--p2 .CodeMirror pre {
+.battle-player--opponent .CodeMirror pre {
   padding: 0 20px; /* Horizontal padding of content */
 }
 
