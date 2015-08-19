@@ -45,4 +45,9 @@ angular.module('battlescript.auth', [])
         console.error(error);
     });
   };
+
+  $scope.signUpWithFb = function(){
+      Auth.signInWithFacebook()
+   }
+
 });

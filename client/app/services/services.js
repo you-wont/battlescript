@@ -12,7 +12,14 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Auth', function ($http, $location, $window) {
-  
+  //signs user in using Passport
+  var signInWithFacebook = function(){
+    return $http({
+      method: 'GET',
+      url: '/api/users/login/facebook',
+      //data: user
+    });
+  }
   // signs users in
   var signin = function (user) {
     return $http({
@@ -71,7 +78,8 @@ angular.module('battlescript.services', [])
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout
+    signout: signout,
+    signInWithFacebook:signInWithFacebook
   };
 })
 
