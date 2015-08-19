@@ -94,6 +94,14 @@ a:hover {
   color: #854800;
 }
 
+img.facebookLogin{
+  width:8%;
+  height:8%;
+  margin-right:5px;
+  margin-top:20px;
+  background:url('../img/fbLogo.png') no-repeat;
+}
+
 b,
 strong {
   font-weight: 700;

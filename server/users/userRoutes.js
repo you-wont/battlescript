@@ -16,13 +16,10 @@ module.exports = function (app,passport) {
   app.get('/login/facebook', passport.authenticate('facebook',{scope:['email']}));
 
   	// handle the callback after facebook has authenticated the user
-  app.get('/login/facebook/callback',function(req,res,next){
-    console.log('callback section')
-    passport.authenticate('facebook', {
-      successRedirect : '/stats',
-      failureRedirect : '/'
-    })(req,res,next);
-  });
+  app.get('/login/facebook/callback',passport.authenticate('facebook', {
+      successRedirect : '/',
+      failureRedirect : '/signup'
+    }));
 
  /*
   passport.authenticate('facebook', {

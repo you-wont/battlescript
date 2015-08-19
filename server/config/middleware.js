@@ -3,8 +3,7 @@ var bodyParser = require('body-parser');
 var helpers = require('./helpers.js');
 var passport = require('passport');
 var expressSession = require('express-session');
-var fbConfig = require('../fb.js');
-var FacebookStrategy = require('passport-facebook').Strategy;
+
 
 module.exports = function (app, express) {
   // define routers

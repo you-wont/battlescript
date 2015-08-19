@@ -13,14 +13,14 @@ module.exports = function(passport) {
     // facebook will send back the tokens and profile
     function(access_token, refresh_token, profile, done) {
 
-    	console.log('profile', profile);
+    	console.log('profile', profile.id);
     	done(null,profile);
 
 		// asynchronous
-		/*process.nextTick(function() {
+		process.nextTick(function() {
 			console.log('hi there friend')
 			// find the user in the database based on their facebook id
-	        User.findOne({ 'id' : profile.id }, function(err, user) {
+	       /* User.findOne({ 'id' : profile.id }, function(err, user) {
 
 	        	// if there is an error, stop everything and return that
 	        	// ie an error connecting to the database
@@ -51,8 +51,8 @@ module.exports = function(passport) {
 	                });
 	            }
 
-	        });
-        });*/
+	        });*/
+        });
 
     }));
 	
