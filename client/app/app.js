@@ -4,6 +4,7 @@
 
 angular.module('battlescript', [
   'battlescript.services',
+  'battlescript.directives',
   'battlescript.auth',
   'battlescript.home',
   'battlescript.dashboard',
@@ -60,55 +61,6 @@ angular.module('battlescript', [
 
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('AttachTokens');
-})
-
-////////////////////////////////////////////////////////////
-// boot up app directives
-// 
-// - headerMain: the main header bar for auth'd users
-// - headerLogout: a directive specifically for logout
-// - headerNoAuthPartial: a directive for rendering a static
-//   HTML header on the signup/signin pages
-// - footerPartial: a static html directive for the footer
-////////////////////////////////////////////////////////////
-
-.directive('headerMain', function() {
-  return {
-    restrict: 'E',
-    scope: {
-      userInfo: '=userInfo'
-    },
-    templateUrl: 'app/directives/header-main.html'
-  };
-})
-
-.directive('headerLogout', function() {
-  var link = function(scope, element, attrs) {
-    element.bind('click', function(e) {
-      e.preventDefault();
-      scope.$parent.$apply(attrs.logout);
-    });
-  };
-
-  return {
-    link: link,
-    restrict: 'E',
-    templateUrl: 'app/directives/header-logout.html'
-  };
-})
-
-.directive('headerNonAuthPartial', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'app/directives/header-nonauth.html'
-  };
-})
-
-.directive('footerPartial', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'app/directives/footer.html'
-  };
 })
 
 ////////////////////////////////////////////////////////////
