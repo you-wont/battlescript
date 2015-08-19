@@ -63,24 +63,6 @@ angular.module('battlescript', [
 })
 
 ////////////////////////////////////////////////////////////
-// set up app factory for attaching tokens
-////////////////////////////////////////////////////////////
-
-.factory('AttachTokens', function ($window) {
-  var attach = {
-    request: function (object) {
-      var jwt = $window.localStorage.getItem('battlepro');
-      if (jwt) {
-        object.headers['x-access-token'] = jwt;
-      }
-      object.headers['Allow-Control-Allow-Origin'] = '*';
-      return object;
-    }
-  };
-  return attach;
-})
-
-////////////////////////////////////////////////////////////
 // boot up app directives
 // 
 // - headerMain: the main header bar for auth'd users
@@ -140,7 +122,7 @@ angular.module('battlescript', [
   ////////////////////////////////////////////////////////////
 
   // start it up but leave it empty
-  $rootScope.dashboardSocket;
+  $rootScope.dashboardSocket = null;
   
   // only create socket first time when auth and hits dash
   $rootScope.$on('$stateChangeStart', function(evt, next, current) {
