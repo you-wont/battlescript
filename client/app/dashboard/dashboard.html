@@ -1,23 +1,18 @@
 <header-main user-info="userInfo"></header-main>
-
 <main class="main">
   <div class="container">
     <div class="dashboard">
-
       <div class="dashboard-notification" ng-show="userHasBattleRequest && battleRequestStatus === 'open'">
         <h2 class="dashboard-notification__title">{{ battleRequestOpponentName }} challenged you! (level: {{battleRequestChallengeLevel}})</h2>
         <button class="dashboard-notification__button btn btn--secondary btn--medium btn--block" ng-click="battleAccepted()">Accept</button>
         <button class="dashboard-notification__button btn btn--primary btn--medium btn--block" ng-click="battleDeclined()">Decline</button>
       </div>
-
       <div class="dashboard-notification" ng-show="userHasBattleRequest && battleRequestStatus === 'init'">
         <h2 class="dashboard-notification__title">Challenge ready!</h2>
         <p>Go to this url to face your opponent: <a ng-href="#/battle/{{ battleRoomHash }}">localhost:8000/#/battle/{{ battleRoomHash }}</a></p>
       </div>
-
       <div class="dashboard-stats">
         <h1 class="dashboard-stats__title">Welcome back, {{ username }}!</h1>
-
         <div class="grid grid--l">
           <div class="grid__item grid__item--25-l">
             <div class="dashboard-stats-entry">
@@ -47,26 +42,34 @@
             <div class="dashboard-stats-entry">
               <h3 class="dashboard-stats-entry__title">Problem Level</h3>
               <div class="dashboard-stats-entry__body">
-                <p class="dashboard-stats-entry__stat"><input class="challenge-input" type="text" placeholder="enter a challenge level" ng-model="challengeLevel"/></p>
+                <!-- Old text field to enter a challenge level -->
+                <!-- <p class="dashboard-stats-entry__stat"><input class="challenge-input" type="text" placeholder="enter a challenge level" ng-model="challengeLevels"  ng-options="level.name for level in challengeLevels"/></p> -->
+                <!-- Added a dropdown for selecting a level -->
+                <span class="dashboard-stats-entry__stat">
+                Select a level
+                </span>
+                <select name="levelDD" class="challenge-input" ng-model="levelSelection" ng-options="level.description for level in levelDescriptions track by level.id" ng-change="setLevel(levelSelection.id)">
+                </select>
+                <!-- option.name for option in data.availableOptions track by option.id -->
               </div>
             </div>
           </div>
         </div>
       </div>
-
-
       <div class="grid grid--l">
         <div class="grid__item grid__item--50-l">
           <div class="dashboar-widget dashboard-leaderboard">
             <h2 class="dashboar-widget__title">Leaderboard</h2>
-             <ul class="dashboard-online__list">
+            <ul class="dashboard-online__list">
               <li class="dashboard-online__item" ng-repeat="user in leaderboard">
                 <span>{{ user.username }}</span>
                 <span>{{ user.totalWins }}</span>
               </li>
             </ul>
-          </div><!-- /dashboar widget -->
-        </div><!-- /grid item -->
+          </div>
+          <!-- /dashboar widget -->
+        </div>
+        <!-- /grid item -->
         <div class="grid__item grid__item--50-l">
           <div class="dashboar-widget dashboard-online">
             <h2 class="dashboar-widget__title">Online Now</h2>
@@ -74,15 +77,19 @@
               <li class="dashboard-online__item" ng-repeat="(key, value) in onlineUsers">
                 <span>{{ key }}</span>
                 <span><a href="#" ng-click="requestBattle($event, key)" ng-hide="challengeClicked[key]">Challenge?</a></span>
-                <span class ="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
+                <span class="dashboard-online__challenged" ng-show="challengeClicked[key]">Player Challenged!</span>
               </li>
             </ul>
-          </div><!-- /dashboar widget -->
-        </div><!-- /grid item -->
-      </div><!-- /grid -->
-
-    </div><!-- dashboard -->
-  </div><!-- /container -->
-</main><!-- /main -->
-
+          </div>
+          <!-- /dashboar widget -->
+        </div>
+        <!-- /grid item -->
+      </div>
+      <!-- /grid -->
+    </div>
+    <!-- dashboard -->
+  </div>
+  <!-- /container -->
+</main>
+<!-- /main -->
 <footer-partial></footer-partial>
