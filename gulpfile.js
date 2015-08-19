@@ -5,7 +5,7 @@
 var gulp = require('gulp');
 
 //////////////////////////////////////////////////
-// load other gulp stuffs
+// load other gulp stuff
 //////////////////////////////////////////////////
 
 var autoprefixer = require('gulp-autoprefixer');
@@ -13,6 +13,7 @@ var gutil = require('gulp-util');
 var minifyCSS = require('gulp-minify-css');
 var rename = require('gulp-rename');
 var sass = require('gulp-sass');
+var karma = require('karma').Server;
 
 //////////////////////////////////////////////////
 // paths
@@ -57,4 +58,15 @@ gulp.task('styles', function() {
 
 gulp.task('watch', function() {
   gulp.watch(filePaths.sass, ['styles']);
+});
+
+//////////////////////////////////////////////////
+// test task
+//////////////////////////////////////////////////
+
+gulp.task('test', function (done) {
+  new karma({
+    configFile: __dirname + '/karma.conf.js',
+    singleRun: false
+  }, done).start();
 });
