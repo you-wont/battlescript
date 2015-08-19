@@ -13,17 +13,30 @@ module.exports = function (app,passport) {
   app.get('/leaderboard', userController.leaderboard);
     // route for facebook authentication and login
   	// different scopes while logging in
-  	app.get('/login/facebook', 
-  		passport.authenticate('facebook', { scope : ['email'] }
-  	));
+  app.get('/login/facebook', function(req,res,next){
+    console.log('login section')
+      passport.authenticate('facebook',{scope:['email']},function(req,res){
+        
+      })(req, res, next);
+    
+      return;
+  });
 
   	// handle the callback after facebook has authenticated the user
-  	app.get('/login/facebook/callback',
-  		passport.authenticate('facebook', {
-  			successRedirect : '/home',
-  			failureRedirect : '/'
-  		})
-  	);
+  app.get('login/facebook/callback',function(req,res,next){
+    console.log('callback section')
+    passport.authenticate('facebook', {
+      successRedirect : '/stats',
+      failureRedirect : '/stats'
+    })(req,res,next);
+  });
 
+ /*
+  passport.authenticate('facebook', {
+      successRedirect : '/stats',
+      failureRedirect : '/stats'
+    })
+ */
+//passport.authenticate('facebook',{ scope : ['email'] })
 
 };

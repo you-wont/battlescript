@@ -3,7 +3,7 @@ var User = require('../users/userModel.js');
 var fbConfig = require('../fb.js');
 
 module.exports = function(passport) {
-
+	console.log('calling')
     passport.use('facebook', new FacebookStrategy({
         clientID        : fbConfig.appID,
         clientSecret    : fbConfig.appSecret,
@@ -16,8 +16,8 @@ module.exports = function(passport) {
     	console.log('profile', profile);
 
 		// asynchronous
-		process.nextTick(function() {
-
+		/*process.nextTick(function() {
+			console.log('hi there friend')
 			// find the user in the database based on their facebook id
 	        User.findOne({ 'id' : profile.id }, function(err, user) {
 
@@ -51,7 +51,7 @@ module.exports = function(passport) {
 	            }
 
 	        });
-        });
+        });*/
 
     }));
 	
