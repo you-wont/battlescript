@@ -11,22 +11,12 @@ module.exports = function (app,passport) {
   app.get('/stats', userController.stats);
   app.post('/statchange', userController.statChange);
   app.get('/leaderboard', userController.leaderboard);
-    // route for facebook authentication and login
-  	// different scopes while logging in
+  //Passport - Facebook OAuth routes - Jonathan Schapiro
   app.get('/login/facebook', passport.authenticate('facebook',{scope:['email']}));
-
-  	// handle the callback after facebook has authenticated the user
   app.get('/login/facebook/callback',passport.authenticate('facebook', {
       successRedirect : '/',
       failureRedirect : '/signup'
     }));
 
- /*
-  passport.authenticate('facebook', {
-      successRedirect : '/stats',
-      failureRedirect : '/stats'
-    })
- */
-//passport.authenticate('facebook',{ scope : ['email'] })
 
 };

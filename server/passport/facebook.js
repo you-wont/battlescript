@@ -1,59 +1,51 @@
+//Passport - FB Oauth Strategy - Jonathan Schapiro
 var FacebookStrategy = require('passport-facebook').Strategy;
 var User = require('../users/userModel.js');
+var Q    = require('q');
+var jwt  = require('jwt-simple');
 var fbConfig = require('../fb.js');
 
 module.exports = function(passport) {
-	console.log('calling')
-    passport.use('facebook', new FacebookStrategy({
-        clientID        : fbConfig.appID,
-        clientSecret    : fbConfig.appSecret,
-        callbackURL     : fbConfig.callbackUrl
+  passport.use('facebook', new FacebookStrategy({
+      clientID: fbConfig.appID,
+      clientSecret: fbConfig.appSecret,
+      callbackURL: fbConfig.callbackUrl
     },
-
     // facebook will send back the tokens and profile
     function(access_token, refresh_token, profile, done) {
+    	console.log('profile', profile);
+    	var findOrCreateUser = function(){
+    		var findOne = Q.nbind(User.findOne,User);
+    		findOne({id:profile.id})
+    		.then(function(user){
+    			if (user){
+    				//creat jwt
+    				console.log('user exists!')
+    			} else {
+    				//create new user
+    				var create = Q.nbind(User.create,User);
+    				var newUser = {
+    					username:profile.displayName,
+    					facebookUserID:profile.id
+    				};
+    				return create(newUser);
+    			}
+    		})
+    		.then(function(user){
+    				//save the user
+    				user.save();
+    				console.log('user successfully created!')
+    		})
+    		.fail(function(error){
+    			console.log("error: " + error)
+    		})
+    	}
+      
+      done(null, profile);
 
-    	console.log('profile', profile.id);
-    	done(null,profile);
-
-		// asynchronous
-		process.nextTick(function() {
-			console.log('hi there friend')
-			// find the user in the database based on their facebook id
-	       /* User.findOne({ 'id' : profile.id }, function(err, user) {
-
-	        	// if there is an error, stop everything and return that
-	        	// ie an error connecting to the database
-	            if (err)
-	                return done(err);
-
-				// if the user is found, then log them in
-	            if (user) {
-	                return done(null, user); // user found, return that user
-	            } else {
-	                // if there is no user found with that facebook id, create them
-	                var newUser = new User();
-
-					// set all of the facebook information in our user model
-	                newUser.fb.id    = profile.id; // set the users facebook id	                
-	                newUser.fb.access_token = access_token; // we will save the token that facebook provides to the user	                
-	                newUser.fb.firstName  = profile.name.givenName;
-	                newUser.fb.lastName = profile.name.familyName; // look at the passport user profile to see how names are returned
-	                newUser.fb.email = profile.emails[0].value; // facebook can return multiple emails so we'll take the first
-
-					// save our user to the database
-	                newUser.save(function(err) {
-	                    if (err)
-	                        throw err;
-
-	                    // if successful, return the new user
-	                    return done(null, newUser);
-	                });
-	            }
-
-	        });*/
-        });
+      // asynchronous
+      process.nextTick(findOrCreateUser);
 
     }));
-	
+
 };

@@ -12,14 +12,6 @@ angular.module('battlescript.services', [])
 ////////////////////////////////////////////////////////////
 
 .factory('Auth', function ($http, $location, $window) {
-  //signs user in using Passport
-  var signInWithFacebook = function(){
-    return $http({
-      method: 'GET',
-      url: '/api/users/login/facebook',
-      //data: user
-    });
-  }
   // signs users in
   var signin = function (user) {
     return $http({
@@ -44,6 +36,7 @@ angular.module('battlescript.services', [])
     .then(function (resp) {
       // Saving a global username to be used throughout app
       $window.localStorage.setItem('username', resp.config.data.username);
+      console.log('response token' + resp.data.token)
       return resp.data.token;
     });
   };
@@ -78,8 +71,7 @@ angular.module('battlescript.services', [])
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout,
-    signInWithFacebook:signInWithFacebook
+    signout: signout
   };
 })
 

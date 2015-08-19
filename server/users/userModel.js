@@ -10,11 +10,14 @@ var UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-
+  facebookUserID: {
+    type: String,
+    unique: true
+  },
 
   password: {
     type: String,
-    required: true
+    required: false
   },
   salt: String,
 
