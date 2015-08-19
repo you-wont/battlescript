@@ -12,11 +12,11 @@ module.exports = function(passport) {
 
     // facebook will send back the tokens and profile
     function(access_token, refresh_token, profile, done) {
-    	console.log('whats up dawg')
+
     	console.log('profile', profile);
 
 		// asynchronous
-		/*process.nextTick(function() {
+		process.nextTick(function() {
 
 			// find the user in the database based on their facebook id
 	        User.findOne({ 'id' : profile.id }, function(err, user) {
@@ -51,8 +51,8 @@ module.exports = function(passport) {
 	            }
 
 	        });
-        }); */
+        });
 
     }));
-
+	
 };
