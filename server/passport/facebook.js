@@ -18,25 +18,39 @@ module.exports = function(passport) {
     function(access_token, refresh_token, profile, done) {
       console.log('profile', profile);
       var findOne = Q.nbind(User.findOne,User);
+      
       findOne({facebookUserID:profile.id}).
       then(function(user){
         //user exists
         if (user){
           //append token
-
-          return done(null,user);
+          var token = jwt.encode(user, 'secret');
+          user.facebookToken = token;
+          
+          console.log('user exists')
+          user.save(function(err,doc){
+            console.log('done resaving')
+            return done(null,token);
+          });
+          
         } else {
           //user doesn't exist - create a new one
           var create = Q.nbind(User.create,User);
           var newUser = {
               username:profile.displayName,
-              facebookUserID:profile.id,
+              facebookUserID:profile.id
           };
           return create(newUser);
         }
       }).then(function(user){
-        user.save();
-        return done(null,user)
+        if (user){
+          var token = jwt.encode(user, 'secret');
+          user.facebookToken = token;
+          user.save(function(err,doc){
+            return done(null,token)
+          });
+        }
+        
       })
       .fail(function(error){
         console.error('error: ' + error)
