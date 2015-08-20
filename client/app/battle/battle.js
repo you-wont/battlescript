@@ -1,6 +1,6 @@
 angular.module('battlescript.battle', [])
 
-.controller('BattleController', function($rootScope, $scope, $timeout, $location, $stateParams, Users, Battle, Editor) {
+.controller('BattleController', function($rootScope, $scope, $timeout, $location, $stateParams,$interval, Users, Battle, Editor) {
 
   ////////////////////////////////////////////////////////////
   // fetch auth user and pass in info to directive
@@ -169,13 +169,34 @@ angular.module('battlescript.battle', [])
     if (!$scope.$$phase) $scope.$apply();
     
     // set up both editors
-    $scope.userEditor = Editor.makeEditor('#editor--user', false);
+    $scope.userEditor = Editor.makeEditor('#editor--user', true);
     $scope.opponentEditor = Editor.makeEditor('#editor--opponent', true);
     $scope.handleEditorEvents();
 
     // set up various fields
     $scope.userButtonAttempt = 'Attempt Solution';
     $scope.userNotes = 'Nothing to show yet...';
+
+    // Timeout to enable the editor and attempt solution button
+    $timeout(function () {
+      $scope.someSeconds = true;
+      $scope.userEditor.options.readOnly = false;
+    }, 8000);
+
+    // Added timer to display while editor is in freeze
+    $scope.counter = 9;
+    $scope.onTimeout = function () {
+      if ($scope.counter <= 1) {
+        var myEl = angular.element(document.querySelector('#countdown'));
+        myEl.remove();
+        $interval.cancel(mytimeout);
+      } else {
+        $scope.counter--;
+        console.log("timer to start the battle : ",$scope.counter);
+      }
+    }
+    var mytimeout = $interval($scope.onTimeout, 1000);
+    $scope.onTimeout();
 
     // get the battle
     $scope.getBattle();

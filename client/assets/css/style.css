@@ -944,6 +944,12 @@ button:focus {
 .battle-player--user {
   margin-bottom: 24px;
 }
+/*Blurring the user editor */
+.battle-player--time {
+  margin-bottom: 24px;
+   -webkit-filter: blur(1.5px);
+           filter: blur(1.5px);
+}
 
 .battle-player__heading {
   padding: 8px;
@@ -952,6 +958,11 @@ button:focus {
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
+}
+
+/*Background for timer text*/
+.countdown-green {
+  background-color: #16DA53;
 }
 
 /* code mirror player/editor size overrides */
