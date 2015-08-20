@@ -3,8 +3,7 @@ var mongoose = require('mongoose');
 var FacebookUserSchema = new mongoose.Schema({
   facebookDisplayName: {
     type: String,
-    required: true,
-    unique: true
+    required: true
   },
 
   facebookID: {

@@ -10,14 +10,11 @@ var UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  facebookUserID: {
-    type: String,
-    unique: true
-  },
+
 
   password: {
     type: String,
-    required: false
+    
   },
   salt: String,
 
@@ -34,6 +31,10 @@ var UserSchema = new mongoose.Schema({
   totalWins: {
     type: Number,
     default: 0
+  },
+
+  facebookUserID: {
+    type:String
   }
 });
 
