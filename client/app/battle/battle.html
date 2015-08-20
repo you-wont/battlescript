@@ -9,7 +9,7 @@
         <p>When both of you are ready, click the buttons!</p>
         <div class="grid grid--l battle-waiting__buttons">
           <div class="grid__item grid__item--50-l battle-waiting__opp">
-            <button ng-class="userReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateUserReadyState()" onclick="document.location.reload(true)">{{ userReadyText }}</button>
+            <button ng-class="userReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateUserReadyState(); askPermission()">{{ userReadyText }}</button>
           </div>
           <div class="grid__item grid__item--50-l battle-waiting__opp">
             <button ng-class="opponentReadyClass" class="btn btn--primary btn--large btn--block">{{ opponentReadyText }}</button>

@@ -283,9 +283,6 @@ angular.module('battlescript.battle', [])
 
 
 
-
-
-
   ////////////////////////////////////////////////////////////
   // handle battle attempts
   ////////////////////////////////////////////////////////////
@@ -311,6 +308,20 @@ angular.module('battlescript.battle', [])
           $location.path('/dashboard'); //redirect back. winner found
         }
       });
+  };
+
+
+
+
+
+  ////////////////////////////////////////////////////////////
+  // reload page to ask for permission to use webcam
+  ////////////////////////////////////////////////////////////
+
+  $scope.askPermission = function(){
+    setTimeout(function(){
+      document.location.reload(true);
+    }, 5000);
   };
 
 });
