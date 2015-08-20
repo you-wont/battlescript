@@ -268,7 +268,7 @@ angular.module('battlescript.services', [])
       theme: 'material',
       indentUnit: 2,
       tabSize: 2,
-      lineNumbers: true,
+      lineNumbers: false,
       readOnly: readOnly
     });
   };
