@@ -17,13 +17,13 @@ module.exports = function (app, express) {
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
    //passport authentication middleware
-  app.use(expressSession({secret: 'mySecretKey',
+  /*app.use(expressSession({secret: 'mySecretKey',
     proxy: true,
     resave: true,
     saveUninitialized: true
-  }));
+  }));*/
   app.use(passport.initialize());
-  app.use(passport.session());
+ // app.use(passport.session());
   
 
 //************

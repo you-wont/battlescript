@@ -12,11 +12,11 @@ module.exports = function (app,passport) {
   app.post('/statchange', userController.statChange);
   app.get('/leaderboard', userController.leaderboard);
   //Passport - Facebook OAuth routes - Jonathan Schapiro
-  app.get('/login/facebook',passport.authenticate('facebook',{scope:['email']}));
-  app.get('/login/facebook/callback',passport.authenticate('facebook', {
-      successRedirect : '/',
-      failureRedirect : '/signup'
-    }));
+  app.get('/login/facebook',passport.authenticate('facebook',{ session: false, scope: ['email'] }));
+  app.get('/login/facebook/callback',passport.authenticate('facebook',{ session: false, failureRedirect: "/" }),
+    function(req,resp,next){
+       resp.redirect("/");
+    });
 
 
 };

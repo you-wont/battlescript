@@ -35,7 +35,12 @@ var UserSchema = new mongoose.Schema({
 
   facebookUserID: {
     type:String
+  }, 
+
+  facebookToken : {
+    type:String
   }
+
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {
