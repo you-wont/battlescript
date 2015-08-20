@@ -1,5 +1,26 @@
 /* -----------------------------------------------------------------------------
 
+  VIDEO
+  
+----------------------------------------------------------------------------- */
+#localVideo {
+  height: 80px;
+  width: 80px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 100%;
+}
+
+.peer {
+  height: 200px;
+  width: 200px;
+  border-radius: 100%;
+  display: block;
+  margin: 0 auto;
+}
+
+/* -----------------------------------------------------------------------------
+
   FONTS
   
 ----------------------------------------------------------------------------- */
@@ -56,7 +77,7 @@ body {
 
 body {
   color: #777;
-  background-color: #2B3A42;
+  background-color: black;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   line-height: 1.8;
@@ -321,7 +342,7 @@ button:focus {
 ----------------------------------------------------------------------------- */
 .header {
   padding: 24px 0;
-  background-color: #2B3A42;
+  background-color: black;
 }
 
 .header__inner {
@@ -426,7 +447,7 @@ button:focus {
  */
 .header-main {
   padding: 12px 0;
-  background-color: #2B3A42;
+  background-color: black;
 }
 
 .header-main__inner {
@@ -515,7 +536,7 @@ button:focus {
 .header-main__user-dropdown-item a {
   display: block;
   padding: 4px 8px;
-  color: #3F5765;
+  color: #333;
 }
 
 .header-main__user-dropdown-item a:hover {
@@ -564,7 +585,6 @@ button:focus {
   
 ----------------------------------------------------------------------------- */
 .main {
-  padding: 48px 0;
   background-color: #fff;
 }
 
@@ -585,7 +605,7 @@ button:focus {
 }
 
 .footer__copyright {
-  color: #3F5765;
+  color: grey;
 }
 
 /* -----------------------------------------------------------------------------
@@ -614,12 +634,12 @@ button:focus {
   margin: 12px 0;
   padding: 12px;
   color: #EB7F00;
-  border: solid 1px #3F5765;
+  border: solid 1px #333;
 }
 
 .auth-form {
   padding: 24px;
-  background-color: #3F5765;
+  background-color: #333;
 }
 
 .auth-form__title {
@@ -808,7 +828,7 @@ button:focus {
 
 /* code mirror theme overrides */
 .cm-s-material {
-  background-color: #2B3A42;
+  background-color: black;
 }
 
 .cm-s-material .CodeMirror-gutters {
@@ -874,13 +894,14 @@ button:focus {
   margin-bottom: 48px;
   padding: 4px 0;
   text-align: center;
-  border-bottom: solid 2px #3F5765;
+  border-bottom: solid 2px #333;
 }
 
 .battle-field__header p {
-  margin: 0;
+  margin: auto;
   color: #EB7F00;
   font-size: 22px;
+  display: inline
 }
 
 .battle-field__header span {
@@ -926,7 +947,7 @@ button:focus {
 
 .battle-player__heading {
   padding: 8px;
-  color: #3F5765;
+  color: #333;
   background-color: #EFEFEF;
   font-size: 12px;
   font-weight: 400;
@@ -994,11 +1015,11 @@ button:focus {
 
 .btn--primary {
   color: #fff;
-  background-color: #3F5765;
+  background-color: #333;
 }
 
 .btn--primary:not(:disabled):hover {
-  background-color: #2B3A42;
+  background-color: black;
 }
 
 .btn--primary.active {
@@ -1058,7 +1079,7 @@ button:focus {
   
 ----------------------------------------------------------------------------- */
 .lead {
-  color: #3F5765;
+  color: #333;
   font-size: 18px;
   text-align: center;
 }
@@ -1094,7 +1115,7 @@ button:focus {
   bottom: 0;
   left: 0;
   z-index: 100;
-  background-color: #2B3A42;
+  background-color: black;
 }
 
 .spinner-container.active {
@@ -1126,8 +1147,8 @@ button:focus {
 }
 
 .spinner::before {
-  border-top: solid 18px #3F5765;
-  border-bottom: solid 18px #3F5765;
+  border-top: solid 18px #333;
+  border-bottom: solid 18px #333;
   border-left: solid 18px transparent;
   border-right: solid 18px transparent;
   border-radius: 48px;
