@@ -175,6 +175,24 @@ angular.module('battlescript.services', [])
 })
 
 ////////////////////////////////////////////////////////////
+// set up app factory for attaching tokens
+////////////////////////////////////////////////////////////
+
+.factory('AttachTokens', function ($window) {
+  var attach = {
+    request: function (object) {
+      var jwt = $window.localStorage.getItem('battlepro');
+      if (jwt) {
+        object.headers['x-access-token'] = jwt;
+      }
+      object.headers['Allow-Control-Allow-Origin'] = '*';
+      return object;
+    }
+  };
+  return attach;
+})
+
+////////////////////////////////////////////////////////////
 // Battle factory
 // 
 // Handles all things to do when users engage in a battle
