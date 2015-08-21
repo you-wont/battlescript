@@ -60,6 +60,7 @@ angular.module('battlescript', [
 
 .config(function($httpProvider) {
   $httpProvider.interceptors.push('AttachTokens');
+  
 })
 
 ////////////////////////////////////////////////////////////
@@ -69,6 +70,7 @@ angular.module('battlescript', [
 .factory('AttachTokens', function ($window) {
   var attach = {
     request: function (object) {
+      console.log('attaching token')
       var jwt = $window.localStorage.getItem('battlepro');
       if (jwt) {
         object.headers['x-access-token'] = jwt;
@@ -230,11 +232,13 @@ angular.module('battlescript', [
   $rootScope.$on('$stateChangeStart', function (evt, next, current) {
     // redirect home if auth required and user isn't auth
     if (next && next.authenticate && !Auth.isAuth()) {
+      console.log('problems')
       $location.path('/');
     }
 
     // redirect to dashboard if user is auth and tries to access home page
     if (next && next.url === '/' && Auth.isAuth()) {
+      console.log('apparently true: ' + next && next.url === '/' && Auth.isAuth() )
       $location.path('/dashboard');
     }
   });

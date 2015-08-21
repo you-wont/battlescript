@@ -12,7 +12,6 @@ module.exports = function(passport) {
       clientSecret: fbConfig.appSecret,
       callbackURL: fbConfig.callbackUrl,
       enableProof: true,
-      //passReqToCallback: true
     },
     // facebook will send back the tokens and profile
     function(access_token, refresh_token, profile, done) {
@@ -25,7 +24,7 @@ module.exports = function(passport) {
         if (user){
           //append token
           var token = jwt.encode(user, 'secret');
-          user.facebookToken = token;
+          //user.facebookToken = token;
           
           console.log('user exists')
           user.save(function(err,doc){
@@ -45,7 +44,7 @@ module.exports = function(passport) {
       }).then(function(user){
         if (user){
           var token = jwt.encode(user, 'secret');
-          user.facebookToken = token;
+          //user.facebookToken = token;
           user.save(function(err,doc){
             return done(null,token)
           });
@@ -54,13 +53,9 @@ module.exports = function(passport) {
       })
       .fail(function(error){
         console.error('error: ' + error)
+        done(null)
       })
 
-
-      // asynchronous
-      /*process.nextTick(function() {
-        done(null, profile)
-      });*/
 
     }));
 

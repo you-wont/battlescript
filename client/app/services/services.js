@@ -43,6 +43,7 @@ angular.module('battlescript.services', [])
 
   // helper to check if users are authorized
   var isAuth = function () {
+    console.log('local token: ' + !!$window.localStorage.getItem('battlepro'))
     return !!$window.localStorage.getItem('battlepro');
   };
 
@@ -65,13 +66,25 @@ angular.module('battlescript.services', [])
     });
 
   };
+  var signInWithFB = function(){
+    console.log('moving on')
+   $http.jsonp('/api/users/login/facebook?callback=JSON_CALLBACK')
+   .success(function(resp){
+    console.log('hellp')
+   }).error(function(){
+    console.log('wrong')
+   });
+   
+   
+  };
 
   // return all funcs as an obj
   return {
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout
+    signout: signout,
+    signInWithFB: signInWithFB
   };
 })
 

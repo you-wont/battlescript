@@ -46,6 +46,21 @@ angular.module('battlescript.auth', [])
     });
   };
 
+  $scope.signInWithFB = function(){
+    console.log('sigining in')
+    Auth.signInWithFB();
+    
+    /*.then(function(token){
+      console.log('token: ' + token)
+    })
+    .catch(function(error){
+      console.log('error')
+      console.dir(error)
+    });*/
+  }
+
+   
+
   
 
 });
