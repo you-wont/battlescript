@@ -15,6 +15,10 @@
   background-color: $color--theme-blue-dark;
 }
 
+.spinner-container.loading {
+  display: block;
+}
+
 .spinner-container.active {
   display: block;
 }

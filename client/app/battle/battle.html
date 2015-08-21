@@ -20,7 +20,12 @@
       <div class="battle-field" ng-class="battleFieldClass">
         
         <div class="battle-field__header">
+        <!-- video player -->
+        <video id="localVideo" autoplay></video>
+        <p id="peer"></p>
           <p>{{ user }} <span>-vs-</span> {{ opponent }}</p>
+  <audio id="clip" src="http://soundfxcenter.com/video-games/mortal-kombat-3-trilogy/57acb6_Mortal_Kombat_3_Fight_Sound_Effect.mp3" style="display: none"> 
+
         </div><!-- /battlefield header -->
 
         <div class="grid grid--l">
@@ -35,8 +40,9 @@
           </div><!-- grid item -->
 
           <div class="grid__item grid__item--66-l">
-
-            <div class="battle-player battle-player--user">
+           <!-- class="battle-player battle-player--user" -->
+          <h3 id="countdown" class="battle-player__heading countdown" ng-model="counter"> Coding starts in {{ counter }} seconds</h3>
+            <div  ng-class="someSeconds ? 'battle-player battle-player--user' : 'battle-player battle-player--time'">
               <h3 class="battle-player__heading">Your solution:</h3>
               <form action="#" class="editor">
                 <div class="editor__field">

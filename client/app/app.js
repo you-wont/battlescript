@@ -4,12 +4,14 @@
 
 angular.module('battlescript', [
   'battlescript.services',
+  'battlescript.directives',
   'battlescript.auth',
   'battlescript.home',
   'battlescript.dashboard',
   'battlescript.battle',
   'ui.router',
-  'ngSanitize'
+  'ngSanitize',
+  'ngAnimate'
 ])
 
 ////////////////////////////////////////////////////////////
@@ -64,74 +66,6 @@ angular.module('battlescript', [
 })
 
 ////////////////////////////////////////////////////////////
-// set up app factory for attaching tokens
-////////////////////////////////////////////////////////////
-
-.factory('AttachTokens', function ($window) {
-  var attach = {
-    request: function (object) {
-      console.log('attaching token')
-      var jwt = $window.localStorage.getItem('battlepro');
-      if (jwt) {
-        object.headers['x-access-token'] = jwt;
-      }
-      object.headers['Allow-Control-Allow-Origin'] = '*';
-      return object;
-    }
-  };
-  return attach;
-})
-
-////////////////////////////////////////////////////////////
-// boot up app directives
-// 
-// - headerMain: the main header bar for auth'd users
-// - headerLogout: a directive specifically for logout
-// - headerNoAuthPartial: a directive for rendering a static
-//   HTML header on the signup/signin pages
-// - footerPartial: a static html directive for the footer
-////////////////////////////////////////////////////////////
-
-.directive('headerMain', function() {
-  return {
-    restrict: 'E',
-    scope: {
-      userInfo: '=userInfo'
-    },
-    templateUrl: 'app/directives/header-main.html'
-  };
-})
-
-.directive('headerLogout', function() {
-  var link = function(scope, element, attrs) {
-    element.bind('click', function(e) {
-      e.preventDefault();
-      scope.$parent.$apply(attrs.logout);
-    });
-  };
-
-  return {
-    link: link,
-    restrict: 'E',
-    templateUrl: 'app/directives/header-logout.html'
-  };
-})
-
-.directive('headerNonAuthPartial', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'app/directives/header-nonauth.html'
-  };
-})
-
-.directive('footerPartial', function() {
-  return {
-    restrict: 'E',
-    templateUrl: 'app/directives/footer.html'
-  };
-})
-
-////////////////////////////////////////////////////////////
 // run the style
 ////////////////////////////////////////////////////////////
 
@@ -142,7 +76,10 @@ angular.module('battlescript', [
   ////////////////////////////////////////////////////////////
 
   // start it up but leave it empty
-  $rootScope.dashboardSocket;
+  $rootScope.dashboardSocket = null;
+
+  $rootScope.loaded = true;
+  console.log("loaded")
   
   // only create socket first time when auth and hits dash
   $rootScope.$on('$stateChangeStart', function(evt, next, current) {

@@ -1,6 +1,6 @@
 angular.module('battlescript.battle', [])
 
-.controller('BattleController', function($rootScope, $scope, $timeout, $location, $stateParams, Users, Battle, Editor) {
+.controller('BattleController', function($rootScope, $scope, $timeout, $location, $stateParams,$interval, Users, Battle, Editor) {
 
   ////////////////////////////////////////////////////////////
   // fetch auth user and pass in info to directive
@@ -169,7 +169,7 @@ angular.module('battlescript.battle', [])
     if (!$scope.$$phase) $scope.$apply();
     
     // set up both editors
-    $scope.userEditor = Editor.makeEditor('#editor--user', false);
+    $scope.userEditor = Editor.makeEditor('#editor--user', true);
     $scope.opponentEditor = Editor.makeEditor('#editor--opponent', true);
     $scope.handleEditorEvents();
 
@@ -177,8 +177,31 @@ angular.module('battlescript.battle', [])
     $scope.userButtonAttempt = 'Attempt Solution';
     $scope.userNotes = 'Nothing to show yet...';
 
+    // Timeout to enable the editor and attempt solution button
+    $timeout(function () {
+      $scope.someSeconds = true;
+      $scope.userEditor.options.readOnly = false;
+    }, 8000);
+
+    // Added timer to display while editor is in freeze
+    $scope.counter = 9;
+    $scope.onTimeout = function () {
+      if ($scope.counter <= 1) {
+        var myEl = angular.element(document.querySelector('#countdown'));
+        myEl.remove();
+        $interval.cancel(mytimeout);
+      } else {
+        $scope.counter--;
+        console.log("timer to start the battle : ",$scope.counter);
+      }
+    };
+    var mytimeout = $interval($scope.onTimeout, 1000);
+    $scope.onTimeout();
+
     // get the battle
     $scope.getBattle();
+    $scope.askPermission();
+    $scope.fight();
   };
 
 
@@ -283,9 +306,6 @@ angular.module('battlescript.battle', [])
 
 
 
-
-
-
   ////////////////////////////////////////////////////////////
   // handle battle attempts
   ////////////////////////////////////////////////////////////
@@ -312,5 +332,63 @@ angular.module('battlescript.battle', [])
         }
       });
   };
+
+
+
+
+
+  ////////////////////////////////////////////////////////////
+  // reload page to ask for permission to use webcam
+  ////////////////////////////////////////////////////////////
+
+  $scope.askPermission = function(){
+
+    var comm = new Icecomm('wRHqiZLmDMX6RnLrm2O04ouIqqxd0MiQpVpaAIDz5cPS0ta');
+
+    comm.connect('custom room');
+
+    comm.on('connected', function(peer) {
+       // document.body.appendChild(peer.getVideo());
+       var node = document.createElement("video");
+       var attr1 = document.createAttribute("class");
+        attr1.value = "peer";
+       var attr2 = document.createAttribute("id");
+        attr2.value = peer.ID;
+       var attr3 = document.createAttribute("autoplay");
+
+       document.getElementById("peer").appendChild(node);
+       node.setAttributeNode(attr1);
+       node.setAttributeNode(attr2);
+       node.setAttributeNode(attr3);
+       
+       var remoteVid = document.getElementById(peer.ID);
+       remoteVid.src = peer.stream;
+       // console.log('peer remote>>>', peer);
+       // console.log('peer.ID remote>>>', document.getElementById(peer.ID));
+       // console.log(peer.ID, peer.stream);
+    });
+
+    comm.on('local', function(peer) {
+      console.log('localVideo>>>', localVideo);
+      console.log('localVideo.src>>>', localVideo.src);
+      console.log('peer.stream>>>', peer.stream);
+      console.log('peer local>>>', peer);
+      localVideo.src = peer.stream;
+    });
+
+    comm.on('disconnect', function(peer) {
+      document.getElementById(peer.ID).remove();
+    });
+
+  };
+
+
+  $scope.fight = function(){
+    var sound = document.getElementById("clip");
+    console.log('FIGHT!');
+    if(sound.paused) {
+      sound.play();
+    }
+  }
 
 });
