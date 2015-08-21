@@ -1,4 +1,4 @@
-angular.module('battlescript.services', [])
+angular.module('battlescript.services', ['ngCookies'])
 
 ////////////////////////////////////////////////////////////
 // Auth factory
@@ -11,8 +11,7 @@ angular.module('battlescript.services', [])
 // - user logged out
 ////////////////////////////////////////////////////////////
 
-.factory('Auth', function ($http, $location, $window) {
-  
+.factory('Auth',function ($http, $location, $window) {
   // signs users in
   var signin = function (user) {
     return $http({
@@ -37,12 +36,14 @@ angular.module('battlescript.services', [])
     .then(function (resp) {
       // Saving a global username to be used throughout app
       $window.localStorage.setItem('username', resp.config.data.username);
+      console.log('response token' + resp.data.token)
       return resp.data.token;
     });
   };
 
   // helper to check if users are authorized
   var isAuth = function () {
+    console.log('local token: ' + !!$window.localStorage.getItem('battlepro'))
     return !!$window.localStorage.getItem('battlepro');
   };
 
@@ -65,13 +66,27 @@ angular.module('battlescript.services', [])
     });
 
   };
+  var signInWithFB = function(token){
+    console.log('TOKEN')
+   
+    //token = JSON.parse(token);
+    console.log("token");
+    token = JSON.parse(token);
+    console.log(token.token)
+    console.log(token.profile.username)
+    $window.localStorage.setItem('battlepro',token.token);
+    $window.localStorage.setItem('username', token.profile['username']);
+    //console.dir(token)
+   
+  };
 
   // return all funcs as an obj
   return {
     signin: signin,
     signup: signup,
     isAuth: isAuth,
-    signout: signout
+    signout: signout,
+    signInWithFB: signInWithFB
   };
 })
 

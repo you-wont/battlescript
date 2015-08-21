@@ -1,9 +1,9 @@
 // do not tamper with this code in here, study it, but do not touch
 // this Auth controller is responsible for our client side authentication
 // in our signup/signin forms using the injected Auth service
-angular.module('battlescript.auth', [])
+angular.module('battlescript.auth', ['ngCookies'])
 
-.controller('AuthController', function ($scope, $window, $location, Auth) {
+.controller('AuthController', function ($scope, $window, $location,$cookies, Auth) {
   $scope.user = {};
 
   $scope.signin = function () {
@@ -45,4 +45,19 @@ angular.module('battlescript.auth', [])
         console.error(error);
     });
   };
+
+  $scope.signInWithFB = function(){
+    console.log('sigining in')
+    var cookies = $cookies.get("facebookToken");
+    //console.log($cookies.getAll())
+
+    //pass along username and token
+    Auth.signInWithFB($cookies.get('facebookToken'));
+ 
+  }
+
+   
+
+  
+
 });

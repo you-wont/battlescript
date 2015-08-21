@@ -1,6 +1,10 @@
 var morgan = require('morgan');
 var bodyParser = require('body-parser');
 var helpers = require('./helpers.js');
+var passport = require('passport');
+var expressSession = require('express-session');
+var cookieParser = require('cookie-parser');
+
 
 module.exports = function (app, express) {
   // define routers
@@ -13,6 +17,32 @@ module.exports = function (app, express) {
   app.use(bodyParser.urlencoded({extended: true}));
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
+   //passport authentication middleware
+  app.use(cookieParser());
+  app.use(expressSession({secret: 'mySecretKey' }));
+  app.use(passport.initialize());
+ // app.use(passport.session());
+  
+
+//************
+  // Initialize Passport
+  
+  var initPassport = require('../passport/init');
+  initPassport(passport);
+
+//************
+
+  //headers
+  app.use(function (req, res, next) {
+    console.log('hi')
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+    next();
+});
+
+ 
 
   // api paths for various routes
   app.use('/api/users', userRouter);
@@ -24,7 +54,9 @@ module.exports = function (app, express) {
   app.use(helpers.errorHandler);
   
   // require necessary route files
-  require('../users/userRoutes.js')(userRouter);
+  require('../users/userRoutes.js')(userRouter,passport);
   require('../duels/duelRoutes.js')(duelRouter);
   require('../battles/battleRoutes.js')(battleRouter);
+
+
 };

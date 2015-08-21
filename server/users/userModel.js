@@ -14,7 +14,7 @@ var UserSchema = new mongoose.Schema({
 
   password: {
     type: String,
-    required: true
+    
   },
   salt: String,
 
@@ -31,7 +31,16 @@ var UserSchema = new mongoose.Schema({
   totalWins: {
     type: Number,
     default: 0
+  },
+
+  facebookUserID: {
+    type:String
+  }, 
+
+  facebookToken : {
+    type:String
   }
+
 });
 
 UserSchema.methods.comparePasswords = function (candidatePassword) {
