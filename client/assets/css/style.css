@@ -961,8 +961,8 @@ button:focus {
 }
 
 /*Background for timer text*/
-.countdown-green {
-  background-color: #16DA53;
+.countdown {
+  background-color: #EB7F00;
 }
 
 /* code mirror player/editor size overrides */

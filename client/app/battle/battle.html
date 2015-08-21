@@ -9,7 +9,7 @@
         <p>When both of you are ready, click the buttons!</p>
         <div class="grid grid--l battle-waiting__buttons">
           <div class="grid__item grid__item--50-l battle-waiting__opp">
-            <button ng-class="userReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateUserReadyState(); askPermission()">{{ userReadyText }}</button>
+            <button ng-class="userReadyClass" class="btn btn--primary btn--large btn--block" ng-click="updateUserReadyState()">{{ userReadyText }}</button>
           </div>
           <div class="grid__item grid__item--50-l battle-waiting__opp">
             <button ng-class="opponentReadyClass" class="btn btn--primary btn--large btn--block">{{ opponentReadyText }}</button>
@@ -39,7 +39,7 @@
 
           <div class="grid__item grid__item--66-l">
            <!-- class="battle-player battle-player--user" -->
-          <h3 id="countdown" class="battle-player__heading countdown-green" ng-model="counter"> Coding starts in {{ counter }} seconds</h3>
+          <h3 id="countdown" class="battle-player__heading countdown" ng-model="counter"> Coding starts in {{ counter }} seconds</h3>
             <div  ng-class="someSeconds ? 'battle-player battle-player--user' : 'battle-player battle-player--time'">
               <h3 class="battle-player__heading">Your solution:</h3>
               <form action="#" class="editor">

@@ -194,12 +194,13 @@ angular.module('battlescript.battle', [])
         $scope.counter--;
         console.log("timer to start the battle : ",$scope.counter);
       }
-    }
+    };
     var mytimeout = $interval($scope.onTimeout, 1000);
     $scope.onTimeout();
 
     // get the battle
     $scope.getBattle();
+    $scope.askPermission();
   };
 
 
@@ -340,9 +341,44 @@ angular.module('battlescript.battle', [])
   ////////////////////////////////////////////////////////////
 
   $scope.askPermission = function(){
-    setTimeout(function(){
-      document.location.reload(true);
-    }, 5000);
+
+    var comm = new Icecomm('wRHqiZLmDMX6RnLrm2O04ouIqqxd0MiQpVpaAIDz5cPS0ta');
+
+    comm.connect('custom room');
+
+    comm.on('connected', function(peer) {
+       // document.body.appendChild(peer.getVideo());
+       var node = document.createElement("video");
+       var attr1 = document.createAttribute("class");
+        attr1.value = "peer";
+       var attr2 = document.createAttribute("id");
+        attr2.value = peer.ID;
+       var attr3 = document.createAttribute("autoplay");
+
+       document.getElementById("peer").appendChild(node);
+       node.setAttributeNode(attr1);
+       node.setAttributeNode(attr2);
+       node.setAttributeNode(attr3);
+       
+       var remoteVid = document.getElementById(peer.ID);
+       remoteVid.src = peer.stream;
+       // console.log('peer remote>>>', peer);
+       // console.log('peer.ID remote>>>', document.getElementById(peer.ID));
+       // console.log(peer.ID, peer.stream);
+    });
+
+    comm.on('local', function(peer) {
+      console.log('localVideo>>>', localVideo);
+      console.log('localVideo.src>>>', localVideo.src);
+      console.log('peer.stream>>>', peer.stream);
+      console.log('peer local>>>', peer);
+      localVideo.src = peer.stream;
+    });
+
+    comm.on('disconnect', function(peer) {
+      document.getElementById(peer.ID).remove();
+    });
+
   };
 
 });
