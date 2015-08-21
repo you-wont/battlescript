@@ -94,7 +94,7 @@ body {
 
 body {
   color: #777;
-  background-color: #2B3A42;
+  background-color: #000;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   line-height: 1.8;
@@ -126,6 +126,8 @@ h6 {
 a {
   color: #EB7F00;
   text-decoration: none;
+  -webkit-transition: all 0.2s linear;
+          transition: all 0.2s linear;
 }
 
 a:hover {
@@ -359,7 +361,7 @@ button:focus {
 ----------------------------------------------------------------------------- */
 .header {
   padding: 24px 0;
-  background-color: #2B3A42;
+  background-color: #000;
 }
 
 .header__inner {
@@ -464,7 +466,7 @@ button:focus {
  */
 .header-main {
   padding: 12px 0;
-  background-color: #2B3A42;
+  background-color: #000;
 }
 
 .header-main__inner {
@@ -553,7 +555,7 @@ button:focus {
 .header-main__user-dropdown-item a {
   display: block;
   padding: 4px 8px;
-  color: #3F5765;
+  color: #333333;
 }
 
 .header-main__user-dropdown-item a:hover {
@@ -623,7 +625,7 @@ button:focus {
 }
 
 .footer__copyright {
-  color: #3F5765;
+  color: #333333;
 }
 
 /* -----------------------------------------------------------------------------
@@ -652,12 +654,12 @@ button:focus {
   margin: 12px 0;
   padding: 12px;
   color: #EB7F00;
-  border: solid 1px #3F5765;
+  border: solid 1px #333333;
 }
 
 .auth-form {
   padding: 24px;
-  background-color: #3F5765;
+  background-color: #333333;
 }
 
 .auth-form__title {
@@ -701,7 +703,7 @@ button:focus {
 }
 
 .auth-form__group > input:focus {
-  box-shadow: 0 0 0 4px #2B3A42;
+  box-shadow: 0 0 0 4px #000;
 }
 
 .auth-form__footer {
@@ -766,11 +768,11 @@ button:focus {
 
 .dashboard-stats-entry__body {
   padding: 12px;
-  background-color: #eeedee;
+  background-color: #EEEDEE;
 }
 
 .dashboard-stats-entry__stat > span {
-  color: #EB7F00;
+  color: #EEEDEE;
 }
 
 .dashboard-stats__streak {
@@ -796,7 +798,7 @@ button:focus {
   display: -ms-flexbox;
   display: flex;
   padding: 4px 0;
-  border-bottom: solid 1px #eeedee;
+  border-bottom: solid 1px #EEEDEE;
 }
 
 .dashboard-online__item:last-child {
@@ -846,11 +848,11 @@ button:focus {
 
 /* code mirror theme overrides */
 .cm-s-material {
-  background-color: #2B3A42;
+  background-color: #000;
 }
 
 .cm-s-material .CodeMirror-gutters {
-  background: #2B3A42;
+  background: #000;
 }
 
 /* -----------------------------------------------------------------------------
@@ -912,7 +914,7 @@ button:focus {
   margin-bottom: 48px;
   padding: 4px 0;
   text-align: center;
-  border-bottom: solid 2px #3F5765;
+  border-bottom: solid 2px #333333;
 }
 
 .battle-field__header p {
@@ -947,7 +949,7 @@ button:focus {
 .battle-prompt__description pre {
   overflow: auto;
   padding: 8px;
-  background-color: #eeedee;
+  background-color: #EEEDEE;
   font-size: 12px;
   border: solid 1px #BDD4DE;
 }
@@ -964,8 +966,8 @@ button:focus {
 
 .battle-player__heading {
   padding: 8px;
-  color: #333;
-  background-color: #eeedee;
+  color: #333333;
+  background-color: #EEEDEE;
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
@@ -1032,11 +1034,11 @@ button:focus {
 
 .btn--primary {
   color: #fff;
-  background-color: #3F5765;
+  background-color: #333333;
 }
 
 .btn--primary:not(:disabled):hover {
-  background-color: #2B3A42;
+  background-color: #000;
 }
 
 .btn--primary.active {
@@ -1096,7 +1098,7 @@ button:focus {
   
 ----------------------------------------------------------------------------- */
 .lead {
-  color: #3F5765;
+  color: #333333;
   font-size: 18px;
   text-align: center;
 }
@@ -1132,7 +1134,11 @@ button:focus {
   bottom: 0;
   left: 0;
   z-index: 100;
-  background-color: #2B3A42;
+  background-color: #000;
+}
+
+.spinner-container.loading {
+  display: block;
 }
 
 .spinner-container.active {
@@ -1164,8 +1170,8 @@ button:focus {
 }
 
 .spinner::before {
-  border-top: solid 18px #3F5765;
-  border-bottom: solid 18px #3F5765;
+  border-top: solid 18px #333333;
+  border-bottom: solid 18px #333333;
   border-left: solid 18px transparent;
   border-right: solid 18px transparent;
   border-radius: 48px;

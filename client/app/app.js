@@ -76,6 +76,9 @@ angular.module('battlescript', [
 
   // start it up but leave it empty
   $rootScope.dashboardSocket = null;
+
+  $rootScope.loaded = true;
+  console.log("loaded")
   
   // only create socket first time when auth and hits dash
   $rootScope.$on('$stateChangeStart', function(evt, next, current) {

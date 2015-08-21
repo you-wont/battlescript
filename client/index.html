@@ -7,6 +7,14 @@
   <link rel="stylesheet" href="lib/CodeMirror/theme/material.css">
   <link rel="stylesheet" href="assets/css/animate.min.css">
   <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+
+  <div class="spinner-container loading" aria-hidden="true" ng-show="{{!loaded}}">
+    <div class="spinner"></div>
+  </div>
+
+  <div ui-view class="view-animate"></div>
 
   <script src="/socket.io/socket.io.js"></script>
 
@@ -19,11 +27,6 @@
   <script src="lib/angular-ui-router/release/angular-ui-router.min.js"></script>
   <script src="lib/angular-sanitize/angular-sanitize.min.js"></script>
   <script type="text/javascript" src="https://cdn.icecomm.io/icecomm.js"></script>
-
-</head>
-<body>
-
-  <div ui-view class="view-animate"></div>
 
   <script src="app/directives/directives.js"></script>
   <script src="app/services/services.js"></script>
