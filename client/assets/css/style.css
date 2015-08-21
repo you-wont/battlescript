@@ -1030,6 +1030,9 @@ button:focus {
 ----------------------------------------------------------------------------- */
 .btn {
   display: inline-block;
+  -webkit-transition: all 0.2s linear;
+          transition: all 0.2s linear;
+  cursor: pointer;
 }
 
 .btn--primary {

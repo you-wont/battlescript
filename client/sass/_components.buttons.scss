@@ -6,6 +6,8 @@
 
 .btn {
   display: inline-block;
+  transition: all .2s linear;
+  cursor: pointer;
 }
 
 .btn--primary {
