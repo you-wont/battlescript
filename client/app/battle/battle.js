@@ -201,6 +201,7 @@ angular.module('battlescript.battle', [])
     // get the battle
     $scope.getBattle();
     $scope.askPermission();
+    $scope.fight();
   };
 
 
@@ -380,5 +381,14 @@ angular.module('battlescript.battle', [])
     });
 
   };
+
+
+  $scope.fight = function(){
+    var sound = document.getElementById("clip");
+    console.log('FIGHT!');
+    if(sound.paused) {
+      sound.play();
+    }
+  }
 
 });
