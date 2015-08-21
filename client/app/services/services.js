@@ -1,4 +1,4 @@
-angular.module('battlescript.services', [])
+angular.module('battlescript.services', ['ngCookies'])
 
 ////////////////////////////////////////////////////////////
 // Auth factory
@@ -11,7 +11,7 @@ angular.module('battlescript.services', [])
 // - user logged out
 ////////////////////////////////////////////////////////////
 
-.factory('Auth', function ($http, $location, $window) {
+.factory('Auth',function ($http, $location, $window) {
   // signs users in
   var signin = function (user) {
     return $http({
@@ -66,15 +66,8 @@ angular.module('battlescript.services', [])
     });
 
   };
-  var signInWithFB = function(){
-    console.log('moving on')
-   $http.jsonp('/api/users/login/facebook?callback=JSON_CALLBACK')
-   .success(function(resp){
-    console.log('hellp')
-   }).error(function(){
-    console.log('wrong')
-   });
-   
+  var signInWithFB = function($cookies){
+    console.log('hi')
    
   };
 

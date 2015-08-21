@@ -16,20 +16,19 @@ module.exports = function (app,passport) {
   
   //Passport - Facebook OAuth routes - Jonathan Schapiro
   app.get('/login/facebook',passport.authenticate('facebook',{ session: false, scope: ['email'] }));
-  app.get('/login/facebook/callback',passport.authenticate('facebook',{ session: false, failureRedirect: "/signedin" }),
-    function(req,resp,next){
+  app.get('/login/facebook/callback',function(req,resp,next){
+    passport.authenticate('facebook',{ session: false, failureRedirect: "/signedin" },
+    function(err, token){
       console.log('SOS')
-      console.log('resp: ')
-      console.log(util.inspect(req.user, false, null));
-      req.session.token = resp.user;
-      if (req.session.token){
-        console.log('session set')
-      }
-      resp.setHeader('content-type', 'text/javascript');
-      resp.jsonp({token: req.session.token});
-     //resp.redirect("/");
-      //resp.json({token: req.user});
-    });
+      console.log('session set' + token)
+      resp.cookie('facebookToken', token, { maxAge: 900000});
+      //resp.setHeader({"Content-Type":'text/javascript'})
+      //resp.jsonp({token:token});
+      resp.redirect('/');
+
+    })(req,resp,next);
+  });
+    
  
 
 };

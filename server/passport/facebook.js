@@ -29,7 +29,7 @@ module.exports = function(passport) {
           console.log('user exists')
           user.save(function(err,doc){
             console.log('done resaving')
-            return done(null,token);
+            return done(null,{token:token,profile:user});
           });
           
         } else {
@@ -46,7 +46,8 @@ module.exports = function(passport) {
           var token = jwt.encode(user, 'secret');
           //user.facebookToken = token;
           user.save(function(err,doc){
-            return done(null,token)
+
+            return done(null,{token:token,profile:user})
           });
         }
         

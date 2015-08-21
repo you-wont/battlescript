@@ -3,6 +3,7 @@ var bodyParser = require('body-parser');
 var helpers = require('./helpers.js');
 var passport = require('passport');
 var expressSession = require('express-session');
+var cookieParser = require('cookie-parser');
 
 
 module.exports = function (app, express) {
@@ -17,6 +18,7 @@ module.exports = function (app, express) {
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../../client'));
    //passport authentication middleware
+  app.use(cookieParser());
   app.use(expressSession({secret: 'mySecretKey' }));
   app.use(passport.initialize());
  // app.use(passport.session());
