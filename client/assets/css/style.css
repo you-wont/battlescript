@@ -1,26 +1,5 @@
 /* -----------------------------------------------------------------------------
 
-  VIDEO
-  
------------------------------------------------------------------------------ */
-#localVideo {
-  height: 80px;
-  width: 80px;
-  display: block;
-  margin: 0 auto;
-  border-radius: 100%;
-}
-
-.peer {
-  height: 200px;
-  width: 200px;
-  border-radius: 100%;
-  display: block;
-  margin: 0 auto;
-}
-
-/* -----------------------------------------------------------------------------
-
   FONTS
   
 ----------------------------------------------------------------------------- */
@@ -65,6 +44,44 @@ html {
 
 /* -----------------------------------------------------------------------------
 
+  Page transitions
+  
+----------------------------------------------------------------------------- */
+.view-animate.ng-enter, .view-animate.ng-leave {
+  -webkit-transition: 0.5s linear all;
+          transition: 0.5s linear all;
+  opacity: 0;
+}
+
+.view-animate.ng-enter, .view-animate.ng-leave.ng-leave-active {
+  opacity: 0;
+}
+
+.view-animate.ng-enter.ng-enter-active {
+  opacity: 1;
+}
+
+/* -----------------------------------------------------------------------------
+
+  Login/signup
+  
+----------------------------------------------------------------------------- */
+.animate-show {
+  opacity: 1;
+}
+
+.animate-show.ng-hide-add, .animate-show.ng-hide-remove {
+  -webkit-transition: all linear 0.5s;
+          transition: all linear 0.5s;
+}
+
+.animate-show.ng-hide {
+  line-height: 0;
+  opacity: 0;
+}
+
+/* -----------------------------------------------------------------------------
+
   ELEMENTS
   
 ----------------------------------------------------------------------------- */
@@ -77,7 +94,7 @@ body {
 
 body {
   color: #777;
-  background-color: black;
+  background-color: #2B3A42;
   font-family: "Roboto", sans-serif;
   font-size: 14px;
   line-height: 1.8;
@@ -342,7 +359,7 @@ button:focus {
 ----------------------------------------------------------------------------- */
 .header {
   padding: 24px 0;
-  background-color: black;
+  background-color: #2B3A42;
 }
 
 .header__inner {
@@ -447,7 +464,7 @@ button:focus {
  */
 .header-main {
   padding: 12px 0;
-  background-color: black;
+  background-color: #2B3A42;
 }
 
 .header-main__inner {
@@ -536,7 +553,7 @@ button:focus {
 .header-main__user-dropdown-item a {
   display: block;
   padding: 4px 8px;
-  color: #333;
+  color: #3F5765;
 }
 
 .header-main__user-dropdown-item a:hover {
@@ -606,7 +623,7 @@ button:focus {
 }
 
 .footer__copyright {
-  color: grey;
+  color: #3F5765;
 }
 
 /* -----------------------------------------------------------------------------
@@ -635,12 +652,12 @@ button:focus {
   margin: 12px 0;
   padding: 12px;
   color: #EB7F00;
-  border: solid 1px #333;
+  border: solid 1px #3F5765;
 }
 
 .auth-form {
   padding: 24px;
-  background-color: #333;
+  background-color: #3F5765;
 }
 
 .auth-form__title {
@@ -829,7 +846,7 @@ button:focus {
 
 /* code mirror theme overrides */
 .cm-s-material {
-  background-color: black;
+  background-color: #2B3A42;
 }
 
 .cm-s-material .CodeMirror-gutters {
@@ -895,14 +912,13 @@ button:focus {
   margin-bottom: 48px;
   padding: 4px 0;
   text-align: center;
-  border-bottom: solid 2px #333;
+  border-bottom: solid 2px #3F5765;
 }
 
 .battle-field__header p {
-  margin: auto;
+  margin: 0;
   color: #EB7F00;
   font-size: 22px;
-  display: inline
 }
 
 .battle-field__header span {
@@ -945,12 +961,6 @@ button:focus {
 .battle-player--user {
   margin-bottom: 24px;
 }
-/*Blurring the user editor */
-.battle-player--time {
-  margin-bottom: 24px;
-   -webkit-filter: blur(1.5px);
-           filter: blur(1.5px);
-}
 
 .battle-player__heading {
   padding: 8px;
@@ -959,11 +969,6 @@ button:focus {
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
-}
-
-/*Background for timer text*/
-.countdown {
-  background-color: #EB7F00;
 }
 
 /* code mirror player/editor size overrides */
@@ -1027,11 +1032,11 @@ button:focus {
 
 .btn--primary {
   color: #fff;
-  background-color: #333;
+  background-color: #3F5765;
 }
 
 .btn--primary:not(:disabled):hover {
-  background-color: black;
+  background-color: #2B3A42;
 }
 
 .btn--primary.active {
@@ -1091,7 +1096,7 @@ button:focus {
   
 ----------------------------------------------------------------------------- */
 .lead {
-  color: #333;
+  color: #3F5765;
   font-size: 18px;
   text-align: center;
 }
@@ -1127,7 +1132,7 @@ button:focus {
   bottom: 0;
   left: 0;
   z-index: 100;
-  background-color: black;
+  background-color: #2B3A42;
 }
 
 .spinner-container.active {
@@ -1159,8 +1164,8 @@ button:focus {
 }
 
 .spinner::before {
-  border-top: solid 18px #333;
-  border-bottom: solid 18px #333;
+  border-top: solid 18px #3F5765;
+  border-bottom: solid 18px #3F5765;
   border-left: solid 18px transparent;
   border-right: solid 18px transparent;
   border-radius: 48px;
@@ -1195,100 +1200,4 @@ button:focus {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg);
   }
-}
-
-
-
-/* -----------------------------------------------------------------------------
-
-  COLLABORATION TEXT AREA
-  
------------------------------------------------------------------------------ */
-
-.firepad-userlist {
-    /* default height */
-    height: 600px;
-    min-width: 175px;
-
-    background: #2B3A42; /* Old browsers */
-    background: -moz-linear-gradient(left, #ebebeb 0%, #eaeaea 93%, #d9d9d9 100%); /* FF3.6+ */
-    background: -webkit-gradient(linear, left top, right top, color-stop(0%,#ebebeb), color-stop(93%,#eaeaea), color-stop(100%,#d9d9d9)); /* Chrome,Safari4+ */
-    background: -webkit-linear-gradient(left, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* Chrome10+,Safari5.1+ */
-    background: -o-linear-gradient(left, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* Opera 11.10+ */
-    background: -ms-linear-gradient(left, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* IE10+ */
-    background: linear-gradient(to right, #ebebeb 0%,#eaeaea 93%,#d9d9d9 100%); /* W3C */
-    color: #404040;
-  }
-
-  .firepad-userlist {
-    text-align: left;
-    font-family: 'Helvetica Neue', sans-serif;
-    line-height: normal;
-  }
-
-  .firepad-userlist-user {
-    position: relative;
-    margin: 3px 0;
-    height: 42px;
-    border-bottom: 1px solid #c9c9c9;
-    padding-bottom: 5px;
-  }
-
-  .firepad-userlist-color-indicator {
-    display: inline-block;
-    width: 32px;
-    height: 32px;
-    border: 1px solid #ccc;
-    -webkit-border-radius: 4px;
-    -moz-border-radius: 4px;
-    border-radius: 4px;
-  }
-
-  input.firepad-userlist-name-input {
-    position: absolute;
-    left: 38px;
-    top: 0;
-    width: 105px;
-    height: 20px;
-    border: 0;
-    border-bottom: 1px solid #d6d6d6;
-    -webkit-border-radius: 0;
-    -moz-border-radius: 0;
-    border-radius: 0;
-    font-size: 14px;
-    line-height: 14px;
-    padding: 1px;
-  }
-
-  .firepad-userlist-name-hint {
-    position: absolute;
-    left: 38px;
-    top: 20px;
-    width: 300px; /* I'd rather it clip than wrap. */
-    font-size: 9px;
-    line-height: 14px;
-  }
-
-  .firepad-userlist-name {
-    position: absolute;
-    top: 2px;
-    left: 38px;
-    width: 95px;
-    font-size: 13px;
-  }
-
-  #firepad-container .firepad .CodeMirror.cm-s-default{
-    position: relative;
-    height: 600px;
-    width: 400px;
-    width: calc(100% - 175px);
-  }
-
-  #userlist {
-    float: left;
-    width: 175px;
-  }
-
-.collab {
-  overflow: auto;
 }

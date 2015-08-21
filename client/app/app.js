@@ -10,7 +10,8 @@ angular.module('battlescript', [
   'battlescript.dashboard',
   'battlescript.battle',
   'ui.router',
-  'ngSanitize'
+  'ngSanitize',
+  'ngAnimate'
 ])
 
 ////////////////////////////////////////////////////////////
