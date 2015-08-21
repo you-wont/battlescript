@@ -585,6 +585,7 @@ button:focus {
   
 ----------------------------------------------------------------------------- */
 .main {
+  padding: 15px 0;
   background-color: #fff;
 }
 
@@ -748,7 +749,7 @@ button:focus {
 
 .dashboard-stats-entry__body {
   padding: 12px;
-  background-color: #EFEFEF;
+  background-color: #eeedee;
 }
 
 .dashboard-stats-entry__stat > span {
@@ -778,7 +779,7 @@ button:focus {
   display: -ms-flexbox;
   display: flex;
   padding: 4px 0;
-  border-bottom: solid 1px #EFEFEF;
+  border-bottom: solid 1px #eeedee;
 }
 
 .dashboard-online__item:last-child {
@@ -930,7 +931,7 @@ button:focus {
 .battle-prompt__description pre {
   overflow: auto;
   padding: 8px;
-  background-color: #EFEFEF;
+  background-color: #eeedee;
   font-size: 12px;
   border: solid 1px #BDD4DE;
 }
@@ -954,7 +955,7 @@ button:focus {
 .battle-player__heading {
   padding: 8px;
   color: #333;
-  background-color: #EFEFEF;
+  background-color: #eeedee;
   font-size: 12px;
   font-weight: 400;
   text-transform: uppercase;
