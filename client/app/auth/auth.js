@@ -48,11 +48,11 @@ angular.module('battlescript.auth', ['ngCookies'])
 
   $scope.signInWithFB = function(){
     console.log('sigining in')
-    var s = $cookies.get("facebookToken");
-    console.log($cookies.getAll())
+    var cookies = $cookies.get("facebookToken");
+    //console.log($cookies.getAll())
 
     //pass along username and token
-    Auth.signInWithFB();
+    Auth.signInWithFB($cookies.get('facebookToken'));
  
   }
 

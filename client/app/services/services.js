@@ -66,8 +66,17 @@ angular.module('battlescript.services', ['ngCookies'])
     });
 
   };
-  var signInWithFB = function($cookies){
-    console.log('hi')
+  var signInWithFB = function(token){
+    console.log('TOKEN')
+   
+    //token = JSON.parse(token);
+    console.log("token");
+    token = JSON.parse(token);
+    console.log(token.token)
+    console.log(token.profile.username)
+    $window.localStorage.setItem('battlepro',token.token);
+    $window.localStorage.setItem('username', token.profile['username']);
+    //console.dir(token)
    
   };
 

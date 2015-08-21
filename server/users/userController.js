@@ -18,6 +18,7 @@ module.exports = {
             .then(function(foundUser) {
               if (foundUser) {
                 var token = jwt.encode(user, 'secret');
+                
                 res.json({token: token});
                 //Set the user to be online
                 user.save();

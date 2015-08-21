@@ -20,8 +20,8 @@ module.exports = function (app,passport) {
     passport.authenticate('facebook',{ session: false, failureRedirect: "/signedin" },
     function(err, token){
       console.log('SOS')
-      console.log('session set' + token)
-      resp.cookie('facebookToken', token, { maxAge: 900000});
+      console.log('session set' + JSON.stringify(token))
+      resp.cookie('facebookToken', JSON.stringify(token), { maxAge: 900000});
       //resp.setHeader({"Content-Type":'text/javascript'})
       //resp.jsonp({token:token});
       resp.redirect('/');
